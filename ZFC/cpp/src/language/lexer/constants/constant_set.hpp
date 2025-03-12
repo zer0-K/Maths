@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../text.hpp"
+#include "../../text.hpp"
 #include "../../../utils/constant/constants.hpp"
 
 namespace mzfclang {

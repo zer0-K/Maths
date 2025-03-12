@@ -1,6 +1,6 @@
 #include "text.hpp"
 
-#include "../../utils/constant/constants.hpp"
+#include "../utils/constant/constants.hpp"
 
 namespace mzfclang {
 namespace mzfclexer {

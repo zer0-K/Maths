@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../text.hpp"
+#include "../../text.hpp"
 
 namespace mzfclang {
 namespace mzfclexer {
