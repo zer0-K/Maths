@@ -1,0 +1,45 @@
+// Judgments
+@ <judgment> ::= <context> "deduce" <term> "oftype" <term>       -- typing
+    | <context> "deduce" <term> "eq_judg" <term> "oftype" <term> -- definitional_equality
+    | <context> "deduce" <term> "reduc" <term>              -- reduction
+    | <context> "ctx"                       -- valid_context
+
+// Contexts
+@ <context> ::= "empty_context"             -- empty_context
+   | <context> "," <var_decl>               -- extended_context
+   | <context> "," <var_def>                -- definition_context
+
+@ <var_decl> ::= <var> "oftype" <term>
+@ <var_def> ::= <var> "vdef" <term> "oftype" <term>
+
+@ <clauses> ::= <clause> | <clause> "," <clause>
+@ <clause> ::= "|" <pattern> "=>" <term>
+@ <pattern> ::= <var> | "(" <pattern> "," <pattern> ")"
+
+@ <term> ::=
+    | <universe>                            -- Universes
+    | <var>                                 -- vars
+    | "pi" <var_decl> "." <term>            -- Dependent function type (Π)
+    | "lambda" <var_decl> "." <term>        -- Lambda abstraction
+    | <term> "(" <term> ")"                 -- Application
+    | "sigma" <var_decl> "." <term>         -- Dependent pair type (Σ)
+    | "(" <term> "," <term> ")"             -- Pair constructor
+    | <term> "+" <term>                     -- Coproduct type (A + B)
+    | "inl" <term> | "inr" <term>           -- Injections into coproduct
+    | "case" <term> "of" "inl" <var> "to" <term>            -- Coproduct elimination left
+    | "case" <term> "of" "inr" <var> "to" <term>            -- Coproduct elimination right
+    | "unit_type"                           -- Unit type (canonical element: ⋆)
+    | "star"                                -- Inhabitant of the unit type
+    | "empty_type"                          -- Empty type
+    | "absurd" <term>                       -- Elimination for the empty type (ex falso quodlibet)
+    | "Id_" <term> "(" <term> "," <term>")" -- Identity type (Id_A(x, y))
+    | "refl_" "(" <term> ")"                -- Reflexivity (refl_A x : Id_A(x, x))
+    | "J" "(" <term> "," <term> "," <term> ")"              -- Path induction (J rule)
+    | "ind" "(" <term> "," <clauses> ")"
+    | "let" "(" <var> "," <var> ")" "=" <term> "in" <term>  -- Σ-elimination (pattern matching)
+
+@ <universe> ::= "Type" | "Type_" <NUMBER>  -- Hierarchy of universes
+@ <var> ::= <VNAME>                         -- variable names
+
+@ <NUMBER> ::= /[0-9]+/
+@ <VNAME> ::= /var_[a-zA-Z_]+(_[0-9]+)?/
