@@ -1,4 +1,4 @@
-// Deductive system
+// ----------------------------------------------------------------------------- Deductive system
 
 // Judgments
 @ <judgment> ::= <context> "deduce" <term> "oftype" <term>       -- typing
@@ -31,41 +31,61 @@
 @ <var_decl_list> ::= <var_decl> | <var_decl_list> <var_decl>
 
 
-// HoTT
+// ----------------------------------------------------------------------------- HoTT
+
+
+// Formation rules
+@ <formation_empty> ::= "empty_type"                        -- 0-formation
+@ <formation_unit> ::= "unit_type"                          -- 1-formation
+@ <formation_pi> ::= "pi" <var_decl> "." <term>             -- Π-formation
+@ <formation_sigma> ::= "sigma" <var_decl> "." <term>       -- Σ-formation
+@ <formation_coproduct> ::= <term> "+" <term>               -- coproduct-formation
+@ <formation_id> ::= "Id" "(" <term> "," <term> "," <term>")"                   -- id-formation
+@ <formation_induction> ::= "Ind" <CNAME> <params> "where" <constructors>       -- inductive_formation
+
+@ <formation_rule> ::= <formation_empty> | <formation_unit> | <formation_pi> | <formation_sigma> | <formation_coproduct> 
+    | <formation_id> | <formation_induction>
+
+
+// Introduction rules
+@ <intro_unit> ::= "star" ":" "unit_type"                -- 1-intro
+@ <intro_lambda> ::= "lambda" <var_decl> "." <term>      -- lambda-intro
+@ <intro_pair> ::= "(" <term> "," <term> ")"             -- pair-intro
+@ <intro_coproduct> ::= "inl" <term> | "inr" <term>      -- coproduct-intro
+@ <intro_refl> ::= "refl" "(" <term> ")"                 -- refl-intro
+@ <intro_constr> ::= <constructor>                       -- constructor-intro
+
+@ <introduction_rule> ::= <intro_unit> | <intro_lambda> | <intro_pair> | <intro_coproduct> | <intro_refl> | <intro_constr>
+
+
+// Elimination rules
+@ <elim_empty> ::= "absurd" <term>                      -- 0-elimination
+@ <elim_apply> ::= <term> "(" <term> ")"                -- application
+@ <elim_coprod_left> ::= "case" <term> "of" "inl" <var> "to" <term>            -- coproduct elimination left
+@ <elim_coprod_right> ::= "case" <term> "of" "inr" <var> "to" <term>           -- coproduct elimination right
+@ <elim_sigma> ::= "proj_1" <term> | "proj_2" <term>    -- Σ-elimination
+@ <path_induction> ::= "J" "(" <term> "," <term> "," <term> ")"                 -- path induction
+@ <recursion> ::= "rec" <term> <motives> <clauses>      -- recursion
+@ <induction> ::= "ind" "(" <term> "," <clauses> ")"    -- induction
+
+@ <elimination_rule> ::= <elim_empty> | <elim_apply> | <elim_coprod_left> | <elim_coprod_right> | <elim_sigma> 
+    | <path_induction> | <recursion> | <induction>
+
+
+// Computation
+@ <computation_rule> ::= "let" <var_def> "in" <term>
 
 // Terms
-@ <term> ::=
-    | <universe>                            -- Universes
-    | <var>                                 -- vars
-    // Formation rules
-    | "empty_type"                          -- 0-formation
-    | "unit_type"                           -- 1-formation
-    | "pi" <var_decl> "." <term>            -- Π-formation
-    | "sigma" <var_decl> "." <term>         -- Σ-formation
-    | <term> "+" <term>                     -- coproduct-formation
-    | "Id" "(" <term> "," <term> "," <term>")"              -- id-formation
-    | "Ind" <name> <params> "where" <constructors>          -- inductive_formation
-    // Introduction rules
-    | "star" ":" "unit_type"                -- 1-intro
-    | "lambda" <var_decl> "." <term>        -- lambda-intro
-    | "(" <term> "," <term> ")"             -- pair-intro
-    | "inl" <term> | "inr" <term>           -- coproduct-intro
-    | "refl" "(" <term> ")"                 -- refl-intro
-    | <constructor>                         -- constructor-intro
-    // Elimination rules
-    | "absurd" <term>                       -- 0-elimination
-    | <term> "(" <term> ")"                 -- application
-    | "case" <term> "of" "inl" <var> "to" <term>            -- coproduct elimination left
-    | "case" <term> "of" "inr" <var> "to" <term>            -- coproduct elimination right
-    | "proj_1" <term> | "proj_2" <term>     -- Σ-elimination
-    | "J" "(" <term> "," <term> "," <term> ")"              -- path induction
-    | "rec" <term> <motives> <clauses>      -- recursion
-    | "ind" "(" <term> "," <clauses> ")"    -- induction
-    // Computation
-    | "let" "(" <var> "," <var> ")" "=" <term> "in" <term>  -- Σ-elimination (pattern matching)
+@ <term> ::= <universe>
+    | <var>
+    | <formation_rule>
+    | <introduction_rule>
+    | <elimination_rule>
+    | <computation_rule>
 
 
-// 'Infrastructure'
+// ----------------------------------------------------------------------------- 'Infrastructure'
+
 @ <universe> ::= "Type" | "Type_" <NUMBER>  -- Hierarchy of universes
 @ <var> ::= <VNAME>                         -- variable names
 
