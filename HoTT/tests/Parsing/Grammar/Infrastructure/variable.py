@@ -39,7 +39,7 @@ class RUN_VAR:
             test_container.add("var_test", "var\tvar_test\n")
             test_container.add("var_test_0", "var\tvar_test_0\n")
             test_container.add("var_test1_0", "var\tvar_test1_0\n")
-            
+
             # starting point in the grammar is the node 'var'
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "var").pretty()
         
@@ -48,7 +48,6 @@ class RUN_VAR:
         
         # postprocess
         Logger.test(success, prefix)
-        
 
     @staticmethod
     def not_allowed():
@@ -73,6 +72,35 @@ class RUN_VAR:
         Logger.test(success, prefix)
         
 
+class RUN_VAR_LIST:
+
+    log_prefix: str = f"{log_prefix}[variable list]"
+    
+    @staticmethod
+    def allowed():
+        # preprocess
+        if True:
+            prefix: str = f"{RUN_VAR.log_prefix}"
+
+            Logger.test("running...", prefix)
+            success: str = "Good"
+
+            test_container = TestContainer()
+            test_container.add("var_0", "varlist\n  var\tvar_0\n")
+            test_container.add("var_0, var_1", "varlist\n  varlist\n    var\tvar_0\n  var\tvar_1\n")
+            test_container.add("var_0, var_1, var_2", 
+                               "varlist\n  varlist\n    varlist\n      var\tvar_0\n    var\tvar_1\n  var\tvar_2\n")
+
+            # starting point in the grammar is the node 'var'
+            func: Callable = lambda s: Parser.get_HoTT_tree(s, "varlist").pretty()
+        
+        # process
+        success = UtilsTest.check(func, test_container, log_prefix)
+        
+        # postprocess
+        Logger.test(success, prefix)
+
+
 class RUN:
 
     @staticmethod
@@ -83,7 +111,10 @@ class RUN:
         RUN_VAR.allowed()
         RUN_VAR.not_allowed()
         
+        RUN_VAR_LIST.allowed()
+        
         Logger.test("done", log_prefix)
+
 
 if __name__ == "__main__":
     RUN.run()

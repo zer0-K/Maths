@@ -13,6 +13,8 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from tests.Parsing.Grammar.Infrastructure.infrastructure import RUN as RUN_INFRA
+from tests.Parsing.Grammar.HoTT.hott import RUN as RUN_HOTT
+from tests.Parsing.Grammar.DeductiveSystem.logic import RUN as RUN_LOGIC
 
 log_prefix: str = "[Parsing][Grammar]"
 
@@ -24,6 +26,8 @@ class RUN:
         Logger.test("Running HoTT grammar tests", log_prefix)
 
         RUN_INFRA.run()
+        RUN_HOTT.run()
+        RUN_LOGIC.run()
         
         Logger.test("Running HoTT grammar tests     - done", log_prefix)
 

@@ -7,11 +7,12 @@
     | <context> "ctx"                       -- valid_context
 
 // Contexts
-@ <context> ::= "empty_context"             -- empty_context
+@ <context> ::= EMPTY_CTX                   -- empty_context
    | <context> "," <var_decl>               -- extended_context
    | <context> "," <var_def>                -- definition_context
 
 @ <var_decl> ::= <var> "oftype" <term>
+@ <var_decl_list> ::= <var_decl> | <var_decl_list> "," <var_decl>
 @ <var_def> ::= <var> "vdef" <term> "oftype" <term>
 
 // Recursion/induction
@@ -22,13 +23,11 @@
 @ <clauselist> ::= <clause> | <clauselist> <clause>
 @ <clause> ::= "or" <pattern> "to" <term>
 @ <pattern> ::= <CNAME> | <CNAME> <varlist>
-@ <varlist> ::= <var> | <varlist> <var>
 
 // Inductive types
 @ <params> ::= <var_decl> | <params> <var_decl>
 @ <constructors> ::= <constructor> | <constructor> "or" <constructor>
 @ <constructor> ::= <CNAME> <var_decl_list> ":" <term>
-@ <var_decl_list> ::= <var_decl> | <var_decl_list> <var_decl>
 
 
 // ----------------------------------------------------------------------------- HoTT
@@ -64,7 +63,7 @@
 @ <elim_coprod_left> ::= "case" <term> "of" "inl" <var> "to" <term>            -- coproduct elimination left
 @ <elim_coprod_right> ::= "case" <term> "of" "inr" <var> "to" <term>           -- coproduct elimination right
 @ <elim_sigma> ::= "proj_1" <term> | "proj_2" <term>    -- Σ-elimination
-@ <path_induction> ::= "J" "(" <term> "," <term> "," <term> ")"                 -- path induction
+@ <path_induction> ::= "J" "(" <term> "," <term> "," <term> ")"                -- path induction
 @ <recursion> ::= "rec" <term> <motives> <clauses>      -- recursion
 @ <induction> ::= "ind" "(" <term> "," <clauses> ")"    -- induction
 
@@ -78,17 +77,20 @@
 // Terms
 @ <term> ::= <universe>
     | <var>
-    | <formation_rule>
-    | <introduction_rule>
-    | <elimination_rule>
-    | <computation_rule>
+//    | <formation_rule>
+//    | <introduction_rule>
+//    | <elimination_rule>
+//    | <computation_rule>
 
 
 // ----------------------------------------------------------------------------- 'Infrastructure'
 
 @ <universe> ::= "Type" | "Type_" <NUMBER>  -- Hierarchy of universes
 @ <var> ::= <VNAME>                         -- variable names
+@ <varlist> ::= <var> | <varlist> "," <var>
 
 @ <NUMBER> ::= /[0-9]+/                                 -- we allow 0109 for example
 @ <VNAME> ::= /var_[a-zA-Z0-9_]+/
 @ <CNAME> ::= /[a-zA-Z_][a-zA-Z0-9_]*/
+
+@ <EMPTY_CTX> ::= /empty_context/

@@ -1,8 +1,8 @@
-###########################################
-#                                         #
-#       Tests on universes (parsing)      #
-#                                         #
-###########################################
+############################################
+#                                          #
+#       Tests on formations (parsing)      #
+#                                          #
+############################################
 
 import sys
 import traceback
@@ -18,31 +18,27 @@ from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
 from src.Parsing.Grammar.hott_parser import Parser
 
-log_prefix: str = "[Parsing][Grammar][Infra][universe]"
+log_prefix: str = "[Parsing][Grammar][HoTT][formation]"
 
 
-class RUN_UNIVERSE:
+class RUN_FORM:
 
-    log_prefix: str = f"{log_prefix}[universe]"
+    log_prefix: str = f"{log_prefix}[simple]"
     
     @staticmethod
-    def allowed():
+    def empty():
         # preprocess
         if True:
-            prefix: str = f"{RUN_UNIVERSE.log_prefix}[allowed names]"
+            prefix: str = f"{RUN_FORM.log_prefix}"
 
             Logger.test("running...", prefix)
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("Type", "universe\n")
-            test_container.add("Type_0", "universe\t0\n")
-            test_container.add("Type_1", "universe\t1\n")
-            test_container.add("Type_10", "universe\t10\n")
-            test_container.add("Type_109", "universe\t109\n")
+            test_container.add("empty_type", "formation_empty\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "universe").pretty()
+            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_empty").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -51,26 +47,26 @@ class RUN_UNIVERSE:
         Logger.test(success, prefix)
 
     @staticmethod
-    def not_allowed():
+    def unit():
         # preprocess
         if True:
-            prefix: str = f"{RUN_UNIVERSE.log_prefix}[forbidden names]"
+            prefix: str = f"{RUN_FORM.log_prefix}"
 
             Logger.test("running...", prefix)
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("Type_", "")
+            test_container.add("unit_type", "formation_unit\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "universe").pretty()
+            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_unit").pretty()
         
         # process
-        success = UtilsTest.check(func, test_container, log_prefix, is_expected_to_fail=True)
+        success = UtilsTest.check(func, test_container, log_prefix)
         
         # postprocess
         Logger.test(success, prefix)
-        
+
 
 class RUN:
 
@@ -79,11 +75,12 @@ class RUN:
         
         Logger.test("running...", log_prefix)
 
-        RUN_UNIVERSE.allowed()
-        RUN_UNIVERSE.not_allowed()
+        RUN_FORM.empty()
+        RUN_FORM.unit()
         
         Logger.test("done", log_prefix)
 
 
 if __name__ == "__main__":
     RUN.run()
+

@@ -29,5 +29,6 @@ class RUN:
         
         Logger.test("Running system 'infrastructure' elements tests     - done", log_prefix)
 
+
 if __name__ == "__main__":
     RUN.run()
