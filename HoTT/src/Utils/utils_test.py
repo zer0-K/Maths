@@ -25,7 +25,12 @@ class CST:
 
 class TestContainer:
     
-    def __init__(self, inputs: list[any] = [], expected_outputs: list[any] = []):
+    def __init__(self, inputs: list[any] = None, expected_outputs: list[any] = None):
+
+        if inputs is None:
+            inputs = []
+        if expected_outputs is None:
+            expected_outputs = []
 
         # check integrity
         if len(inputs) != len(expected_outputs):

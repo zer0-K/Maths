@@ -4,6 +4,15 @@
 #                                               #
 #################################################
 
+#
+#
+# BNF_GRAMMAR is the meta grammar so that lark can read the HoTT grammar in the .bnf file
+# BNFTransformer is used to get the lark tree in a convenient format
+# HottParser is the main class
+# Parser is a static (~singleton) version of the HottParser so that we don't need to create HottParser() every time
+#
+#
+
 import lark
 import re
 
@@ -36,9 +45,10 @@ class BNFTransformer(lark.Transformer):
     def term(self, items):
         return {"term": items[0]}
 
+
 class HottParser:
     """
-    This classe has two purposes :
+    This class has two purposes :
     - parsing the HoTT grammar into an AST using the meta-grammar 'BNF_GRAMMAR'
     - parsing a HoTT expr into an AST using the HoTT grammar
     """
