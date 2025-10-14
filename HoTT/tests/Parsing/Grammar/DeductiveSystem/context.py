@@ -35,7 +35,9 @@ class RUN_CTX:
             success: str = "Good"
 
             test_container = TestContainer()
+            # empty context
             test_container.add("empty_context", "context\tempty_context\n")
+            # extended context
             test_container.add("empty_context, var_A oftype Type", 
                                "context\n" + \
                                "  context\tempty_context\n" + \
@@ -43,6 +45,7 @@ class RUN_CTX:
                                "    var\tvar_A\n" + \
                                "    term\n" + \
                                "      universe\n")
+            # definition context
             test_container.add("empty_context, var_A vdef Type oftype Type_1", 
                                "context\n" + \
                                "  context\tempty_context\n" + \

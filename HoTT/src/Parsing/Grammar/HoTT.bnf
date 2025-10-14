@@ -1,11 +1,11 @@
 // ----------------------------------------------------------------------------- Deductive system
 
 // Judgments
-@ <judgment> ::= <context> "deduce" <term> "oftype" <term>       -- typing
+@ <judgment> ::= <context> "ctx"                       -- valid_context
+    | <context> "deduce" <term> "oftype" <term>        -- typing
     | <context> "deduce" <term> "eq_judg" <term> "oftype" <term> -- definitional_equality
-    | <context> "deduce" <term> "reduc" <term>              -- reduction
-    | <context> "ctx"                       -- valid_context
-
+    | <context> "deduce" <term> "reduc" <term>                   -- reduction
+ 
 // Contexts
 @ <context> ::= EMPTY_CTX                   -- empty_context
    | <context> "," <var_decl>               -- extended_context
