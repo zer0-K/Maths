@@ -47,7 +47,9 @@ class UtilsTest:
     stop_test_on_fail: bool = False
 
     @staticmethod
-    def check(func_to_test: Callable, test_container: TestContainer, log_prefix: str) -> str:
+    def check(func_to_test: Callable, test_container: TestContainer, log_prefix: str, 
+              is_expected_to_fail: bool = False) -> str:
+        """some tests tests that some cases fail : in that case set is_expected_to_fail to true"""
         global_success: str = CST.success 
 
         for x, y_ in zip(test_container.inputs, test_container.expected_outputs):
@@ -58,13 +60,18 @@ class UtilsTest:
             if True:
                 try:
                     y = func_to_test(x)
-                    if y != y_:
+                    if y != y_ and not is_expected_to_fail:
                         err_msg: str = f"Failed on inputs : {x}. Got {y} instead of {y_}."
+                        success = CST.fail
+                    elif y == y_ and is_expected_to_fail:
+                        err_msg: str = f"Failed on inputs : {x}. Test was expected to fail " + \
+                            f"but results matched (got {y}, expected: {y_})."
                         success = CST.fail
                         
                 except Exception as e:
-                    err_msg: str = f"Failed on inputs : {x}.\n{traceback.format_exc()}"
-                    success = CST.fail
+                    if not is_expected_to_fail:
+                        err_msg: str = f"Failed on inputs : {x}.\n{traceback.format_exc()}"
+                        success = CST.fail
 
             # postprocess
             if True:

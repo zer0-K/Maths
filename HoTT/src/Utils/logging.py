@@ -20,27 +20,27 @@ class Logger:
     
     @staticmethod
     def info(text: str, log_prefix: str = "", log_level: int = DEFAULT_LOG_LEVEL):
-        Logger._log(f"Info  : {text}", log_level)
+        Logger._log("Info ", text, log_prefix, log_level)
              
     @staticmethod
     def warn(text: str, log_prefix: str = "", log_level: int = DEFAULT_LOG_LEVEL):
-        Logger._log(f"Warn  : {text}", log_level)
+        Logger._log("Warn ", text, log_prefix, log_level)
              
     @staticmethod
     def error(text: str, log_prefix: str = "", log_level: int = DEFAULT_LOG_LEVEL):
-        Logger._log(f"Error : {text}", log_level)
+        Logger._log("Error", text, log_prefix, log_level)
         if Logger.raise_error:
             raise Exception(f"{log_prefix} {text}")
              
     @staticmethod
     def debug(text: str, log_prefix: str = "", log_level: int = DEFAULT_LOG_LEVEL):
-        Logger._log(f"Debug : {text}", log_level)
+        Logger._log("Debug", text, log_prefix, log_level)
              
     @staticmethod
     def test(text: str, log_prefix: str = "", log_level: int = DEFAULT_LOG_LEVEL):
-        Logger._log(f"Test  : {text}", log_level)
+        Logger._log("Test ", text, log_prefix, log_level)
              
     @staticmethod
-    def _log(text: str, log_prefix: str = "", log_level: int = DEFAULT_LOG_LEVEL):
+    def _log(log_type: str, text: str, log_prefix: str = "", log_level: int = DEFAULT_LOG_LEVEL):
         if Logger.enabled and Logger.log_level >= log_level:
-            print(f"{log_prefix} {text}")
+            print(f"{log_type} : {log_prefix} {text}")
