@@ -86,7 +86,7 @@ class HottParser:
         return parser.parse(self.bnf_str_meta)
 
 
-    def parse(self, HoTT_expr_str: str):
+    def parse(self, HoTT_expr_str: str, start_point_in_grammar: str = "term"):
         """Get the HoTT derivation tree of the given expression"""
         if self.bnf_str == "":
             raise Exception(f"BNF at {self.file_path} was not retrieved...")
@@ -94,7 +94,7 @@ class HottParser:
         # to parse an actual HoTT expression like "lambda x.y"
         hott_parser = lark.Lark(
             self.bnf_str,
-            start=r'term',
+            start=start_point_in_grammar,
             parser="lalr",
             transformer=None,  # We'll add a transformer later
         )
@@ -102,17 +102,19 @@ class HottParser:
         return parsed
        
  
-def get_HoTT_grammar_tree():
-    parser = HottParser()
-    parsed_tree = parser.parse_meta()
-    return parsed_tree
+class Parser:
 
+    parser: HottParser = HottParser()
+     
+    @staticmethod
+    def get_HoTT_grammar_tree():
+        parsed_tree = Parser.parser.parse_meta()
+        return parsed_tree
 
-def get_HoTT_tree(HoTT_expr_str: str):
-
-    parser = HottParser()    
-    parsed = parser.parse(HoTT_expr_str)
-    return parsed
+    @staticmethod
+    def get_HoTT_tree(HoTT_expr_str: str, start_point_in_grammar: str = "term"):
+        parsed = Parser.parser.parse(HoTT_expr_str, start_point_in_grammar)
+        return parsed
 
 
 if __name__ == "__main__":
