@@ -87,11 +87,10 @@ class RUN_VAR_LIST:
 
             test_container = TestContainer()
             test_container.add("var_0", "varlist\n  var\tvar_0\n")
-            test_container.add("var_0, var_1", "varlist\n  varlist\n    var\tvar_0\n  var\tvar_1\n")
+            test_container.add("var_0, var_1", "varlist\n  var\tvar_0\n  var\tvar_1\n")
             test_container.add("var_0, var_1, var_2", 
-                               "varlist\n  varlist\n    varlist\n      var\tvar_0\n    var\tvar_1\n  var\tvar_2\n")
+                               "varlist\n  var\tvar_0\n  var\tvar_1\n  var\tvar_2\n")
 
-            # starting point in the grammar is the node 'var'
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "varlist").pretty()
         
         # process

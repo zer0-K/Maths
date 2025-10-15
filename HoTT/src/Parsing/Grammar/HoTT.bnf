@@ -12,22 +12,20 @@
    | <context> "," <var_def>                -- definition_context
 
 @ <var_decl> ::= <var> "oftype" <term>
-@ <var_decl_list> ::= <var_decl> | <var_decl_list> "," <var_decl>
+@ <var_decl_list> ::= <var_decl> ("," <var_decl>)*
 @ <var_def> ::= <var> "vdef" <term> "oftype" <term>
 
 // motives for recursion/induction
 @ <pattern> ::= <CNAME> | <CNAME> <varlist>
 @ <clause> ::= "begclause" <pattern> "to" <term>
-@ <clauselist> ::= <clause> | <clauselist> <clause>
-@ <clauses> ::= "[" <clauselist> "]"
+@ <clauses> ::= "[" (<clause>)+ "]"
 @ <motive> ::= <var> "oftype" <term> "to" <term>
-@ <motiveslist> ::= <motive> | <motiveslist> ";" <motive>
-@ <motives> ::= "{" <motiveslist> "}"
+@ <motives> ::= "{" <motive> (";" <motive>)* "}"
 
 // Inductive types
-@ <params> ::= <var_decl> | <params> <var_decl>
-@ <constructors> ::= <constructor> | <constructor> "or" <constructor>
+@ <params> ::= <var_decl> | <params> "," <var_decl>
 @ <constructor> ::= <CNAME> <var_decl_list> ":" <term>
+@ <constructors> ::= <constructor> ("or" <constructor>)*
 
 
 // ----------------------------------------------------------------------------- HoTT
@@ -87,7 +85,7 @@
 
 @ <universe> ::= "Type" | "Type_" <NUMBER>  -- Hierarchy of universes
 @ <var> ::= <VNAME>                         -- variable names
-@ <varlist> ::= <var> | <varlist> "," <var>
+@ <varlist> ::= <var> ("," <var>)*
 
 @ <NUMBER> ::= /[0-9]+/                                 -- we allow 0109 for example
 @ <VNAME> ::= /var_[a-zA-Z0-9_]+/

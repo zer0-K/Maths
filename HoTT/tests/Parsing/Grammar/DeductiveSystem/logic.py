@@ -14,7 +14,7 @@ if hott_dir not in sys.path:
 from src.Utils.logging import Logger
 from tests.Parsing.Grammar.DeductiveSystem.context import RUN as RUN_CONTEXT
 from tests.Parsing.Grammar.DeductiveSystem.declaration import RUN as RUN_DECL
-from tests.Parsing.Grammar.DeductiveSystem.induction import RUN as RUN_IND
+from tests.Parsing.Grammar.DeductiveSystem.motives import RUN as RUN_MOTIVES
 from tests.Parsing.Grammar.DeductiveSystem.inductive_types import RUN as RUN_IND_TYPES
 from tests.Parsing.Grammar.DeductiveSystem.judgment import RUN as RUN_JUDGMENT
 
@@ -29,7 +29,7 @@ class RUN:
 
         RUN_CONTEXT.run()
         RUN_DECL.run()
-        RUN_IND.run()
+        RUN_MOTIVES.run()
         RUN_IND_TYPES.run()
         RUN_JUDGMENT.run()
         

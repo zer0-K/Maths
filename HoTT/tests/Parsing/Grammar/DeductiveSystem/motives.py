@@ -86,34 +86,33 @@ class RUN_MOTIVES:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("[ begclause pattern_test var_0 to var_1 ]", 
-                               "clauses\n" + \
-                               "  clauselist\n" + \
-                               "    clause\n" + \
-                               "      pattern\n" + \
-                               "        pattern_test\n" + \
-                               "        varlist\n" + \
-                               "          var\tvar_0\n" + \
-                               "      term\n" + \
-                               "        var\tvar_1\n")
-            test_container.add("[ begclause pattern_test var_0 to var_1 begclause pattern_test var_0 to var_1 ]", 
-                               "clauses\n" + \
-                               "  clauselist\n" + \
-                               "    clauselist\n" + \
-                               "      clause\n" + \
-                               "        pattern\n" + \
-                               "          pattern_test\n" + \
-                               "          varlist\n" + \
-                               "            var\tvar_0\n" + \
-                               "        term\n" + \
-                               "          var\tvar_1\n" + \
-                               "    clause\n" + \
-                               "      pattern\n" + \
-                               "        pattern_test\n" + \
-                               "        varlist\n" + \
-                               "          var\tvar_0\n" + \
-                               "      term\n" + \
-                               "        var\tvar_1\n")
+            test_container.add(
+                "[ begclause pattern_test var_0 to var_1 ]", 
+                "clauses\n" + \
+                "  clause\n" + \
+                "    pattern\n" + \
+                "      pattern_test\n" + \
+                "      varlist\n" + \
+                "        var\tvar_0\n" + \
+                "    term\n" + \
+                "      var\tvar_1\n")
+            test_container.add(
+                "[ begclause pattern_test var_0 to var_1 begclause pattern_test var_0 to var_1 ]", 
+                "clauses\n" + \
+                "  clause\n" + \
+                "    pattern\n" + \
+                "      pattern_test\n" + \
+                "      varlist\n" + \
+                "        var\tvar_0\n" + \
+                "    term\n" + \
+                "      var\tvar_1\n" + \
+                "  clause\n" + \
+                "    pattern\n" + \
+                "      pattern_test\n" + \
+                "      varlist\n" + \
+                "        var\tvar_0\n" + \
+                "    term\n" + \
+                "      var\tvar_1\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "clauses").pretty()
         
@@ -156,31 +155,30 @@ class RUN_MOTIVES:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("{ var_0 oftype Type to Type }", 
-                               "motives\n" + \
-                               "  motiveslist\n" + \
-                               "    motive\n" + \
-                               "      var\tvar_0\n" + \
-                               "      term\n" + \
-                               "        universe\n" + \
-                               "      term\n" + \
-                               "        universe\n")
-            test_container.add("{ var_0 oftype Type to Type ; var_0 oftype var_1 to Type }", 
-                               "motives\n" + \
-                               "  motiveslist\n" + \
-                               "    motiveslist\n" + \
-                               "      motive\n" + \
-                               "        var\tvar_0\n" + \
-                               "        term\n" + \
-                               "          universe\n" + \
-                               "        term\n" + \
-                               "          universe\n" + \
-                               "    motive\n" + \
-                               "      var\tvar_0\n" + \
-                               "      term\n" + \
-                               "        var\tvar_1\n" + \
-                               "      term\n" + \
-                               "        universe\n")
+            test_container.add(
+                "{ var_0 oftype Type to Type }", 
+                "motives\n" + \
+                "  motive\n" + \
+                "    var\tvar_0\n" + \
+                "    term\n" + \
+                "      universe\n" + \
+                "    term\n" + \
+                "      universe\n")
+            test_container.add(
+                "{ var_0 oftype Type to Type ; var_0 oftype var_1 to Type }", 
+                "motives\n" + \
+                "  motive\n" + \
+                "    var\tvar_0\n" + \
+                "    term\n" + \
+                "      universe\n" + \
+                "    term\n" + \
+                "      universe\n" + \
+                "  motive\n" + \
+                "    var\tvar_0\n" + \
+                "    term\n" + \
+                "      var\tvar_1\n" + \
+                "    term\n" + \
+                "      universe\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "motives").pretty()
         

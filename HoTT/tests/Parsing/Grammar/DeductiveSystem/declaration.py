@@ -56,12 +56,24 @@ class RUN_DECL:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("var_A oftype Type", 
-                               "var_decl_list\n  var_decl\n    var\tvar_A\n    term\n      universe\n")
-            test_container.add("var_A oftype Type, var_B oftype Type", 
-                               "var_decl_list\n  var_decl_list\n    " + \
-                               "var_decl\n      var\tvar_A\n      term\n        universe\n  " + \
-                               "var_decl\n    var\tvar_B\n    term\n      universe\n")
+            test_container.add(
+                "var_A oftype Type", 
+                "var_decl_list\n" + \
+                "  var_decl\n" + \
+                "    var\tvar_A\n" + \
+                "    term\n" + \
+                "      universe\n")
+            test_container.add(
+                "var_A oftype Type, var_B oftype Type", 
+                "var_decl_list\n" + \
+                "  var_decl\n" + \
+                "    var\tvar_A\n" + \
+                "    term\n" + \
+                "      universe\n" + \
+                "  var_decl\n" + \
+                "    var\tvar_B\n" + \
+                "    term\n" + \
+                "      universe\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "var_decl_list").pretty()
         
