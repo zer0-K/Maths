@@ -15,14 +15,14 @@
 @ <var_decl_list> ::= <var_decl> | <var_decl_list> "," <var_decl>
 @ <var_def> ::= <var> "vdef" <term> "oftype" <term>
 
-// Recursion/induction
-@ <motives> ::= "{" <motiveslist> "}"
-@ <motiveslist> ::= <motive> | <motiveslist> ";" <motive>
-@ <motive> ::= <var> "oftype" <term> "to" <term>
-@ <clauses> ::= "[" <clauselist> "]"
-@ <clauselist> ::= <clause> | <clauselist> <clause>
-@ <clause> ::= "or" <pattern> "to" <term>
+// motives for recursion/induction
 @ <pattern> ::= <CNAME> | <CNAME> <varlist>
+@ <clause> ::= "begclause" <pattern> "to" <term>
+@ <clauselist> ::= <clause> | <clauselist> <clause>
+@ <clauses> ::= "[" <clauselist> "]"
+@ <motive> ::= <var> "oftype" <term> "to" <term>
+@ <motiveslist> ::= <motive> | <motiveslist> ";" <motive>
+@ <motives> ::= "{" <motiveslist> "}"
 
 // Inductive types
 @ <params> ::= <var_decl> | <params> <var_decl>
