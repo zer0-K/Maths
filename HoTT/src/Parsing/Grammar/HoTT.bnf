@@ -1,10 +1,10 @@
 // ----------------------------------------------------------------------------- Deductive system
 
 // Judgments
-@ <judgment> ::= <context> "ctx"                       -- valid_context
+@ <judgment> ::= <context> "ctx"                  -- valid_context
     | <context> "deduce" <term> ":" <term>        -- typing
-    | <context> "deduce" <term> "eq_judg" <term> ":" <term> -- definitional_equality
-    | <context> "deduce" <term> "reduc" <term>                   -- reduction
+    | <context> "deduce" <term> "eq_judg" <term> ":" <term>     -- definitional_equality
+    | <context> "deduce" <term> "reduc" <term>                  -- reduction
  
 // Contexts
 @ <context> ::= EMPTY_CTX                   -- empty_context
@@ -51,7 +51,7 @@
 @ <intro_unit> ::= <STAR> ":" "unit_type"                -- 1-intro
 @ <intro_lambda> ::= "lambda" <var_decl> "." <term>      -- lambda-intro
 @ <intro_pair> ::= "(" <term> "," <term> ")"             -- pair-intro
-@ <intro_coproduct> ::= "inl" <term> | "inr" <term>      -- coproduct-intro
+@ <intro_coproduct> ::= "inl" "(" <term> ")" | "inr" "(" <term> ")"     -- coproduct-intro
 @ <intro_refl> ::= "refl" "(" <term> ")"                 -- refl-intro
 @ <intro_constr> ::= <constructor>                       -- constructor-intro
 
@@ -59,16 +59,29 @@
 
 
 // Elimination rules
-@ <elim_empty> ::= "absurd" <term>                      -- 0-elimination
-@ <elim_apply> ::= <term> "(" <term> ")"                -- application
-@ <elim_coprod_left> ::= "case" <term> "of" "inl" <var> "to" <term>            -- coproduct elimination left
-@ <elim_coprod_right> ::= "case" <term> "of" "inr" <var> "to" <term>           -- coproduct elimination right
-@ <elim_sigma> ::= "proj_1" <term> | "proj_2" <term>    -- Σ-elimination
-@ <path_induction> ::= "J" "(" <term> "," <term> "," <term> ")"                -- path induction
-@ <recursion> ::= "rec" <term> <motives> <clauses>      -- recursion
-@ <induction> ::= "ind" "(" <term> "," <clauses> ")"    -- induction
+@ <elim_empty> ::= "absurd" <term>                     -- 0-elimination
+@ <elim_unit> ::= "elimT" "(" <term> "," <term> ")"    -- 1-elimination
+@ <elim_apply> ::= <term> "%(" <term> ")"               -- application
+@ <elim_coprod_left> ::= <var> "to" <term>             -- coproduct elimination left
+@ <elim_coprod_right> ::= <var> "to" <term>            -- coproduct elimination right
+@ <elim_coprod> ::= "case" <term> "of" "inl" <elim_coprod_left> "|" "inr" <elim_coprod_right>
+@ <elim_sigma1> ::= "pr1" "(" <term> ")"               -- Σ1
+@ <elim_sigma2> ::= "pr2" "(" <term> ")"               -- Σ2
+@ <elim_sigma> ::= <elim_sigma1> | <elim_sigma2>       -- Σ-elimination
+@ <path_induction> ::= "J" "(" <term> "," <term> "," <term> "," <term> "," <term> "," <term> ")"      -- path induction
+// J(A, a, C, d, b, p) where:
+//   A: type, a:A, C: Π (b:A). Π (p:Id_A(a,b)). Type, d: C(a, refl_a), b:A, p:Id_A(a,b)
 
-@ <elimination_rule> ::= <elim_empty> | <elim_apply> | <elim_coprod_left> | <elim_coprod_right> | <elim_sigma> 
+@ <recursion> ::= "rec" "(" <term> "," <term> "," <term> "," <term> ")"     -- recursion
+@ <induction> ::= "ind" "(" <term> "," <term> "," <term> "," <term> ")"     -- induction
+// rec(A, R, F, a) where:
+//   A: Type
+//   R: A → A → Type (well-founded relation)
+//   F: Π(x:A). (Π(y:A). R(y, x) → B(y)) → B(x)
+//   a: A
+// Result: B(a)
+
+@ <elimination_rule> ::= <elim_empty> | <elim_unit> | <elim_apply> | <elim_coprod> | <elim_sigma> 
     | <path_induction> | <recursion> | <induction>
 
 
@@ -80,8 +93,8 @@
     | <var>
     | <STAR>
     | <formation_rule>
-//    | <introduction_rule>
-//    | <elimination_rule>
+    | <introduction_rule>
+    | <elimination_rule>
 //    | <computation_rule>
     | <CNAME> ( "(" <term> ")" )?                       -- for example : List(var_A)
 

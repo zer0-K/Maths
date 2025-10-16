@@ -109,9 +109,9 @@ class RUN_INTRO:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("inl star", 
+            test_container.add("inl(star)", 
                                "introduction_rule\n  intro_coproduct\n    term\tstar\n")
-            test_container.add("inr star", 
+            test_container.add("inr(star)", 
                                "introduction_rule\n  intro_coproduct\n    term\tstar\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "introduction_rule").pretty()
