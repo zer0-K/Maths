@@ -18,7 +18,7 @@ from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
 from src.Parsing.Grammar.hott_parser import Parser
 
-log_prefix: str = "[Parsing][Grammar][HoTT][computation rules]"
+log_prefix: str = "[Parsing][Grammar][HoTT][computation rule]"
 
 
 class RUN_COMPUT:
@@ -29,34 +29,25 @@ class RUN_COMPUT:
     def run():
         # preprocess
         if True:
-            prefix: str = f"{RUN_CTX.log_prefix}"
+            prefix: str = f"{RUN_COMPUT.log_prefix}"
 
             Logger.test("running...", prefix)
             success: str = "Good"
 
             test_container = TestContainer()
             # empty context
-            test_container.add("empty_context", "context\tempty_context\n")
-            # extended context
-            test_container.add("empty_context, var_A : Type", 
-                               "context\n" + \
-                               "  context\tempty_context\n" + \
-                               "  var_decl\n" + \
-                               "    var\tvar_A\n" + \
-                               "    term\n" + \
-                               "      universe\n")
-            # definition context
-            test_container.add("empty_context, var_A vdef Type : Type_1", 
-                               "context\n" + \
-                               "  context\tempty_context\n" + \
-                               "  var_def\n" + \
-                               "    var\tvar_A\n" + \
-                               "    term\n" + \
-                               "      universe\n" + \
-                               "    term\n" + \
-                               "      universe\t1\n")
+            test_container.add(
+                "let name_p = name_e in (name_e, name_d)", 
+                "computation_rule\n" + \
+                "  term\tname_p\n" + \
+                "  term\tname_e\n" + \
+                "  term\n" + \
+                "    introduction_rule\n" + \
+                "      intro_pair\n" + \
+                "        term\tname_e\n" + \
+                "        term\tname_d\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "context").pretty()
+            func: Callable = lambda s: Parser.get_HoTT_tree(s, "computation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

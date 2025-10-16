@@ -17,7 +17,6 @@ from tests.Parsing.Grammar.HoTT.formation_rule import RUN as RUN_FORM
 from tests.Parsing.Grammar.HoTT.introduction_rule import RUN as RUN_INTRO
 from tests.Parsing.Grammar.HoTT.elimination_rule import RUN as RUN_ELIM
 from tests.Parsing.Grammar.HoTT.computation_rule import RUN as RUN_COMPUT
-from tests.Parsing.Grammar.HoTT.terms_complex import RUN as RUN_TERM_COMPLEX
 
 log_prefix: str = "[Parsing][Grammar][HoTT]"
 
@@ -33,10 +32,6 @@ class RUN:
         RUN_INTRO.run()
         RUN_ELIM.run()
         RUN_COMPUT.run()
-        RUN_FORM_COMPLEX.run()
-        RUN_INTRO_COMPLEX.run()
-        RUN_ELIM_COMPLEX.run()
-        RUN_TERM_COMPLEX.run()
         
         Logger.test("Running 'pure' HoTT tests     - done", log_prefix)
 

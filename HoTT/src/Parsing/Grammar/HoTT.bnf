@@ -86,7 +86,8 @@
 
 
 // Computation
-@ <computation_rule> ::= "let" <var_def> "in" <term>
+@ <computation_rule> ::= "let" <term> "=" <term> "in" <term>
+// all computation rules are 'factorized' into a single 'binding' rule for easier usage
 
 // Terms
 @ <term> ::= <universe>
@@ -95,7 +96,7 @@
     | <formation_rule>
     | <introduction_rule>
     | <elimination_rule>
-//    | <computation_rule>
+    | <computation_rule>
     | <CNAME> ( "(" <term> ")" )?                       -- for example : List(var_A)
 
 @ <subscript> ::= "[" term "]"
