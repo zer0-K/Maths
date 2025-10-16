@@ -13,13 +13,10 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from tests.Parsing.Grammar.HoTT.terms_simple import RUN as RUN_TERM
-from tests.Parsing.Grammar.HoTT.formation_rules import RUN as RUN_FORM
-from tests.Parsing.Grammar.HoTT.introduction_rules import RUN as RUN_INTRO
-from tests.Parsing.Grammar.HoTT.elimination_rules import RUN as RUN_ELIM
-from tests.Parsing.Grammar.HoTT.computation_rules import RUN as RUN_COMPUT
-from tests.Parsing.Grammar.HoTT.formation_rules_complex import RUN as RUN_FORM_COMPLEX
-from tests.Parsing.Grammar.HoTT.introduction_rules_complex import RUN as RUN_INTRO_COMPLEX
-from tests.Parsing.Grammar.HoTT.elimination_rules_complex import RUN as RUN_ELIM_COMPLEX
+from tests.Parsing.Grammar.HoTT.formation_rule import RUN as RUN_FORM
+from tests.Parsing.Grammar.HoTT.introduction_rule import RUN as RUN_INTRO
+from tests.Parsing.Grammar.HoTT.elimination_rule import RUN as RUN_ELIM
+from tests.Parsing.Grammar.HoTT.computation_rule import RUN as RUN_COMPUT
 from tests.Parsing.Grammar.HoTT.terms_complex import RUN as RUN_TERM_COMPLEX
 
 log_prefix: str = "[Parsing][Grammar][HoTT]"

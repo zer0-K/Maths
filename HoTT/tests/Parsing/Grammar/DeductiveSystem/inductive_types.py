@@ -18,7 +18,7 @@ from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
 from src.Parsing.Grammar.hott_parser import Parser
 
-log_prefix: str = "[Parsing][Grammar][HoTT][inductive_types]"
+log_prefix: str = "[Parsing][Grammar][Logic][inductive_types]"
 
 
 class RUN_IND:
@@ -35,8 +35,26 @@ class RUN_IND:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("var_A oftype Type", 
-                               "params\n  var_decl\n    var\tvar_A\n    term\n      universe\n")
+            test_container.add(
+                "(var_A : Type)", 
+                "params\n" + \
+                "  var_decl_list\n" + \
+                "    var_decl\n" + \
+                "      var\tvar_A\n" + \
+                "      term\n" + \
+                "        universe\n")
+            test_container.add(
+                "(var_A : Type, var_B : Type)", 
+                "params\n" + \
+                "  var_decl_list\n" + \
+                "    var_decl\n" + \
+                "      var\tvar_A\n" + \
+                "      term\n" + \
+                "        universe\n" + \
+                "    var_decl\n" + \
+                "      var\tvar_B\n" + \
+                "      term\n" + \
+                "        universe\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "params").pretty()
         
@@ -56,19 +74,22 @@ class RUN_IND:
             success: str = "Good"
 
             test_container = TestContainer()
+            test_container.add("name_new_el : var_A", 
+                               "constructor\n  name_new_el\n  term\n    var\tvar_A\n")
             test_container.add(
-                "C var_A oftype Type, var_B oftype Type : var_A", 
+                "name_C(var_A:Type, var_B:Type) : var_A", 
                 "constructor\n" + \
-                "  C\n" + \
-                "  var_decl_list\n" + \
-                "    var_decl\n" + \
-                "      var\tvar_A\n" + \
-                "      term\n" + \
-                "        universe\n" + \
-                "    var_decl\n" + \
-                "      var\tvar_B\n" + \
-                "      term\n" + \
-                "        universe\n" + \
+                "  name_C\n" + \
+                "  params\n" + \
+                "    var_decl_list\n" + \
+                "      var_decl\n" + \
+                "        var\tvar_A\n" + \
+                "        term\n" + \
+                "          universe\n" + \
+                "      var_decl\n" + \
+                "        var\tvar_B\n" + \
+                "        term\n" + \
+                "          universe\n" + \
                 "  term\n" + \
                 "    var\tvar_A\n")
             
@@ -91,44 +112,48 @@ class RUN_IND:
 
             test_container = TestContainer()
             test_container.add(
-                "C var_A oftype Type, var_B oftype Type : var_A", 
+                "| name_C(var_A:Type, var_B:Type) :var_A", 
                 "constructors\n" + \
                 "  constructor\n" + \
-                "    C\n" + \
-                "    var_decl_list\n" + \
-                "      var_decl\n" + \
-                "        var\tvar_A\n" + \
-                "        term\n" + \
-                "          universe\n" + \
-                "      var_decl\n" + \
-                "        var\tvar_B\n" + \
-                "        term\n" + \
-                "          universe\n" + \
+                "    name_C\n" + \
+                "    params\n" + \
+                "      var_decl_list\n" + \
+                "        var_decl\n" + \
+                "          var\tvar_A\n" + \
+                "          term\n" + \
+                "            universe\n" + \
+                "        var_decl\n" + \
+                "          var\tvar_B\n" + \
+                "          term\n" + \
+                "            universe\n" + \
                 "    term\n" + \
                 "      var\tvar_A\n")
             test_container.add(
-                "C var_A oftype Type : var_A or C var_A oftype Type, var_B oftype Type : var_A", 
+                "| name_C1(var_A:Type) :var_A " + \
+                    "| name_C2(var_A:Type, var_B:Type) :var_A", 
                 "constructors\n" + \
                 "  constructor\n" + \
-                "    C\n" + \
-                "    var_decl_list\n" + \
-                "      var_decl\n" + \
-                "        var\tvar_A\n" + \
-                "        term\n" + \
-                "          universe\n" + \
+                "    name_C1\n" + \
+                "    params\n" + \
+                "      var_decl_list\n" + \
+                "        var_decl\n" + \
+                "          var\tvar_A\n" + \
+                "          term\n" + \
+                "            universe\n" + \
                 "    term\n" + \
                 "      var\tvar_A\n" + \
                 "  constructor\n" + \
-                "    C\n" + \
-                "    var_decl_list\n" + \
-                "      var_decl\n" + \
-                "        var\tvar_A\n" + \
-                "        term\n" + \
-                "          universe\n" + \
-                "      var_decl\n" + \
-                "        var\tvar_B\n" + \
-                "        term\n" + \
-                "          universe\n" + \
+                "    name_C2\n" + \
+                "    params\n" + \
+                "      var_decl_list\n" + \
+                "        var_decl\n" + \
+                "          var\tvar_A\n" + \
+                "          term\n" + \
+                "            universe\n" + \
+                "        var_decl\n" + \
+                "          var\tvar_B\n" + \
+                "          term\n" + \
+                "            universe\n" + \
                 "    term\n" + \
                 "      var\tvar_A\n")
             

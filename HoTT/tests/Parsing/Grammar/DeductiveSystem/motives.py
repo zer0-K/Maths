@@ -18,7 +18,7 @@ from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
 from src.Parsing.Grammar.hott_parser import Parser
 
-log_prefix: str = "[Parsing][Grammar][HoTT][motives]"
+log_prefix: str = "[Parsing][Grammar][Logic][motives]"
 
 
 class RUN_MOTIVES:
@@ -35,9 +35,9 @@ class RUN_MOTIVES:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("pattern_test", "pattern\tpattern_test\n")
-            test_container.add("pattern_test var_0", 
-                               "pattern\n  pattern_test\n  varlist\n    var\tvar_0\n")
+            test_container.add("name_pattern_test", "pattern\tname_pattern_test\n")
+            test_container.add("name_pattern_test var_0", 
+                               "pattern\n  name_pattern_test\n  varlist\n    var\tvar_0\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "pattern").pretty()
         
@@ -57,12 +57,12 @@ class RUN_MOTIVES:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("begclause pattern_test to Type", 
-                               "clause\n  pattern\tpattern_test\n  term\n    universe\n")
-            test_container.add("begclause pattern_test var_0 to var_1", 
+            test_container.add("begclause name_pattern_test to Type", 
+                               "clause\n  pattern\tname_pattern_test\n  term\n    universe\n")
+            test_container.add("begclause name_pattern_test var_0 to var_1", 
                                "clause\n" + \
                                "  pattern\n" + \
-                               "    pattern_test\n" + \
+                               "    name_pattern_test\n" + \
                                "    varlist\n" + \
                                "      var\tvar_0\n" + \
                                "  term\n" + \
@@ -87,28 +87,28 @@ class RUN_MOTIVES:
 
             test_container = TestContainer()
             test_container.add(
-                "[ begclause pattern_test var_0 to var_1 ]", 
+                "[[ begclause name_pattern_test var_0 to var_1 ]]", 
                 "clauses\n" + \
                 "  clause\n" + \
                 "    pattern\n" + \
-                "      pattern_test\n" + \
+                "      name_pattern_test\n" + \
                 "      varlist\n" + \
                 "        var\tvar_0\n" + \
                 "    term\n" + \
                 "      var\tvar_1\n")
             test_container.add(
-                "[ begclause pattern_test var_0 to var_1 begclause pattern_test var_0 to var_1 ]", 
+                "[[ begclause name_pattern_test var_0 to var_1 begclause name_pattern_test var_0 to var_1 ]]", 
                 "clauses\n" + \
                 "  clause\n" + \
                 "    pattern\n" + \
-                "      pattern_test\n" + \
+                "      name_pattern_test\n" + \
                 "      varlist\n" + \
                 "        var\tvar_0\n" + \
                 "    term\n" + \
                 "      var\tvar_1\n" + \
                 "  clause\n" + \
                 "    pattern\n" + \
-                "      pattern_test\n" + \
+                "      name_pattern_test\n" + \
                 "      varlist\n" + \
                 "        var\tvar_0\n" + \
                 "    term\n" + \
@@ -132,9 +132,9 @@ class RUN_MOTIVES:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("var_0 oftype Type to Type", 
+            test_container.add("var_0 : Type to Type", 
                                "motive\n  var\tvar_0\n  term\n    universe\n  term\n    universe\n")
-            test_container.add("var_0 oftype var_1 to Type", 
+            test_container.add("var_0 : var_1 to Type", 
                                "motive\n  var\tvar_0\n  term\n    var\tvar_1\n  term\n    universe\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "motive").pretty()
@@ -156,7 +156,7 @@ class RUN_MOTIVES:
 
             test_container = TestContainer()
             test_container.add(
-                "{ var_0 oftype Type to Type }", 
+                "{ var_0 : Type to Type }", 
                 "motives\n" + \
                 "  motive\n" + \
                 "    var\tvar_0\n" + \
@@ -165,7 +165,7 @@ class RUN_MOTIVES:
                 "    term\n" + \
                 "      universe\n")
             test_container.add(
-                "{ var_0 oftype Type to Type ; var_0 oftype var_1 to Type }", 
+                "{ var_0 : Type to Type ; var_0 : var_1 to Type }", 
                 "motives\n" + \
                 "  motive\n" + \
                 "    var\tvar_0\n" + \

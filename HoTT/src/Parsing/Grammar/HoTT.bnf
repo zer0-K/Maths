@@ -2,8 +2,8 @@
 
 // Judgments
 @ <judgment> ::= <context> "ctx"                       -- valid_context
-    | <context> "deduce" <term> "oftype" <term>        -- typing
-    | <context> "deduce" <term> "eq_judg" <term> "oftype" <term> -- definitional_equality
+    | <context> "deduce" <term> ":" <term>        -- typing
+    | <context> "deduce" <term> "eq_judg" <term> ":" <term> -- definitional_equality
     | <context> "deduce" <term> "reduc" <term>                   -- reduction
  
 // Contexts
@@ -11,41 +11,44 @@
    | <context> "," <var_decl>               -- extended_context
    | <context> "," <var_def>                -- definition_context
 
-@ <var_decl> ::= <var> "oftype" <term>
+@ <var_decl> ::= <var> ":" <term>
 @ <var_decl_list> ::= <var_decl> ("," <var_decl>)*
-@ <var_def> ::= <var> "vdef" <term> "oftype" <term>
+@ <var_def> ::= <var> "vdef" <term> ":" <term>
 
 // motives for recursion/induction
 @ <pattern> ::= <CNAME> | <CNAME> <varlist>
 @ <clause> ::= "begclause" <pattern> "to" <term>
-@ <clauses> ::= "[" (<clause>)+ "]"
-@ <motive> ::= <var> "oftype" <term> "to" <term>
+@ <clauses> ::= "[[" (<clause>)+ "]]"
+@ <motive> ::= <var> ":" <term> "to" <term>
 @ <motives> ::= "{" <motive> (";" <motive>)* "}"
 
 // Inductive types
-@ <params> ::= <var_decl> | <params> "," <var_decl>
-@ <constructor> ::= <CNAME> <var_decl_list> ":" <term>
-@ <constructors> ::= <constructor> ("or" <constructor>)*
+@ <params> ::= "(" <var_decl_list> ")"
+@ <constructor> ::= <CNAME> (<params>)? ":" <term>
+@ <constructors> ::= ("|" <constructor>)+
 
 
 // ----------------------------------------------------------------------------- HoTT
 
+// the following rules are not axioms, it's only the needed for the syntax for the axioms
+// for example, to introduce the axioms for induction, we need to allow the syntax "ind(...)"
 
 // Formation rules
 @ <formation_empty> ::= "empty_type"                        -- 0-formation
 @ <formation_unit> ::= "unit_type"                          -- 1-formation
+@ <formation_arrow> ::= <term> "mapsto" <term>              -- arrow-formation
 @ <formation_pi> ::= "pi" <var_decl> "." <term>             -- Π-formation
 @ <formation_sigma> ::= "sigma" <var_decl> "." <term>       -- Σ-formation
 @ <formation_coproduct> ::= <term> "+" <term>               -- coproduct-formation
-@ <formation_id> ::= "Id" "(" <term> "," <term> "," <term>")"                   -- id-formation
-@ <formation_induction> ::= "Ind" <CNAME> <params> "where" <constructors>       -- inductive_formation
+@ <formation_id> ::= "Id" <subscript>? "(" <term> "," <term> "," <term>")"                              -- id-formation
+@ <formation_induction> ::= "Ind" <CNAME> <params> ":" <term> "where" <constructors>       -- inductive_formation
 
-@ <formation_rule> ::= <formation_empty> | <formation_unit> | <formation_pi> | <formation_sigma> | <formation_coproduct> 
+@ <formation_rule> ::= <formation_empty> | <formation_unit> | <formation_arrow> | <formation_pi> 
+    | <formation_sigma> | <formation_coproduct> 
     | <formation_id> | <formation_induction>
 
-
 // Introduction rules
-@ <intro_unit> ::= "star" ":" "unit_type"                -- 1-intro
+@ <intro_unit> ::= <STAR> ":" "unit_type"                -- 1-intro
 @ <intro_lambda> ::= "lambda" <var_decl> "." <term>      -- lambda-intro
 @ <intro_pair> ::= "(" <term> "," <term> ")"             -- pair-intro
 @ <intro_coproduct> ::= "inl" <term> | "inr" <term>      -- coproduct-intro
@@ -75,10 +78,14 @@
 // Terms
 @ <term> ::= <universe>
     | <var>
-//    | <formation_rule>
+    | <STAR>
+    | <formation_rule>
 //    | <introduction_rule>
 //    | <elimination_rule>
 //    | <computation_rule>
+    | <CNAME> ( "(" <term> ")" )?                       -- for example : List(var_A)
+
+@ <subscript> ::= "[" term "]"
 
 
 // ----------------------------------------------------------------------------- 'Infrastructure'
@@ -87,8 +94,9 @@
 @ <var> ::= <VNAME>                         -- variable names
 @ <varlist> ::= <var> ("," <var>)*
 
+@ <STAR> ::= "star"
 @ <NUMBER> ::= /[0-9]+/                                 -- we allow 0109 for example
 @ <VNAME> ::= /var_[a-zA-Z0-9_]+/
-@ <CNAME> ::= /[a-zA-Z_][a-zA-Z0-9_]*/
+@ <CNAME> ::= /name_[a-zA-Z_][a-zA-Z0-9_]*/
 
 @ <EMPTY_CTX> ::= /empty_context/

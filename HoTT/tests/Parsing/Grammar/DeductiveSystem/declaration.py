@@ -18,7 +18,7 @@ from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
 from src.Parsing.Grammar.hott_parser import Parser
 
-log_prefix: str = "[Parsing][Grammar][HoTT][declaration]"
+log_prefix: str = "[Parsing][Grammar][Logic][declaration]"
 
 
 class RUN_DECL:
@@ -35,7 +35,7 @@ class RUN_DECL:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("var_A oftype Type", 
+            test_container.add("var_A : Type", 
                                "var_decl\n  var\tvar_A\n  term\n    universe\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "var_decl").pretty()
@@ -57,14 +57,14 @@ class RUN_DECL:
 
             test_container = TestContainer()
             test_container.add(
-                "var_A oftype Type", 
+                "var_A : Type", 
                 "var_decl_list\n" + \
                 "  var_decl\n" + \
                 "    var\tvar_A\n" + \
                 "    term\n" + \
                 "      universe\n")
             test_container.add(
-                "var_A oftype Type, var_B oftype Type", 
+                "var_A : Type, var_B : Type", 
                 "var_decl_list\n" + \
                 "  var_decl\n" + \
                 "    var\tvar_A\n" + \
@@ -98,7 +98,7 @@ class RUN_DEF:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("var_A vdef Type oftype Type_1", 
+            test_container.add("var_A vdef Type : Type_1", 
                                "var_def\n  var\tvar_A\n  term\n    universe\n  term\n    universe\t1\n")
             
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "var_def").pretty()

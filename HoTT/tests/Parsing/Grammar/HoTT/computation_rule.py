@@ -1,8 +1,8 @@
-##########################################
-#                                        #
-#       Tests on contexts (parsing)      #
-#                                        #
-##########################################
+###################################################
+#                                                 #
+#       Tests on computation rules (parsing)      #
+#                                                 #
+###################################################
 
 import sys
 import traceback
@@ -18,10 +18,10 @@ from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
 from src.Parsing.Grammar.hott_parser import Parser
 
-log_prefix: str = "[Parsing][Grammar][Logic][context]"
+log_prefix: str = "[Parsing][Grammar][HoTT][computation rules]"
 
 
-class RUN_CTX:
+class RUN_COMPUT:
 
     log_prefix: str = f"{log_prefix}"
     
@@ -72,7 +72,7 @@ class RUN:
         
         Logger.test("running...", log_prefix)
 
-        RUN_CTX.run()
+        RUN_COMPUT.run()
         
         Logger.test("done", log_prefix)
 

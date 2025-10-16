@@ -25,7 +25,7 @@ def example_2():
 
 def example_3():
     # parse a simple HoTT expression
-    parsed = Parser.get_HoTT_tree("lambda var_x oftype Type . var_y")
+    parsed = Parser.get_HoTT_tree("lambda var_x : Type . var_y")
     print(parsed.pretty())
 
 

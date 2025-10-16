@@ -18,7 +18,7 @@ from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
 from src.Parsing.Grammar.hott_parser import Parser
 
-log_prefix: str = "[Parsing][Grammar][HoTT][judgment]"
+log_prefix: str = "[Parsing][Grammar][Logic][judgment]"
 
 
 class RUN_JUDGMENT:
@@ -46,7 +46,7 @@ class RUN_JUDGMENT:
                                "  term\n" + \
                                "    universe\n")
             # typing
-            test_container.add("empty_context deduce Type oftype Type_1", 
+            test_container.add("empty_context deduce Type : Type_1", 
                                "judgment\n" + \
                                 "  context\tempty_context\n" + \
                                 "  term\n" + \
@@ -54,7 +54,7 @@ class RUN_JUDGMENT:
                                 "  term\n" + \
                                 "    universe\t1\n")
             # definitional equality 
-            test_container.add("empty_context deduce Type eq_judg Type oftype Type_1", 
+            test_container.add("empty_context deduce Type eq_judg Type : Type_1", 
                                "judgment\n" + \
                                "  context\tempty_context\n" + \
                                "  term\n" + \

@@ -35,10 +35,10 @@ class RUN_INTRO:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("star:empty_type", "elim_empty\n")
+            test_container.add("star:unit_type", "elim_empty\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elim_empty").pretty()
+            func: Callable = lambda s: Parser.get_HoTT_tree(s, "intro_unit").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
