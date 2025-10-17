@@ -38,7 +38,7 @@ class RUN_JUDGMENT:
             # valid context
             test_container.add("empty_context ctx", "judgment\n  context\tempty_context\n")
             # reduction
-            test_container.add("empty_context deduce Type_1 reduc Type", 
+            test_container.add("empty_context ⊢ Type_1 reduc Type", 
                                "judgment\n" + \
                                "  context\tempty_context\n" + \
                                "  term\n" + \
@@ -46,7 +46,7 @@ class RUN_JUDGMENT:
                                "  term\n" + \
                                "    universe\n")
             # typing
-            test_container.add("empty_context deduce Type : Type_1", 
+            test_container.add("empty_context ⊢ Type : Type_1", 
                                "judgment\n" + \
                                 "  context\tempty_context\n" + \
                                 "  term\n" + \
@@ -54,7 +54,7 @@ class RUN_JUDGMENT:
                                 "  term\n" + \
                                 "    universe\t1\n")
             # definitional equality 
-            test_container.add("empty_context deduce Type eq_judg Type : Type_1", 
+            test_container.add("empty_context ⊢ Type eq_judg Type : Type_1", 
                                "judgment\n" + \
                                "  context\tempty_context\n" + \
                                "  term\n" + \

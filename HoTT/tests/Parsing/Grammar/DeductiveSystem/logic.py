@@ -17,6 +17,7 @@ from tests.Parsing.Grammar.DeductiveSystem.declaration import RUN as RUN_DECL
 from tests.Parsing.Grammar.DeductiveSystem.motives import RUN as RUN_MOTIVES
 from tests.Parsing.Grammar.DeductiveSystem.inductive_types import RUN as RUN_IND_TYPES
 from tests.Parsing.Grammar.DeductiveSystem.judgment import RUN as RUN_JUDGMENT
+from tests.Parsing.Grammar.DeductiveSystem.inference import RUN as RUN_INFERENCE
 
 log_prefix: str = "[Parsing][Grammar][Logic]"
 
@@ -32,6 +33,7 @@ class RUN:
         RUN_MOTIVES.run()
         RUN_IND_TYPES.run()
         RUN_JUDGMENT.run()
+        RUN_INFERENCE.run()
         
         Logger.test("Running HoTT logic system tests     - done", log_prefix)
 

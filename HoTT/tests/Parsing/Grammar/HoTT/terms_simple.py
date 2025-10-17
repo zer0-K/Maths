@@ -39,7 +39,6 @@ class RUN_TERM:
             test_container.add("var_test_1", "term\n  var\tvar_test_1\n")
             test_container.add("star", "term\tstar\n")
             
-            # starting point in the grammar is the node 'universe'
             func: Callable = lambda s: Parser.get_HoTT_tree(s, "term").pretty()
         
         # process

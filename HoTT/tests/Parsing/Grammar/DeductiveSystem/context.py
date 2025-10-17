@@ -37,6 +37,8 @@ class RUN_CTX:
             test_container = TestContainer()
             # empty context
             test_container.add("empty_context", "context\tempty_context\n")
+            # custom context
+            test_container.add("context_gamma", "context\tcontext_gamma\n")
             # extended context
             test_container.add("empty_context, var_A : Type", 
                                "context\n" + \
