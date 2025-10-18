@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][Infra][universe]"
 
@@ -43,7 +43,7 @@ class RUN_UNIVERSE:
             test_container.add("Type_109", "universe\t109\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "universe").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "universe").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -64,7 +64,7 @@ class RUN_UNIVERSE:
             test_container.add("Type_", "")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "universe").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "universe").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix, is_expected_to_fail=True)

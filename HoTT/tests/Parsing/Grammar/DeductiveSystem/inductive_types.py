@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][Logic][inductive_types]"
 
@@ -56,7 +56,7 @@ class RUN_IND:
                 "      term\n" + \
                 "        universe\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "params").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "params").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -93,7 +93,7 @@ class RUN_IND:
                 "  term\n" + \
                 "    var\tvar_A\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "constructor").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "constructor").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -157,7 +157,7 @@ class RUN_IND:
                 "    term\n" + \
                 "      var\tvar_A\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "constructors").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "constructors").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

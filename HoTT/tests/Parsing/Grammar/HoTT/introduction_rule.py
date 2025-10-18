@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][HoTT][introduction]"
 
@@ -37,7 +37,7 @@ class RUN_INTRO:
             test_container = TestContainer()
             test_container.add("star:unit_type", "introduction_rule\n  intro_unit\tstar\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "introduction_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -66,7 +66,7 @@ class RUN_INTRO:
                 "          formation_unit\n" + \
                 "    term\tstar\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "introduction_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -91,7 +91,7 @@ class RUN_INTRO:
                 "    term\tstar\n" + \
                 "    term\tstar\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "introduction_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -114,7 +114,7 @@ class RUN_INTRO:
             test_container.add("inr(star)", 
                                "introduction_rule\n  intro_coproduct\n    term\tstar\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "introduction_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -135,7 +135,7 @@ class RUN_INTRO:
             test_container.add("refl(star)", 
                                "introduction_rule\n  intro_refl\n    term\tstar\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "introduction_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -176,7 +176,7 @@ class RUN_INTRO:
                 "        term\n" + \
                 "          var\tvar_A\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "introduction_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

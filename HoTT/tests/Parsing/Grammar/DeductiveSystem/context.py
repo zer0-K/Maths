@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][Logic][context]"
 
@@ -58,7 +58,7 @@ class RUN_CTX:
                                "    term\n" + \
                                "      universe\t1\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "context").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "context").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

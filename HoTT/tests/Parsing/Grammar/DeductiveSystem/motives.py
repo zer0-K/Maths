@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][Logic][motives]"
 
@@ -39,7 +39,7 @@ class RUN_MOTIVES:
             test_container.add("name_pattern_test var_0", 
                                "pattern\n  name_pattern_test\n  varlist\n    var\tvar_0\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "pattern").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "pattern").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -68,7 +68,7 @@ class RUN_MOTIVES:
                                "  term\n" + \
                                "    var\tvar_1\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "clause").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "clause").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -114,7 +114,7 @@ class RUN_MOTIVES:
                 "    term\n" + \
                 "      var\tvar_1\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "clauses").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "clauses").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -137,7 +137,7 @@ class RUN_MOTIVES:
             test_container.add("var_0 : var_1 to Type", 
                                "motive\n  var\tvar_0\n  term\n    var\tvar_1\n  term\n    universe\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "motive").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "motive").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -180,7 +180,7 @@ class RUN_MOTIVES:
                 "    term\n" + \
                 "      universe\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "motives").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "motives").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

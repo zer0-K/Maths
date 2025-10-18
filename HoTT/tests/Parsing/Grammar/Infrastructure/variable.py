@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][Infra][variable]"
 
@@ -41,7 +41,7 @@ class RUN_VAR:
             test_container.add("var_test1_0", "var\tvar_test1_0\n")
 
             # starting point in the grammar is the node 'var'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "var").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "var").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -63,7 +63,7 @@ class RUN_VAR:
             test_container.add("var_", "")
             
             # starting point in the grammar is the node 'var'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "var").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "var").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix, is_expected_to_fail=True)
@@ -91,7 +91,7 @@ class RUN_VAR_LIST:
             test_container.add("var_0, var_1, var_2", 
                                "varlist\n  var\tvar_0\n  var\tvar_1\n  var\tvar_2\n")
 
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "varlist").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "varlist").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

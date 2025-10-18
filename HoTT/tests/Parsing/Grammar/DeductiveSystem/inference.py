@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][Logic][inference]"
 
@@ -75,7 +75,7 @@ class RUN_INFERENCE:
                 "              var_x\n" + \
                 "              context\tcontext_gamma\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "inference_system").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "inference_system").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

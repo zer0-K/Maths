@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][HoTT][formation]"
 
@@ -38,7 +38,7 @@ class RUN_FORM:
             test_container.add("empty_type", "formation_rule\n  formation_empty\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -59,7 +59,7 @@ class RUN_FORM:
             test_container.add("unit_type", "formation_rule\n  formation_unit\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -99,7 +99,7 @@ class RUN_FORM:
                 "    term\tstar\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -131,7 +131,7 @@ class RUN_FORM:
                 "        formation_unit\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -161,7 +161,7 @@ class RUN_FORM:
                 "        formation_unit\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -189,7 +189,7 @@ class RUN_FORM:
                 "    term\tstar\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -249,7 +249,7 @@ class RUN_FORM:
                 "            var\tvar_A\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "formation_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

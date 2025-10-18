@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][HoTT][elimination]"
 
@@ -44,7 +44,7 @@ class RUN_ELIM:
                 "        formation_unit\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -70,7 +70,7 @@ class RUN_ELIM:
                 "    term\tname_c\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -96,7 +96,7 @@ class RUN_ELIM:
                 "    term\tstar\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -136,7 +136,7 @@ class RUN_ELIM:
                 "              var\tvar_y\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -176,7 +176,7 @@ class RUN_ELIM:
                 "            term\tstar\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -207,7 +207,7 @@ class RUN_ELIM:
                 "    term\tname_p\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -235,7 +235,7 @@ class RUN_ELIM:
                 "    term\tstar\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -263,7 +263,7 @@ class RUN_ELIM:
                 "    term\tstar\n")
             
             # starting point in the grammar is the node 'universe'
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "elimination_rule").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

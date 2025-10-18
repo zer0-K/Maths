@@ -16,7 +16,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Utils.utils_test import TestContainer, UtilsTest
-from src.Parsing.Grammar.hott_parser import Parser
+from src.Parsing.Grammar.hott_parser import HottParser
 
 log_prefix: str = "[Parsing][Grammar][Logic][declaration]"
 
@@ -38,7 +38,7 @@ class RUN_DECL:
             test_container.add("var_A : Type", 
                                "var_decl\n  var\tvar_A\n  term\n    universe\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "var_decl").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "var_decl").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -75,7 +75,7 @@ class RUN_DECL:
                 "    term\n" + \
                 "      universe\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "var_decl_list").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "var_decl_list").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)
@@ -101,7 +101,7 @@ class RUN_DEF:
             test_container.add("var_A vdef Type : Type_1", 
                                "var_def\n  var\tvar_A\n  term\n    universe\n  term\n    universe\t1\n")
             
-            func: Callable = lambda s: Parser.get_HoTT_tree(s, "var_def").pretty()
+            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "var_def").pretty()
         
         # process
         success = UtilsTest.check(func, test_container, log_prefix)

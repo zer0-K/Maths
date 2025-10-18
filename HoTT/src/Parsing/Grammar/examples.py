@@ -13,19 +13,19 @@ from hott_parser import Parser
 
 def example_1():
     # HoTT grammar parsed into an AST
-    parsed_tree = Parser.get_HoTT_grammar_tree()
+    parsed_tree = HottParser.get_HoTT_grammar_tree()
     print("Parse Tree (JSON-like):")
     print(parsed_tree)
 
 
 def example_2():
     # parse a simple HoTT expression
-    parsed = Parser.get_HoTT_tree("Type")
+    parsed = HottParser.get_HoTT_tree("Type")
     print(parsed.pretty())
 
 def example_3():
     # parse a simple HoTT expression
-    parsed = Parser.get_HoTT_tree("lambda var_x : Type . var_y")
+    parsed = HottParser.get_HoTT_tree("lambda var_x : Type . var_y")
     print(parsed.pretty())
 
 
