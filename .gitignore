@@ -1,6 +1,8 @@
 .vscode
 **/__pycache__
-**/build/CMakeFiles
-**/build/cmake_install.cmake
-**/build/CMakeCache.txt
-**/build/Makefile
+**/*.aux
+**/*.log
+**/*.fdb_latexmk
+**/*.fls
+**/*.toc
+**/*.gz
