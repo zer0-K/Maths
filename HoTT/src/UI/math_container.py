@@ -23,14 +23,15 @@ log_prefix: str = "[UI][Math container]"
 
 class MathContainer:
     
-    def __init__(self, name: str, tree: Tree):
+    def __init__(self, name: str = "empty container", tree: Tree = None):
 
         self.name = name
         self.definitions: Dict[str, str] = {}
         self.axioms: Dict[str, str] = {}
         self.theorems: Dict[str, str] = {}
         
-        self.transform_ast(tree)
+        if tree is not None:
+            self.transform_ast(tree)
     
     def transform_ast(self, tree: Tree):
         prefix = f"{log_prefix}[transform_ast]({self.name})"

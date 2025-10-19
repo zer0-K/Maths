@@ -41,11 +41,11 @@ class LatexToUI:
         
         # check integrity
         if True:
-            if not os.path.exist(file):
+            if not os.path.isfile(file):
                 Logger.error(f"File {file} does not exist", log_prefix, 3)
                 return MathContainer()
 
-            if file[-4:]:
+            if file[-4:] != ".tex":
                 Logger.error(f"File {file} is not a latex file", log_prefix, 3)
                 return MathContainer()
         
