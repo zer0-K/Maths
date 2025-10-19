@@ -88,7 +88,7 @@ class Parser:
         return parser.parse(self.bnf_str_meta)
 
 
-    def parse(self, expr_str: str, start_point_in_grammar: str = "term"):
+    def parse(self, expr_str: str, start_point_in_grammar: str = "term", grammar_transformer: lark.Transformer = None):
         """Get the derivation tree of the given expression"""
         if self.bnf_str == "":
             raise Exception(f"BNF at {self.file_path} was not retrieved...")
@@ -98,7 +98,7 @@ class Parser:
             self.bnf_str,
             start=start_point_in_grammar,
             parser="lalr",
-            transformer=None,  # We'll add a transformer later
+            transformer=grammar_transformer
         )
         parsed = parser.parse(expr_str)
         return parsed

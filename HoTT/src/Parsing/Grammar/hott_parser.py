@@ -25,13 +25,13 @@ class HottParser:
         return parsed_tree
 
     @staticmethod
-    def get_HoTT_tree(HoTT_expr_str: str, start_point_in_grammar: str = "term"):
+    def get_HoTT_tree(HoTT_expr_str: str, start_point_in_grammar: str = "inference_system"):
         parsed = HottParser.parser.parse(HoTT_expr_str, start_point_in_grammar)
         return parsed
 
 
 if __name__ == "__main__":
     # HoTT grammar parsed into an AST
-    parsed_tree = get_HoTT_grammar_tree()
+    parsed_tree = HottParser.get_HoTT_grammar_tree()
     print("Parse Tree (JSON-like):")
     print(parsed_tree)

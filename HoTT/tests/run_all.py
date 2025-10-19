@@ -13,6 +13,7 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from tests.Parsing.parsing import RUN as RUN_PARSING
+from tests.UI.ui import RUN as RUN_UI
 
 
 class RUN:
@@ -22,6 +23,7 @@ class RUN:
         Logger.test("Running all tests")
 
         RUN_PARSING.run()
+        RUN_UI.run()
         
         Logger.test("Running all tests     - done")
 

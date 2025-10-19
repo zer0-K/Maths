@@ -1,0 +1,28 @@
+// ----------------------------------------------------------------------------- Base
+
+@ <start> ::= <content>* "\\end{document}" /[\n]+/?
+@ <content> ::= <rule> | <other_content>
+
+
+// definition
+@ <notation> ::= "\\notation{" <text> "}" "\\probe"
+@ <actual_definition> ::= "\\actualDef{" <text> "}" "\\probe"
+@ <def_id> ::= <text>
+@ <definition> ::= "\\begin{definition}{" <def_id> "}" <other_content>* <notation> <other_content>? <actual_definition> <other_content>? "\\end{definition}"
+    | "\\begin{definition}{" <def_id> "}" <other_content>* <actual_definition> <other_content>? <notation> <other_content>? "\\end{definition}"
+
+@ <rule> ::= <definition>
+
+// ----------------------------------------------------------------------------- latex stuff (mainly to tell the parser to ignore those)
+
+@ <arguments> ::= (<optional_args> | <balanced_braces>)+
+@ <other_content> ::= <text> | <latex_command> | <balanced_braces> | <comment>
+@ <balanced_braces> ::= "{" <balanced_content> "}"
+@ <balanced_content> ::= ( <text> | <latex_command> | <balanced_braces> )*
+@ <latex_command> ::= "\\" <command_name> (<balanced_braces> | <optional_args>)*
+@ <command_name>  ::= /[a-zA-Z]+/
+@ <optional_args> ::= "[" <text> "]"
+@ <other_latex>   ::= <text> | <latex_command> | <balanced_braces> | <comment>
+@ <text>          ::= /[^{}\[\]\\%]+/
+@ <any_text>      ::= /.+/
+@ <comment>       ::= "%" /[^\n]+/ "\n"

@@ -74,6 +74,7 @@ class UtilsTest:
                         success = CST.fail
                         
                 except Exception as e:
+                    y = None
                     if not is_expected_to_fail:
                         err_msg: str = f"Failed on inputs : {x}.\n{traceback.format_exc()}"
                         success = CST.fail

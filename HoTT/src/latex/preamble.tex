@@ -1,0 +1,58 @@
+% ===== Packages =====
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{tikz-cd}  % For commutative diagrams
+\usepackage{stmaryrd} % For \llbracket, \rrbracket
+
+% --- general features ---
+\setlength{\parindent}{1em} % Standard indent (~2 chars)
+\setlength{\parskip}{0pt}   % No extra spacing
+
+% ===== Custom Commands =====
+% --- General Math ---
+\newcommand{\N}{\mathbb{N}}        % Natural numbers
+\newcommand{\cat}[1]{\mathbf{#1}}  % Categories (bold)
+
+% --- Category Theory ---
+\newcommand{\op}[1]{#1^{\mathrm{op}}}          % Opposite category
+\newcommand{\functor}[1]{\mathscr{#1}}         % Functor (script)
+\newcommand{\Hom}[3]{\mathrm{Hom}_{#1}(#2,#3)} % Hom-set
+
+% --- Type Theory ---
+\newcommand{\type}{\vdash}                     % Judgement line
+\newcommand{\ctx}{\Gamma}                      % Context
+\newcommand{\subst}[2]{[#1/#2]}                % Substitution
+
+% --- HoTT/Homotopy Theory ---
+\newcommand{\isContr}{\mathsf{isContr}}        % Is contractible
+\newcommand{\eqv}[2]{#1 \simeq #2}             % Equivalence
+
+% --- Code/Programming ---
+\newcommand{\code}[1]{\texttt{#1}}             % Monospace font
+
+% --- For latex parsing ---
+\newcommand{\probe}{}
+% definition
+\newcommand{\notation}[1]{#1}
+\newcommand{\actualDef}[1]{#1}
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+% axiom
+\newenvironment{axiom}[2][Axiom]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+%
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
