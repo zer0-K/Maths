@@ -66,6 +66,8 @@ class MathContainer:
 
                 if rule_name == "definition":
                     self.add_definition(rule)
+                elif rule_name == "axiom":
+                    self.add_axiom(rule)
         
         # postprocess
         if True:
@@ -105,3 +107,38 @@ class MathContainer:
          # postprocess
         if True:
             Logger.info(f"Definition of '{notation}' ({def_id}) added", prefix, 10)
+    
+    def add_axiom(self, axiom: Tree):
+        prefix = f"{log_prefix}[add_axiom]({self.name})"
+ 
+        # check integrity
+        if True:
+            # check if the axiom contains an id, a name and the actual axiom
+            children_names = [c.data.value for c in axiom.children]
+            if len(axiom.children) != 3 \
+                    or "axiom_id" not in children_names \
+                    or "axiom_name" not in children_names \
+                    or "actual_axiom" not in children_names:
+                err_msg = f"Cannot retrieve axiom from tree: an axiom should have " + \
+                    f"an axiom_id, an axiom_name and an actual_axiom. Got : {children_names}"
+                Logger.error(err_msg, prefix)
+                return                
+
+        # preprocess
+        if True:
+            axiom_id = [c.children[0] for c in axiom.children if c.data.value == "axiom_id"][0]
+            axiom_name = [c.children[0] for c in axiom.children if c.data.value == "axiom_name"][0]
+            actual_axiom = [c.children[0] for c in axiom.children if c.data.value == "actual_axiom"][0]
+
+            # 'unwrap'
+            axiom_id = axiom_id.children[0].value
+            axiom_name = axiom_name.children[0].value
+            actual_axiom = actual_axiom.children[0].value
+   
+         # process
+        if True:
+            self.axioms[f"{axiom_id} ::: {axiom_name}"] = actual_axiom
+    
+         # postprocess
+        if True:
+            Logger.info(f"'{axiom_name}' ({axiom_id}) added", prefix, 10)

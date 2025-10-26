@@ -24,10 +24,12 @@ class LatexToUI:
 
     @staticmethod
     def get_container_from_str(text: str, container_name: str) -> MathContainer:
+        log_prefix: str = f"{prefix}[get_container_from_str]"
+
         try:
             tree = LatexParser.get_latex_tree(text)
         except Exception as e:
-            err_msg: str = f"Failed to parse lines of {file} as Lark tree for LaTeX.\n{traceback.format_exc()}"
+            err_msg: str = f"Failed to parse lines of {text} as Lark tree for LaTeX.\n{traceback.format_exc()}"
             Logger.error(err_msg, log_prefix, 1)
             return MathContainer()
         

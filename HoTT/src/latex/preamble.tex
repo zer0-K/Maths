@@ -19,7 +19,7 @@
 \newcommand{\Hom}[3]{\mathrm{Hom}_{#1}(#2,#3)} % Hom-set
 
 % --- Type Theory ---
-\newcommand{\type}{\vdash}                     % Judgement line
+\newcommand{\deduce}{\vdash}                     % Judgement line
 \newcommand{\ctx}{\Gamma}                      % Context
 \newcommand{\subst}[2]{[#1/#2]}                % Substitution
 
@@ -38,6 +38,8 @@
 \newenvironment{definition}[2][Definition]{\begin{trivlist}
 \item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
 % axiom
+\newcommand{\axiomName}[1]{#1}
+\newcommand{\actualAxiom}[1]{#1}
 \newenvironment{axiom}[2][Axiom]{\begin{trivlist}
 \item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
 %

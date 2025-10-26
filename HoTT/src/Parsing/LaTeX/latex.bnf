@@ -3,7 +3,6 @@
 @ <start> ::= <content>* "\\end{document}" /[\n]+/?
 @ <content> ::= <rule> | <other_content>
 
-
 // definition
 @ <notation> ::= "\\notation{" <text> "}" "\\probe"
 @ <actual_definition> ::= "\\actualDef{" <text> "}" "\\probe"
@@ -11,7 +10,14 @@
 @ <definition> ::= "\\begin{definition}{" <def_id> "}" <other_content>* <notation> <other_content>? <actual_definition> <other_content>? "\\end{definition}"
     | "\\begin{definition}{" <def_id> "}" <other_content>* <actual_definition> <other_content>? <notation> <other_content>? "\\end{definition}"
 
-@ <rule> ::= <definition>
+// axiom
+@ <axiom_name> ::= "\\axiomName{" <text> "}" "\\probe"
+@ <actual_axiom> ::= "\\actualAxiom{" <any_text> "}" "\\probe"
+@ <axiom_id> ::= <text>
+@ <axiom> ::= "\\begin{axiom}{" <axiom_id> "}" <other_content>* <axiom_name> <other_content>? <actual_axiom> <other_content>? "\\end{axiom}"
+    | "\\begin{axiom}{" <axiom_id> "}" <other_content>* <actual_axiom> <other_content>? <axiom_name> <other_content>? "\\end{axiom}"
+
+@ <rule> ::= <definition> | <axiom>
 
 // ----------------------------------------------------------------------------- latex stuff (mainly to tell the parser to ignore those)
 
@@ -24,5 +30,5 @@
 @ <optional_args> ::= "[" <text> "]"
 @ <other_latex>   ::= <text> | <latex_command> | <balanced_braces> | <comment>
 @ <text>          ::= /[^{}\[\]\\%]+/
-@ <any_text>      ::= /.+/
+@ <any_text>      ::= /(?:[^{}]|\{(?!\s*\\probe\})|\}(?!\s*\\probe))+/      -- any text that does not end with "}\probe" (taking whitespaces into account)
 @ <comment>       ::= "%" /[^\n]+/ "\n"

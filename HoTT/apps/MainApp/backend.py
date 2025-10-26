@@ -32,6 +32,7 @@ class BackEnd:
         if True:
             log_prefix: str = f"{BackEnd.log_prefix}[init]"
 
+            Logger.log_level = 1000
             Logger.info(f"Initializing environment", log_prefix, 10)
         
         # process
@@ -52,7 +53,8 @@ class BackEnd:
                 "selected_chapter_tex_file": "",
                 "math_container": MathContainer(),
                 # choices and display
-                "definition_choices": [],
+                "definition_choices": {},
+                "axiom_choices": {},
                 "display_text": ""
             }
             
@@ -104,7 +106,7 @@ class BackEnd:
             def definition_choices(session) -> list[str]:
                 # preprocess
                 if True:
-                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_parse_latex]"
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][definition_choices]"
                     container: MathContainer = st.session_state["data"]["math_container"]
                     definitions: Dict[str, str] = container.definitions
                     choices = []
@@ -112,6 +114,23 @@ class BackEnd:
                 # process
                 if len(definitions) > 0:
                     choices = list(definitions.keys())
+
+                # postprocess
+                if True:
+                    return choices
+
+            @staticmethod
+            def axiom_choices(session) -> list[str]:
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][axiom_choices]"
+                    container: MathContainer = st.session_state["data"]["math_container"]
+                    axioms: Dict[str, str] = container.axioms
+                    choices = []
+                
+                # process
+                if len(axioms) > 0:
+                    choices = list(axioms.keys())
 
                 # postprocess
                 if True:
@@ -181,12 +200,23 @@ class BackEnd:
                     session["data"]["math_container"] = container
                     
                     # updates choices after latex file was parsed
-                    definition_choices = BackEnd.Get.Choices.definition_choices(st.session_state)
-                    session["data"]["definition_choices"] = definition_choices
-                    Logger.debug(f"Definition choices: {definition_choices}", log_prefix, 5)
+                    # definitions
+                    if True:
+                        def_choices_raw = BackEnd.Get.Choices.definition_choices(st.session_state)
+                        def_choices_clean = [d.replace(":::", ":").replace("$", "") for d in def_choices_raw]
+                        def_choices_display = {d1: d2 for d1, d2 in zip(def_choices_clean, def_choices_raw)}
+                        session["data"]["definition_choices"] = def_choices_display
+                    # axioms
+                    if True:
+                        axiom_choices_raw = BackEnd.Get.Choices.axiom_choices(st.session_state)
+                        axiom_choices_clean = [a.replace(":::", ":").replace("$", "") for a in axiom_choices_raw]
+                        axiom_choices_display = {a1: a2 for a1, a2 in zip(axiom_choices_clean, axiom_choices_raw)}
+                        session["data"]["axiom_choices"] = axiom_choices_display
 
                 # postprocess
                 if True:
+                    Logger.debug(f"Definition choices: {def_choices_clean}", log_prefix, 5)
+                    Logger.debug(f"Axiom choices: {axiom_choices_clean}", log_prefix, 5)
                     return session
         
         class Choices:
@@ -199,24 +229,48 @@ class BackEnd:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_select_definition]"
 
                     container = session["data"]["math_container"]
-                    choice = session["selectbox_definition"]
+                    choice_displayed = session["selectbox_definition"]
+                    choice = session["data"]["definition_choices"][choice_displayed]
 
                 # process
                 if True:
                     def_id, notation = choice.split(":::")
+                    def_id = def_id.replace(" ", "")
                     Logger.debug(f"Chosen definition: id={def_id}, notation={notation}", log_prefix, 5)
                     actual_def = container.definitions[choice]
 
-                    session["data"]["display_text"] = f"({def_id}) {notation} ::= {actual_def}"
+                    display_text = BackEnd.Display.clean_definition(def_id, notation, actual_def)
+                    session["data"]["display_text"] = display_text
                 
                 # postprocess
                 if True:
                     return session
-        
-        class Display:
-            
-            pass
-        
+
+            @staticmethod
+            def on_select_axiom(session):
+
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_select_axiom]"
+
+                    container = session["data"]["math_container"]
+                    choice_displayed = session["selectbox_axioms"]
+                    choice = session["data"]["axiom_choices"][choice_displayed]
+
+                # process
+                if True:
+                    axiom_id, axiom_name = choice.split(":::")
+                    axiom_id = axiom_id.replace(" ", "")
+                    Logger.debug(f"Chosen axiom: id={axiom_id}, axiom name={axiom_name}", log_prefix, 5)
+                    actual_axiom = container.axioms[choice]
+
+                    display_text = BackEnd.Display.clean_axiom(axiom_id, axiom_name, actual_axiom)
+                    session["data"]["display_text"] = display_text
+                
+                # postprocess
+                if True:
+                    return session
+
         class Settings:
             
             @staticmethod
@@ -228,3 +282,47 @@ class BackEnd:
                     Logger.log_level = 1000
                 else:
                     Logger.enable = False
+
+    class Display:
+        
+        @staticmethod
+        def clean_definition(def_id: str, notation: str, actual_def: str) -> str:
+            # preprocess
+            if True:
+                log_prefix: str = f"{BackEnd.log_prefix}[Display][clean_definition]"
+
+            # process
+            if True:
+                display_text_raw: str = f"({def_id}) {notation} ::= {actual_def}"
+                display_text = display_text_raw.replace("$", "").replace(" ", "\ ")
+            
+            # postprocess
+            if True:
+                Logger.debug(f"Definition (raw): {display_text_raw}", log_prefix, 15)
+                Logger.debug(f"Cleaned definition for display: {display_text}", log_prefix, 15)
+                return display_text
+    
+        @staticmethod
+        def clean_axiom(axiom_id: str, axiom_name: str, actual_axiom: str) -> str:
+            # preprocess
+            if True:
+                log_prefix: str = f"{BackEnd.log_prefix}[Display][clean_axiom]"
+
+            # process
+            if True:
+                display_text_raw: str = f"({axiom_id}) {axiom_name} ::= {actual_axiom}"
+                display_text = display_text_raw.replace("$", "").replace(" ", "\ ")
+
+                # remove "rule_xxx"
+                if "rule_" not in display_text:
+                    Logger.warn("Axiom text should contain 'rule_' (for the HoTT grammar)", log_prefix, 5)
+                else:
+                    i1 = display_text.find("rule_")
+                    i2 = display_text[i1:].find(":")
+                    display_text = display_text[:i1] + display_text[i1+i2+1:]
+            
+            # postprocess
+            if True:
+                Logger.debug(f"Axiom (raw): {display_text_raw}", log_prefix, 15)
+                Logger.debug(f"Cleaned axiom for display: {display_text}", log_prefix, 15)
+                return display_text

@@ -69,12 +69,20 @@ def run():
     with choice_col:
         st.subheader("Choices")
         
+        # callbacks
         def on_select_definition():
             st.session_state = be.Listener.Choices.on_select_definition(st.session_state)
+        def on_select_axiom():
+            st.session_state = be.Listener.Choices.on_select_axiom(st.session_state)
+        # choices
         st.selectbox(label="definitions",
                      key="selectbox_definition",
-                     options=st.session_state["data"]["definition_choices"],
+                     options=st.session_state["data"]["definition_choices"].keys(),
                      on_change=on_select_definition)
+        st.selectbox(label="axioms",
+                     key="selectbox_axioms",
+                     options=st.session_state["data"]["axiom_choices"].keys(),
+                     on_change=on_select_axiom)
 
     
     with display_col:

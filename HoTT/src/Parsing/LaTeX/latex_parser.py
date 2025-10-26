@@ -34,10 +34,13 @@ class LatexTransformer(Transformer):
     def content(self, items):
         return LatexTransformer.filter(items, "content")
 
-    # ----- definition
+    # ----- main nodes
     
     def definition(self, items):
         return LatexTransformer.filter(items, "definition") 
+
+    def axiom(self, items):
+        return LatexTransformer.filter(items, "axiom") 
 
 
 class LatexParser:

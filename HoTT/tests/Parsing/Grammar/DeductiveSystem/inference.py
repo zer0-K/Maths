@@ -37,11 +37,11 @@ class RUN_INFERENCE:
             test_container = TestContainer()
             # simple axiom
             test_container.add(
-                "rule_axiom_1 : epsilon ————— empty_context ctx",
+                "rule_axiom_1 : \\epsilon ————— empty_context ctx",
                 "inference_system\n  rule\n" + \
-                "    rule_name\trule_axiom_1\n" + \
+                "    rule_name\taxiom 1\n" + \
                 "    inference_rule\n" + \
-                "      premises\tepsilon\n" + \
+                "      premises\t\\epsilon\n" + \
                 "      conclusion\n" + \
                 "        judgment_list\n" + \
                 "          judgment\n" + \
@@ -51,7 +51,7 @@ class RUN_INFERENCE:
                 "rule_inference_1 : context_gamma ⊢ var_A:Type_i  ————— context_gamma, var_x:var_A ctx, var_x not in dom(context_gamma)",
                 "inference_system\n" + \
                 "  rule\n" + \
-                "    rule_name\trule_inference_1\n" + \
+                "    rule_name\tinference 1\n" + \
                 "    inference_rule\n" + \
                 "      premises\n" + \
                 "        judgment_list\n" + \
