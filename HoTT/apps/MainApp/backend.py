@@ -293,7 +293,7 @@ class BackEnd:
 
             # process
             if True:
-                display_text_raw: str = f"({def_id}) {notation} ::= {actual_def}"
+                display_text_raw: str = f"({def_id})\ {notation} ::= {actual_def}"
                 display_text = display_text_raw.replace("$", "").replace(" ", "\ ")
             
             # postprocess
@@ -310,16 +310,14 @@ class BackEnd:
 
             # process
             if True:
-                display_text_raw: str = f"({axiom_id}) {axiom_name} ::= {actual_axiom}"
-                display_text = display_text_raw.replace("$", "").replace(" ", "\ ")
+                display_text_raw: str = f"({axiom_id})\ {actual_axiom}"
+                display_text = display_text_raw.replace("$", "")
 
                 # remove "rule_xxx"
-                if "rule_" not in display_text:
+                if "rule\_" not in display_text:
                     Logger.warn("Axiom text should contain 'rule_' (for the HoTT grammar)", log_prefix, 5)
                 else:
-                    i1 = display_text.find("rule_")
-                    i2 = display_text[i1:].find(":")
-                    display_text = display_text[:i1] + display_text[i1+i2+1:]
+                    display_text = display_text.replace("rule\_", "")
             
             # postprocess
             if True:

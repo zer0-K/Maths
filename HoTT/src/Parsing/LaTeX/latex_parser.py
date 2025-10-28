@@ -6,7 +6,7 @@
 
 
 import sys
-from lark import Transformer, Tree
+from lark import Transformer, Tree, Token
 
 proj_dir = "Maths/HoTT".lower()
 hott_dir = __file__[:__file__.lower().rfind(proj_dir) + len(proj_dir)]
@@ -24,7 +24,12 @@ class LatexTransformer(Transformer):
         if filtered_items is None or len(filtered_items) == 0:
             return None
         return Tree(tree_name, filtered_items)
- 
+
+    def any_text(self, items):
+        token_type = items[0].type
+        val = items[0].value.replace("\\_", "_")
+        return [Token(token_type, val)] 
+
     def other_content(self, *items):
         return None
 
