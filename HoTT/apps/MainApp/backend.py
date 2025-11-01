@@ -6,6 +6,7 @@
 
 import sys
 import os
+import traceback
 import streamlit as st
 from typing import Dict
 
@@ -19,6 +20,7 @@ from src.Utils.utils_path import UtilsPath
 from src.APIs.chapters import chapters
 from src.UI.latex_to_ui import LatexToUI
 from src.UI.math_container import MathContainer
+from src.Parsing.Grammar.hott_parser import HottParser
 
 
 class BackEnd:
@@ -55,6 +57,8 @@ class BackEnd:
                 # choices and display
                 "definition_choices": {},
                 "axiom_choices": {},
+                "text_for_ast": "",
+                "ast_as_text": "",
                 "display_text": ""
             }
             
@@ -241,6 +245,8 @@ class BackEnd:
 
                     display_text = BackEnd.Display.clean_definition(def_id, notation, actual_def)
                     session["data"]["display_text"] = display_text
+                    session["data"]["text_for_ast"] = ""
+                    session["data"]["ast_as_text"] = ""
                 
                 # postprocess
                 if True:
@@ -266,10 +272,42 @@ class BackEnd:
 
                     display_text = BackEnd.Display.clean_axiom(axiom_id, axiom_name, actual_axiom)
                     session["data"]["display_text"] = display_text
+                    session["data"]["text_for_ast"] = actual_axiom
+                    session["data"]["ast_as_text"] = ""
+
+                # postprocess
+                if True:
+                    return session
+
+        class Other:
+            
+            @staticmethod
+            def on_click_get_ast(session):
+                
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_click_get_ast]"
+
+                    text_for_ast = session["data"]["text_for_ast"]
+                    #container = session["data"]["math_container"]
+
+                # process
+                if text_for_ast != "":
+
+                    text_for_ast = text_for_ast.replace("$", "").replace("\\_", "_")\
+                        .replace("\\text{——}", "—————").replace("\\", "")
+                    
+                    try:
+                        parsed = HottParser.get_HoTT_tree(text_for_ast, "inference_system")
+                        session["data"]["ast_as_text"] = parsed.pretty()
+                    except Exception as e:
+                        session["data"]["ast_as_text"] = f"Couldn't parse. Error: {traceback.format_exc()}"
+
                 
                 # postprocess
                 if True:
                     return session
+
 
         class Settings:
             
@@ -317,7 +355,7 @@ class BackEnd:
                 if "rule\_" not in display_text:
                     Logger.warn("Axiom text should contain 'rule_' (for the HoTT grammar)", log_prefix, 5)
                 else:
-                    display_text = display_text.replace("rule\_", "")
+                    display_text = display_text.replace("rule\_", "").replace("—————", "\\text{——}")
             
             # postprocess
             if True:

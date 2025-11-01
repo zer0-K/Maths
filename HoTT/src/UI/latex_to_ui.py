@@ -61,7 +61,7 @@ class LatexToUI:
                 text = ''.join(lines)
             
             i = file[::-1].find("/")
-            container_name = file[i:-4]
+            container_name = file[len(file)-i:-4]
                 
         # process
         if True:

@@ -27,8 +27,8 @@ class LatexTransformer(Transformer):
 
     def any_text(self, items):
         token_type = items[0].type
-        val = items[0].value.replace("\\_", "_")
-        return [Token(token_type, val)] 
+        val = items[0].value.replace("\\text{——}", "—————").replace("\\\\_", "\\_")
+        return Tree("any_text", [Token(token_type, val)])
 
     def other_content(self, *items):
         return None

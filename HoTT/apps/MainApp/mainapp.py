@@ -64,31 +64,45 @@ def run():
 
     # --------------------------------------------- display maths container
 
-    choice_col, display_col = st.columns([1, 5])
-    
-    with choice_col:
-        st.subheader("Choices")
-        
-        # callbacks
-        def on_select_definition():
-            st.session_state = be.Listener.Choices.on_select_definition(st.session_state)
-        def on_select_axiom():
-            st.session_state = be.Listener.Choices.on_select_axiom(st.session_state)
-        # choices
-        st.selectbox(label="definitions",
-                     key="selectbox_definition",
-                     options=st.session_state["data"]["definition_choices"].keys(),
-                     on_change=on_select_definition)
-        st.selectbox(label="axioms",
-                     key="selectbox_axioms",
-                     options=st.session_state["data"]["axiom_choices"].keys(),
-                     on_change=on_select_axiom)
+    tab_doc, tab_example = st.tabs(["Document", "Example"])
 
-    
-    with display_col:
-        st.subheader("Display")
+    with tab_doc:
+
+        choice_col, display_col = st.columns([1, 5])
         
-        st.latex(st.session_state["data"]["display_text"])
+        with choice_col:
+            st.subheader("Choices")
+            
+            # callbacks
+            def on_click_get_ast():
+                st.session_state = be.Listener.Other.on_click_get_ast(st.session_state)
+            def on_select_definition():
+                st.session_state = be.Listener.Choices.on_select_definition(st.session_state)
+            def on_select_axiom():
+                st.session_state = be.Listener.Choices.on_select_axiom(st.session_state)
+            
+            # choices
+            st.selectbox(label="definitions",
+                         key="selectbox_definition",
+                         options=st.session_state["data"]["definition_choices"].keys(),
+                         on_change=on_select_definition)
+            st.selectbox(label="axioms",
+                         key="selectbox_axioms",
+                         options=st.session_state["data"]["axiom_choices"].keys(),
+                         on_change=on_select_axiom)
+        
+        with display_col:
+            st.subheader("Display")
+        
+            st.latex(st.session_state["data"]["display_text"])
+
+            st.button("Get ast", on_click=on_click_get_ast)
+
+            st.text(st.session_state["data"]["ast_as_text"])
+    
+    with tab_example:
+        
+        st.text("Nothing yet")
         
 
 if __name__=="__main__":

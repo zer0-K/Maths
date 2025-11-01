@@ -24,7 +24,7 @@ class RUN:
     def parse_file():
         
         file = "/home/adrien/Programmation/Projets/Maths/HoTT/src/latex/Foundations/TypeTheory/type_theory.tex"
-        container =LatexToUI.read_latex(file) 
+        container = LatexToUI.read_latex(file) 
 
         Logger.info("end")
 

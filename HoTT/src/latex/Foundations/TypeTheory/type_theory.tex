@@ -20,11 +20,12 @@ We will note \notation{$.$} \probe for the \actualDef{empty context} \probe
 \end{definition}
 
 \begin{axiom}{0.1}
-\axiomName{empty derivation} \probe : \actualAxiom{$rule\_empty\_derivation : \epsilon \vdash empty\ context\ ctx$} \probe
+\axiomName{empty derivation} \probe : \actualAxiom{$rule\_empty\_derivation : \epsilon\ \text{——}\ empty\ context\ ctx$} \probe
 \end{axiom}
 
 \begin{axiom}{0.2}
-\axiomName{context extension} \probe : \actualAxiom{$rule\_context\_extension : \epsilon \vdash empty\ context\ ctx$} \probe
+\axiomName{context extension} \probe : 
+\actualAxiom{$rule\_context\_extension : context\_gamma \vdash var\_A:Type\_i\ \text{——}\ context\_gamma, var\_x:var\_A\ ctx, var\_x\ not\ in\ dom(context\_gamma)$} \probe
 \end{axiom}
 
 \end{document}
