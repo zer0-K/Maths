@@ -7,9 +7,10 @@
 import sys
 
 grammar_dir = __file__[:__file__.lower().rfind("grammar") + len("grammar")]
-sys.path.append(grammar_dir)
+if grammar_dir not in sys.path:
+    sys.path.append(grammar_dir)
 
-from hott_parser import Parser
+from hott_parser import HottParser
 
 def example_1():
     # HoTT grammar parsed into an AST

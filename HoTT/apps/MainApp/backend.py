@@ -295,7 +295,8 @@ class BackEnd:
                 if text_for_ast != "":
 
                     text_for_ast = text_for_ast.replace("$", "").replace("\\_", "_")\
-                        .replace("\\text{——}", "—————").replace("\\", "")
+                        .replace("\\text{——}", "—————").replace("\\ ", " ").replace("\\vdash", "⊢")
+                    Logger.debug(f"Text for ast : {text_for_ast}", log_prefix)
                     
                     try:
                         parsed = HottParser.get_HoTT_tree(text_for_ast, "inference_system")

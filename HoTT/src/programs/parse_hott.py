@@ -1,0 +1,31 @@
+################################
+#                              #
+#       Parses a HoTT text     #
+#                              #
+################################
+
+import sys
+
+proj_dir = "Maths/HoTT".lower()
+hott_dir = __file__[:__file__.lower().rfind(proj_dir) + len(proj_dir)]
+if hott_dir not in sys.path:
+    sys.path = [hott_dir] + sys.path
+
+from src.Parsing.Grammar.hott_parser import HottParser
+
+
+def run():
+    # parse a simple HoTT expression
+    txt = "rule_context_extension : context_gamma ⊢ var_A:Type_i ————— context_gamma, var_x:var_A ctx, var_x not in dom(context_gamma)"
+    parsed = HottParser.get_HoTT_tree(txt, "inference_system")
+
+    res_str = parsed.pretty()
+
+    print("end")
+
+
+if __name__ == "__main__":
+    
+    run()
+
+    print("end")
