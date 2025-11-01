@@ -25,7 +25,12 @@ We will note \notation{$.$} \probe for the \actualDef{empty context} \probe
 
 \begin{axiom}{0.2}
 \axiomName{context extension} \probe : 
-\actualAxiom{$rule\_context\_extension : \context{\Gamma} \vdash \var{A}:\U{i}\ \text{——}\ \context{\Gamma}, \var{x}:\var{A}\ ctx, \var{x}\ not\ in\ dom(\context{\Gamma})$} \probe
+\actualAxiom{$rule\_context\_extension : \context{\Gamma} \vdash \var{A}:\U{i},\ \var{x}\ not\ in\ dom(\context{\Gamma})\ \text{——}\ \context{\Gamma},\ \var{x}:\var{A}\ ctx$} \probe
+\end{axiom}
+
+\begin{axiom}{0.3}
+\axiomName{variable rule} \probe : 
+\actualAxiom{$rule\_variable : \context{\Gamma}\ ctx, \var{x}:\var{A}\ in\ \context{\Gamma}\ \text{——}\ \context{\Gamma} \vdash \var{x}:\var{A}$} \probe
 \end{axiom}
 
 \end{document}

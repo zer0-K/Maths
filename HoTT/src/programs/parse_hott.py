@@ -15,8 +15,8 @@ from src.Parsing.Grammar.hott_parser import HottParser
 
 
 def run():
-    # parse a simple HoTT expression
-    txt = "rule_context_extension : context_\Gamma ⊢ var_A:Type_i ————— context_\Gamma, var_x:var_A ctx, var_x not in dom(context_\Gamma)"
+    # parse an HoTT expression
+    txt = "rule_variable : context_\Gamma ctx, var_x:var_A in context_\Gamma ————— context_\Gamma ⊢ var_x:var_A"
     parsed = HottParser.get_HoTT_tree(txt, "inference_system")
 
     res_str = parsed.pretty()

@@ -13,7 +13,8 @@
 
 @ <conclusion> ::= <judgment_list>
 
-@ <side_condition> ::= <VNAME> "not in" "dom(" <context> ")"
+@ <side_condition> ::= <var_decl> "in" <context>
+    | <VNAME> "not in" "dom(" <context> ")"
     | <VNAME> "fresh"
 
 
