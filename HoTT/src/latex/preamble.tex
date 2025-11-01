@@ -9,6 +9,12 @@
 \setlength{\parskip}{0pt}   % No extra spacing
 
 % ===== Custom Commands =====
+% --- Syntax ---
+\newcommand{\var}[1]{{#1}}         % variable
+
+% --- Inference system ---
+\newcommand{\context}[1]{{#1}}     % context
+
 % --- General Math ---
 \newcommand{\N}{\mathbb{N}}        % Natural numbers
 \newcommand{\cat}[1]{\mathbf{#1}}  % Categories (bold)
@@ -19,7 +25,8 @@
 \newcommand{\Hom}[3]{\mathrm{Hom}_{#1}(#2,#3)} % Hom-set
 
 % --- Type Theory ---
-\newcommand{\deduce}{\vdash}                     % Judgement line
+\newcommand{\U}[1]{\mathcal{U}_{#1}}        % universe
+\newcommand{\deduce}{\vdash}                   % Judgement line
 \newcommand{\ctx}{\Gamma}                      % Context
 \newcommand{\subst}[2]{[#1/#2]}                % Substitution
 

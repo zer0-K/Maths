@@ -21,6 +21,7 @@ from src.APIs.chapters import chapters
 from src.UI.latex_to_ui import LatexToUI
 from src.UI.math_container import MathContainer
 from src.Parsing.Grammar.hott_parser import HottParser
+from src.Parsing.LaTeX.latex_parser import LatexTransformer
 
 
 class BackEnd:
@@ -296,6 +297,7 @@ class BackEnd:
 
                     text_for_ast = text_for_ast.replace("$", "").replace("\\_", "_")\
                         .replace("\\text{——}", "—————").replace("\\ ", " ").replace("\\vdash", "⊢")
+                    text_for_ast = LatexTransformer.replace_all_commands(text_for_ast)
                     Logger.debug(f"Text for ast : {text_for_ast}", log_prefix)
                     
                     try:
@@ -323,7 +325,7 @@ class BackEnd:
                     Logger.enable = False
 
     class Display:
-        
+
         @staticmethod
         def clean_definition(def_id: str, notation: str, actual_def: str) -> str:
             # preprocess
@@ -334,6 +336,7 @@ class BackEnd:
             if True:
                 display_text_raw: str = f"({def_id})\ {notation} ::= {actual_def}"
                 display_text = display_text_raw.replace("$", "").replace(" ", "\ ")
+                display_text = LatexTransformer.replace_all_commands(display_text)
             
             # postprocess
             if True:
@@ -351,6 +354,7 @@ class BackEnd:
             if True:
                 display_text_raw: str = f"({axiom_id})\ {actual_axiom}"
                 display_text = display_text_raw.replace("$", "")
+                display_text = LatexTransformer.replace_all_commands(display_text)
 
                 # remove "rule_xxx"
                 if "rule\_" not in display_text:

@@ -19,6 +19,59 @@ from src.Parsing.general_parser import Parser
 class LatexTransformer(Transformer):
 
     @staticmethod
+    def replace_nested(text: str, command: str, corresponding_hott_command: str = None):
+        """Replaces all text in a 'command{text}' by 'command_text'"""
+        result = []
+        i = 0
+        n = len(text)
+
+        if corresponding_hott_command is None:
+            corresponding_hott_command = command
+        cmd_latex = "\\" + command + "{"
+        cmd_size = len(cmd_latex)
+        
+        while i < n:
+            # Look for the \command{ pattern
+            
+            if text[i:i+cmd_size] == cmd_latex:
+                # Add "context_" to result
+                result.append(corresponding_hott_command + '\\_')
+                i += cmd_size
+                
+                # Count brackets to find the matching closing brace
+                bracket_count = 1
+                content_start = i
+                
+                while i < n and bracket_count > 0:
+                    if text[i] == '{':
+                        bracket_count += 1
+                    elif text[i] == '}':
+                        bracket_count -= 1
+                    i += 1
+                
+                # Extract content (excluding the final closing brace)
+                content = text[content_start:i-1]
+                
+                # Add the content with any internal brackets preserved
+                result.append(content)
+                
+            else:
+                # Add regular character to result
+                result.append(text[i])
+                i += 1
+        
+        return ''.join(result)
+
+    @staticmethod
+    def replace_all_commands(text: str):
+
+        text = LatexTransformer.replace_nested(text, "context")
+        text = LatexTransformer.replace_nested(text, "var")
+        text = LatexTransformer.replace_nested(text, "U", "Type")
+        
+        return text
+
+    @staticmethod
     def filter(items, tree_name):
         filtered_items = [item for item in items if item is not None]
         if filtered_items is None or len(filtered_items) == 0:
@@ -28,6 +81,9 @@ class LatexTransformer(Transformer):
     def any_text(self, items):
         token_type = items[0].type
         val = items[0].value.replace("\\text{——}", "—————").replace("\\\\_", "\\_")
+
+        val = LatexTransformer.replace_all_commands(val)
+        
         return Tree("any_text", [Token(token_type, val)])
 
     def other_content(self, *items):
