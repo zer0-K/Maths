@@ -15,22 +15,54 @@
 
 \subsection{Contexts}
 
-\begin{definition}{0.1}
+Here are the basic principles for contexts in type theory.
+
+\begin{definition}{0.1.1}
 We will note \notation{$.$} \probe for the \actualDef{empty context} \probe
 \end{definition}
 
-\begin{axiom}{0.1}
+\begin{axiom}{0.1.1}
 \axiomName{empty derivation} \probe : \actualAxiom{$rule\_empty\_derivation : \epsilon\ \text{——}\ empty\_context\ ctx$} \probe
 \end{axiom}
 
-\begin{axiom}{0.2}
+\begin{axiom}{0.1.2}
 \axiomName{context extension} \probe : 
 \actualAxiom{$rule\_context\_extension : \context{\Gamma} \vdash \var{A}:\U{i},\ \var{x}\ not\ in\ dom(\context{\Gamma})\ \text{——}\ \context{\Gamma},\ \var{x}:\var{A}\ ctx$} \probe
 \end{axiom}
 
-\begin{axiom}{0.3}
+\begin{axiom}{0.1.3}
 \axiomName{variable rule} \probe : 
 \actualAxiom{$rule\_variable : \context{\Gamma}\ ctx, \var{x}:\var{A}\ in\ \context{\Gamma}\ \text{——}\ \context{\Gamma} \vdash \var{x}:\var{A}$} \probe
 \end{axiom}
+
+\subsection{Judgemental equality}
+
+We suppose that judgmental equality is an equivalence relation. Namely:
+
+\begin{axiom}{0.2.1}
+\axiomName{Judgmental reflexivity} \probe : 
+\actualAxiom{$rule\_judg\_refl : \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash\ \var{a} \equiv \var{a}:\var{A}$} \probe
+\end{axiom}
+
+\begin{axiom}{0.2.2}
+\axiomName{Judgmental symmetry} \probe : 
+\actualAxiom{$rule\_judg\_sym : \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{A}\ \text{——}\ \context{\Gamma} \vdash\ \var{b} \equiv \var{a}:\var{A}$} \probe
+\end{axiom}
+
+\begin{axiom}{0.2.3}
+\axiomName{Judgmental transitivity} \probe : 
+\actualAxiom{$rule\_judg\_trans : \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{A},\ \context{\Gamma} \vdash \var{b}\equiv \var{c}:\var{A}\ \text{——}\ \context{\Gamma} \vdash\ \var{a} \equiv \var{c}:\var{A}$} \probe
+\end{axiom}
+
+\begin{axiom}{0.2.4}
+\axiomName{Judgmental typing} \probe : 
+\actualAxiom{$rule\_judg\_typing : \context{\Gamma} \vdash \var{a}:\var{A},\ \context{\Gamma} \vdash \var{A}\equiv \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash\ \var{a}:\var{B}$} \probe
+\end{axiom}
+
+\begin{axiom}{0.2.5}
+\axiomName{Judgmental typing equiv} \probe : 
+\actualAxiom{$rule\_judg\_typing\_eq : \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{A},\ \context{\Gamma} \vdash \var{A}\equiv \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash\ \var{a}\equiv \var{b}:\var{B}$} \probe
+\end{axiom}
+
 
 \end{document}

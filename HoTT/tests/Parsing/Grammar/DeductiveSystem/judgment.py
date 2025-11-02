@@ -54,7 +54,7 @@ class RUN_JUDGMENT:
                                 "  term\n" + \
                                 "    universe\t1\n")
             # definitional equality 
-            test_container.add("empty_context ⊢ Type eq_judg Type : Type_1", 
+            test_container.add("empty_context ⊢ Type \equiv Type : Type_1", 
                                "judgment\n" + \
                                "  context\tempty_context\n" + \
                                "  term\n" + \

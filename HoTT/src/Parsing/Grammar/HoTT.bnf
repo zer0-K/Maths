@@ -21,7 +21,7 @@
 // judgments
 @ <judgment> ::= <context> "ctx"                  -- valid_context
     | <context> "⊢" <term> ":" <term>             -- typing
-    | <context> "⊢" <term> "eq_judg" <term> ":" <term>     -- definitional_equality
+    | <context> "⊢" <term> "\equiv" <term> ":" <term>     -- definitional_equality
     | <context> "⊢" <term> "reduc" <term>                  -- reduction
     | <side_condition>                             -- meta-level conditions
  
