@@ -35,7 +35,7 @@ We will note \notation{$.$} \probe for the \actualDef{empty context} \probe
 \actualAxiom{$rule\_variable : \context{\Gamma}\ ctx, \var{x}:\var{A}\ in\ \context{\Gamma}\ \text{——}\ \context{\Gamma} \vdash \var{x}:\var{A}$} \probe
 \end{axiom}
 
-\subsection{Judgemental equality}
+\subsection{Judgemental equalities}
 
 We suppose that judgmental equality is an equivalence relation. Namely:
 
@@ -62,6 +62,18 @@ We suppose that judgmental equality is an equivalence relation. Namely:
 \begin{axiom}{0.2.5}
 \axiomName{Judgmental typing equiv} \probe : 
 \actualAxiom{$rule\_judg\_typing\_eq : \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{A},\ \context{\Gamma} \vdash \var{A}\equiv \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash\ \var{a}\equiv \var{b}:\var{B}$} \probe
+\end{axiom}
+
+\subsection{Type universe}
+
+\begin{axiom}{0.3.1}
+\axiomName{Universe intro} \probe : 
+\actualAxiom{$rule\_univ\_intro : \context{\Gamma}\ ctx\ \text{——}\ \context{\Gamma} \vdash\ \U{i}:\U{i+1}$} \probe
+\end{axiom}
+
+\begin{axiom}{0.3.2}
+\axiomName{Universe cumul} \probe : 
+\actualAxiom{$rule\_univ\_cumul : \context{\Gamma} \vdash \var{A}:\U{i}\ \text{——}\ \context{\Gamma} \vdash\ \var{A}:\U{i+1}$} \probe
 \end{axiom}
 
 

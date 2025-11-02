@@ -342,8 +342,8 @@ class BackEnd:
 
             # process
             if True:
-                display_text_raw: str = f"({def_id})\ {notation} ::= {actual_def}"
-                display_text = display_text_raw.replace("$", "").replace(" ", "\ ")
+                display_text_raw: str = f"({def_id})\\ {notation} ::= {actual_def}"
+                display_text = display_text_raw.replace("$", "").replace(" ", "\\ ")
                 display_text = LatexTransformer.replace_all_commands(display_text)
                 display_text = BackEnd.Display.clean_common(display_text)
             
@@ -367,10 +367,10 @@ class BackEnd:
                 display_text = BackEnd.Display.clean_common(display_text)
 
                 # remove "rule_xxx"
-                if "rule\_" not in display_text:
+                if "rule\\_" not in display_text:
                     Logger.warn("Axiom text should contain 'rule_' (for the HoTT grammar)", log_prefix, 5)
                 else:
-                    display_text = display_text.replace("rule\_", "").replace("—————", "\\text{——}")
+                    display_text = display_text.replace("rule\\_", "").replace("—————", "\\text{——}")
             
             # postprocess
             if True:

@@ -126,7 +126,7 @@
 
 // ----------------------------------------------------------------------------- 'Infrastructure'
 
-@ <universe> ::= "Type" | "Type_i" | "Type_" <NUMBER>  -- Hierarchy of universes
+@ <universe> ::= "Type" | "Type_i" | "Type_i+1" | "Type_" <NUMBER>  -- Hierarchy of universes
 @ <var> ::= <VNAME>                         -- variable names
 @ <varlist> ::= <var> ("," <var>)*
 
