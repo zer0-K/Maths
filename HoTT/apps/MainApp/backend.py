@@ -327,6 +327,14 @@ class BackEnd:
     class Display:
 
         @staticmethod
+        def clean_common(text):
+            
+            text = text.replace("context\\_", "").replace("var\\_", "")\
+                .replace("Type\\_", "\\mathcal{U}_")
+            
+            return text
+
+        @staticmethod
         def clean_definition(def_id: str, notation: str, actual_def: str) -> str:
             # preprocess
             if True:
@@ -337,6 +345,7 @@ class BackEnd:
                 display_text_raw: str = f"({def_id})\ {notation} ::= {actual_def}"
                 display_text = display_text_raw.replace("$", "").replace(" ", "\ ")
                 display_text = LatexTransformer.replace_all_commands(display_text)
+                display_text = BackEnd.Display.clean_common(display_text)
             
             # postprocess
             if True:
@@ -355,6 +364,7 @@ class BackEnd:
                 display_text_raw: str = f"({axiom_id})\ {actual_axiom}"
                 display_text = display_text_raw.replace("$", "")
                 display_text = LatexTransformer.replace_all_commands(display_text)
+                display_text = BackEnd.Display.clean_common(display_text)
 
                 # remove "rule_xxx"
                 if "rule\_" not in display_text:
