@@ -88,7 +88,7 @@ class RUN_FORM:
                 "      formation_rule\n" + \
                 "        formation_unit\n")
             test_container.add(
-                "pi var_x : unit_type . star", 
+                "\\Pi_{var_x:unit_type} star", 
                 "formation_rule\n" + \
                 "  formation_pi\n" + \
                 "    var_decl\n" + \

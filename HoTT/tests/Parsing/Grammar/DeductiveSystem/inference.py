@@ -48,7 +48,7 @@ class RUN_INFERENCE:
                 "            context\tempty_context\n")
             # simple inference rule
             test_container.add(
-                "rule_inference_1 : context_gamma ⊢ var_A:Type_i  ————— context_gamma, var_x:var_A ctx, var_x not in dom(context_gamma)",
+                "rule_inference_1 : context_gamma ⊢ var_A:Type_i  ————— context_gamma, var_x:var_A ctx,\\quad var_x not in dom(context_gamma)",
                 "inference_system\n" + \
                 "  rule\n" + \
                 "    rule_name\tinference 1\n" + \

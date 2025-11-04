@@ -24,7 +24,7 @@
     | <context> "⊢" <term> "reduc" <term>                  -- reduction
     | <side_condition>                             -- meta-level conditions
  
-@ <judgment_list> ::= <judgment> ( "," <judgment>)*
+@ <judgment_list> ::= <judgment> ( ",\quad" <judgment>)*
 
 // contexts
 @ <context> ::= <EMPTY_CTX>                 -- empty_context
@@ -58,7 +58,7 @@
 @ <formation_empty> ::= "empty_type"                        -- 0-formation
 @ <formation_unit> ::= "unit_type"                          -- 1-formation
 @ <formation_arrow> ::= <term> "mapsto" <term>              -- arrow-formation
-@ <formation_pi> ::= "pi" <var_decl> "." <term>             -- Π-formation
+@ <formation_pi> ::= "\Pi_{" <var_decl> "}" <term>          -- Π-formation
 @ <formation_sigma> ::= "sigma" <var_decl> "." <term>       -- Σ-formation
 @ <formation_coproduct> ::= <term> "+" <term>               -- coproduct-formation
 @ <formation_id> ::= "Id" <subscript>? "(" <term> "," <term> "," <term>")"                 -- id-formation
@@ -82,7 +82,7 @@
 // Elimination rules
 @ <elim_empty> ::= "absurd" <term>                     -- 0-elimination
 @ <elim_unit> ::= "elimT" "(" <term> "," <term> ")"    -- 1-elimination
-@ <elim_apply> ::= <term> "%(" <term> ")"               -- application
+@ <elim_apply> ::= <term> "%(" <term> ")"              -- application
 @ <elim_coprod_left> ::= <var> "to" <term>             -- coproduct elimination left
 @ <elim_coprod_right> ::= <var> "to" <term>            -- coproduct elimination right
 @ <elim_coprod> ::= "case" <term> "of" "inl" <elim_coprod_left> "|" "inr" <elim_coprod_right>
@@ -137,4 +137,4 @@
 @ <EMPTY_CTX> ::= /empty_context/
 @ <EMPTY_PREMISE> ::= /\\epsilon/
 @ <CTX_NAME> ::= /context_[a-zA-Z_\\][a-zA-Z0-9_\\]*/ | /context_{[a-zA-Z_\\][a-zA-Z0-9_\\]*}/
-@ <RULE_NAME> ::= /rule_[a-zA-Z_\\][a-zA-Z0-9_\\]*/
+@ <RULE_NAME> ::= /rule_[a-zA-Z_\\][a-zA-Z0-9_\\\-]*/ | /rule_{[a-zA-Z_\\][a-zA-Z0-9_\\\-]*}/
