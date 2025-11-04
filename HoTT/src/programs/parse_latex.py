@@ -21,6 +21,21 @@ from src.UI.latex_to_ui import LatexToUI
 class RUN:
 
     @staticmethod
+    def parse_text():
+        
+        text = """
+        \\begin{document}
+        \\begin{axiom}{0.3.2}
+        \\axiomName{Test axiom} \\probe : 
+        \\actualAxiom{$rule\\_test : \\context{G} \\vdash \\U{i+1}:\\U{i}\\ \\text{——}\\ \\context{G} ctx$} \\probe
+        \\end{axiom}
+        \\end{document}"""
+        container = LatexToUI.get_container_from_str(text, "test container") 
+
+        Logger.info("end")
+
+
+    @staticmethod
     def parse_file():
         
         file = "/home/adrien/Programmation/Projets/Maths/HoTT/src/latex/Foundations/TypeTheory/type_theory.tex"
@@ -29,4 +44,5 @@ class RUN:
         Logger.info("end")
 
 if __name__ == "__main__":
+    RUN.parse_text()
     RUN.parse_file()

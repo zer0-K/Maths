@@ -35,7 +35,7 @@ class LatexTransformer(Transformer):
             
             if text[i:i+cmd_size] == cmd_latex:
                 # Add "context_" to result
-                result.append(corresponding_hott_command + '\\_')
+                result.append(corresponding_hott_command + '\\_{')
                 i += cmd_size
                 
                 # Count brackets to find the matching closing brace
@@ -54,6 +54,7 @@ class LatexTransformer(Transformer):
                 
                 # Add the content with any internal brackets preserved
                 result.append(content)
+                result.append('}')
                 
             else:
                 # Add regular character to result

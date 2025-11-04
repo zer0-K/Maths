@@ -36,6 +36,7 @@ class RUN_VAR:
 
             test_container = TestContainer()
             test_container.add("var_0", "var\tvar_0\n")
+            test_container.add("var_{\\Gamma}", "var\tvar_{\\Gamma}\n")
             test_container.add("var_test", "var\tvar_test\n")
             test_container.add("var_test_0", "var\tvar_test_0\n")
             test_container.add("var_test1_0", "var\tvar_test1_0\n")

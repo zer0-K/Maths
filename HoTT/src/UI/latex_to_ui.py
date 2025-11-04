@@ -35,7 +35,6 @@ class LatexToUI:
         
         container = MathContainer(container_name, tree)
         return container
-
     
     @staticmethod
     def read_latex(file: str) -> MathContainer:

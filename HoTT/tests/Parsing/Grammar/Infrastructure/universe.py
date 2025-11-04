@@ -37,6 +37,7 @@ class RUN_UNIVERSE:
             test_container = TestContainer()
             test_container.add("Type", "universe\n")
             test_container.add("Type_i", "universe\n")
+            test_container.add("Type_{i+1}", "universe\n")
             test_container.add("Type_0", "universe\t0\n")
             test_container.add("Type_1", "universe\t1\n")
             test_container.add("Type_10", "universe\t10\n")
