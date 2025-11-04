@@ -57,7 +57,7 @@
 // Formation rules
 @ <formation_empty> ::= "empty_type"                        -- 0-formation
 @ <formation_unit> ::= "unit_type"                          -- 1-formation
-@ <formation_arrow> ::= <term> "mapsto" <term>              -- arrow-formation
+@ <formation_arrow> ::= <term> "\\to" <term>                 -- arrow-formation
 @ <formation_pi> ::= "\Pi_{" <var_decl> "}" <term>          -- Π-formation
 @ <formation_sigma> ::= "sigma" <var_decl> "." <term>       -- Σ-formation
 @ <formation_coproduct> ::= <term> "+" <term>               -- coproduct-formation

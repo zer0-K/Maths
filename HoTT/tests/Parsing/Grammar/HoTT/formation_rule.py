@@ -78,7 +78,7 @@ class RUN_FORM:
 
             test_container = TestContainer()
             test_container.add(
-                "unit_type mapsto unit_type", 
+                "unit_type \\to unit_type", 
                 "formation_rule\n" + \
                 "  formation_arrow\n" + \
                 "    term\n" + \

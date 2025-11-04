@@ -77,6 +77,14 @@ We suppose that judgmental equality is an equivalence relation. Namely:
 \end{axiom}
 
 
+\subsection{Function type}
+
+\begin{axiom}{0.4.1}
+\axiomName{Function formation} \probe : 
+\actualAxiom{$rule\_\lambda-form : \context{\Gamma} \vdash \var{A}:\U{i},\quad \context{\Gamma}, \var{x}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \var{A} \to \var{B}:\U{i}$} \probe
+\end{axiom}
+
+
 \subsection{Dependent function type}
 
 \begin{axiom}{0.4.1}
