@@ -56,7 +56,7 @@ class RUN_INTRO:
 
             test_container = TestContainer()
             test_container.add(
-                "lambda var_x:unit_type.star", 
+                "\lambda var_x:unit_type.star", 
                 "introduction_rule\n" + \
                 "  intro_lambda\n" + \
                 "    var_decl\n" + \

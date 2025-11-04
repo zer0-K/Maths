@@ -70,7 +70,7 @@
 
 // Introduction rules
 @ <intro_unit> ::= <STAR> ":" "unit_type"                -- 1-intro
-@ <intro_lambda> ::= "lambda" <var_decl> "." <term>      -- lambda-intro
+@ <intro_lambda> ::= "\lambda" <var_decl> "." <term>      -- lambda-intro
 @ <intro_pair> ::= "(" <term> "," <term> ")"             -- pair-intro
 @ <intro_coproduct> ::= "inl" "(" <term> ")" | "inr" "(" <term> ")"     -- coproduct-intro
 @ <intro_refl> ::= "refl" "(" <term> ")"                 -- refl-intro
