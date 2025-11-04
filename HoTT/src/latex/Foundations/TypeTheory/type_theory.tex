@@ -148,11 +148,39 @@ We suppose that judgmental equality is an equivalence relation. Namely:
 % Dependent function type
 \subsection{Dependent function type}
 
+\indent
+Similar as non dependent functions.
+
 \begin{axiom}{1.2.1}
 \axiomName{Dependent function formation} \probe : 
 
-\actualAxiom{$rule\_\Pi-form : \context{\Gamma} \vdash \var{A}:\U{i},\quad \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \Pi_{\var{x}:\var{A}}\var{B}:\U{i}$} \probe
+\actualAxiom{$rule\_\Pi-form : \context{\Gamma} \vdash \var{A}:\U{i},\quad \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \Pi_{\var{x}:\var{A}}\var{B}(\var{x}):\U{i}$} \probe
 \end{axiom}
+
+\begin{axiom}{1.2.2}
+\axiomName{Dependent function introduction} \probe : 
+
+\actualAxiom{$rule\_\Pi-intro : \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \lambda (\var{x}:\var{A}).\var{b}:\Pi_{\var{x}:\var{A}}\var{B}(\var{x})$} \probe
+\end{axiom}
+
+\begin{axiom}{1.2.3}
+\axiomName{Dependent function elimination} \probe : 
+
+\actualAxiom{$rule\_\Pi-elim : \context{\Gamma} \vdash \var{f}:\Pi_{\var{x}:\var{A}}\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \var{f(a)}:\var{B}(\var{a})$} \probe
+\end{axiom}
+
+\begin{axiom}{1.2.4}
+\axiomName{Dependent function computation} \probe : 
+
+\actualAxiom{$rule\_\Pi-comp : \context{\Gamma}, \var{x}:\var{A} \vdash \var{b}:\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \text{let}\ \var{x} = \var{a}\ \text{in}\ \lambda (\var{x}:\var{A}).\var{b}:\var{B}(\var{x})$} \probe
+\end{axiom}
+
+\begin{axiom}{1.2.5}
+\axiomName{Dependent function uniqueness principle} \probe : 
+
+\actualAxiom{$rule\_\Pi-uniq : \context{\Gamma} \vdash \var{f}:\Pi_{\var{x}:\var{A}}\var{B}\ \text{——}\ \context{\Gamma} \vdash \var{f} \equiv \lambda (\var{x}:\var{A}).\var{f}(\var{x}):\Pi_{\var{x}:\var{A}}\var{B}$} \probe
+\end{axiom}
+
 
 
 \end{document}

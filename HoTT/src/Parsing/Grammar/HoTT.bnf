@@ -21,7 +21,7 @@
 @ <judgment> ::= <context> "ctx"                  -- valid_context
     | <context> "⊢" <term> ":" <term>             -- typing
     | <context> "⊢" <term> "\equiv" <term> ":" <term>     -- definitional_equality
-    | <context> "⊢" <term> "reduc" <term>                  -- reduction
+    | <context> "⊢" <term> "reduc" <term>                 -- reduction
     | <side_condition>                             -- meta-level conditions
  
 @ <judgment_list> ::= <judgment> ( ",\quad" <judgment>)*
