@@ -122,7 +122,25 @@ We suppose that judgmental equality is an equivalence relation. Namely:
 \begin{axiom}{1.1.2}
 \axiomName{Function introduction} \probe : 
 
-\actualAxiom{$rule\_\lambda-intro : \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \lambda \var{x}:\var{A}.\var{b}:\var{A} \to \var{B}$} \probe
+\actualAxiom{$rule\_\lambda-intro : \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \lambda (\var{x}:\var{A}).\var{b}:\var{A} \to \var{B}$} \probe
+\end{axiom}
+
+\begin{axiom}{1.1.3}
+\axiomName{Function elimination} \probe : 
+
+\actualAxiom{$rule\_\lambda-elim : \context{\Gamma} \vdash \var{f}:\var{A}\to\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \var{f(a)}:\var{B}$} \probe
+\end{axiom}
+
+\begin{axiom}{1.1.4}
+\axiomName{Function computation} \probe : 
+
+\actualAxiom{$rule\_\lambda-comp : \context{\Gamma}, \var{x}:\var{A} \vdash \var{b}:\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \text{let}\ \var{x} = \var{a}\ \text{in}\ \lambda (\var{x}:\var{A}).\var{b}:\var{B}$} \probe
+\end{axiom}
+
+\begin{axiom}{1.1.5}
+\axiomName{Function uniqueness principle} \probe : 
+
+\actualAxiom{$rule\_\lambda-uniq : \context{\Gamma} \vdash \var{f}:\var{A}\to\var{B}\ \text{——}\ \context{\Gamma} \vdash \var{f} \equiv \lambda (\var{x}:\var{A}).\var{f}(\var{x}):\var{A} \to \var{B}$} \probe
 \end{axiom}
 
 
