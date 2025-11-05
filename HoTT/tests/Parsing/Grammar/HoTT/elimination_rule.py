@@ -63,10 +63,10 @@ class RUN_ELIM:
 
             test_container = TestContainer()
             test_container.add(
-                "elimT(star,name_c)", 
+                "elimT(\\star,name_c)", 
                 "elimination_rule\n" + \
                 "  elim_unit\n" + \
-                "    term\tstar\n" + \
+                "    term\t\\star\n" + \
                 "    term\tname_c\n")
             
             # starting point in the grammar is the node 'universe'
@@ -89,11 +89,11 @@ class RUN_ELIM:
 
             test_container = TestContainer()
             test_container.add(
-                "name_f%(star)", 
+                "name_f%(\\star)", 
                 "elimination_rule\n" + \
                 "  elim_apply\n" + \
                 "    term\tname_f\n" + \
-                "    term\tstar\n")
+                "    term\t\\star\n")
             
             # starting point in the grammar is the node 'universe'
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
@@ -155,25 +155,25 @@ class RUN_ELIM:
 
             test_container = TestContainer()
             test_container.add(
-                "pr1(pair(star, star))", 
+                "pr1(pair(\\star, \\star))", 
                 "elimination_rule\n" + \
                 "  elim_sigma\n" + \
                 "    elim_sigma1\n" + \
                 "      term\n" + \
                 "        introduction_rule\n" + \
                 "          intro_pair\n" + \
-                "            term\tstar\n" + \
-                "            term\tstar\n")
+                "            term\t\\star\n" + \
+                "            term\t\\star\n")
             test_container.add(
-                "pr2(pair(star, star))", 
+                "pr2(pair(\\star, \\star))", 
                 "elimination_rule\n" + \
                 "  elim_sigma\n" + \
                 "    elim_sigma2\n" + \
                 "      term\n" + \
                 "        introduction_rule\n" + \
                 "          intro_pair\n" + \
-                "            term\tstar\n" + \
-                "            term\tstar\n")
+                "            term\t\\star\n" + \
+                "            term\t\\star\n")
             
             # starting point in the grammar is the node 'universe'
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
@@ -226,13 +226,13 @@ class RUN_ELIM:
 
             test_container = TestContainer()
             test_container.add(
-                "rec(name_N, name_comp, name_add, star)", 
+                "rec(name_N, name_comp, name_add, \\star)", 
                 "elimination_rule\n" + \
                 "  recursion\n" + \
                 "    term\tname_N\n" + \
                 "    term\tname_comp\n" + \
                 "    term\tname_add\n" + \
-                "    term\tstar\n")
+                "    term\t\\star\n")
             
             # starting point in the grammar is the node 'universe'
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()
@@ -254,13 +254,13 @@ class RUN_ELIM:
 
             test_container = TestContainer()
             test_container.add(
-                "ind(name_N, name_comp, name_add, star)", 
+                "ind(name_N, name_comp, name_add, \\star)", 
                 "elimination_rule\n" + \
                 "  induction\n" + \
                 "    term\tname_N\n" + \
                 "    term\tname_comp\n" + \
                 "    term\tname_add\n" + \
-                "    term\tstar\n")
+                "    term\t\\star\n")
             
             # starting point in the grammar is the node 'universe'
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "elimination_rule").pretty()

@@ -37,8 +37,8 @@ class RUN_TERM:
             test_container = TestContainer()
             test_container.add("Type_010", "term\n  universe\t010\n")
             test_container.add("var_test_1", "term\n  var\tvar_test_1\n")
-            test_container.add("star", "term\tstar\n")
-            test_container.add("((star))", "term\n  term\n    term\tstar\n")
+            test_container.add("\\star", "term\t\\star\n")
+            test_container.add("((\\star))", "term\n  term\n    term\t\\star\n")
             test_container.add("var_f(var_x)", "term\n  var\tvar_f\n  term\n    var\tvar_x\n")
             
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "term").pretty()

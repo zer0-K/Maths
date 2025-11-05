@@ -26,26 +26,6 @@ class RUN_INTRO:
     log_prefix: str = f"{log_prefix}[simple]"
     
     @staticmethod
-    def unit():
-        # preprocess
-        if True:
-            prefix: str = f"{RUN_INTRO.log_prefix}"
-
-            Logger.test("running...", prefix)
-            success: str = "Good"
-
-            test_container = TestContainer()
-            test_container.add("star:unit_type", "introduction_rule\n  intro_unit\tstar\n")
-            
-            func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
-        
-        # process
-        success = UtilsTest.check(func, test_container, log_prefix)
-        
-        # postprocess
-        Logger.test(success, prefix)
-
-    @staticmethod
     def function():
         # preprocess
         if True:
@@ -56,7 +36,7 @@ class RUN_INTRO:
 
             test_container = TestContainer()
             test_container.add(
-                "\lambda var_x:unit_type.star", 
+                "\lambda var_x:unit_type.\\star", 
                 "introduction_rule\n" + \
                 "  intro_lambda\n" + \
                 "    var_decl\n" + \
@@ -64,7 +44,7 @@ class RUN_INTRO:
                 "      term\n" + \
                 "        formation_rule\n" + \
                 "          formation_unit\n" + \
-                "    term\tstar\n")
+                "    term\t\\star\n")
             
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
@@ -85,11 +65,11 @@ class RUN_INTRO:
 
             test_container = TestContainer()
             test_container.add(
-                "pair(star,star)", 
+                "pair(\\star,\\star)", 
                 "introduction_rule\n" + \
                 "  intro_pair\n" + \
-                "    term\tstar\n" + \
-                "    term\tstar\n")
+                "    term\t\\star\n" + \
+                "    term\t\\star\n")
             
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
@@ -109,10 +89,10 @@ class RUN_INTRO:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("inl(star)", 
-                               "introduction_rule\n  intro_coproduct\n    term\tstar\n")
-            test_container.add("inr(star)", 
-                               "introduction_rule\n  intro_coproduct\n    term\tstar\n")
+            test_container.add("inl(\\star)", 
+                               "introduction_rule\n  intro_coproduct\n    term\t\\star\n")
+            test_container.add("inr(\\star)", 
+                               "introduction_rule\n  intro_coproduct\n    term\t\\star\n")
             
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
@@ -132,8 +112,8 @@ class RUN_INTRO:
             success: str = "Good"
 
             test_container = TestContainer()
-            test_container.add("refl(star)", 
-                               "introduction_rule\n  intro_refl\n    term\tstar\n")
+            test_container.add("refl(\\star)", 
+                               "introduction_rule\n  intro_refl\n    term\t\\star\n")
             
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "introduction_rule").pretty()
         
@@ -192,7 +172,6 @@ class RUN:
         
         Logger.test("running...", log_prefix)
 
-        RUN_INTRO.unit()
         RUN_INTRO.function()
         RUN_INTRO.pair()
         RUN_INTRO.coproduct()

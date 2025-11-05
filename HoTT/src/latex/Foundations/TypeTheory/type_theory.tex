@@ -265,4 +265,32 @@ Similar as non dependent functions.
 \end{axiom}
 
 
+% Unit type
+\subsection{Unit type}
+
+\begin{axiom}{1.6.1}
+\axiomName{Unit formation} \probe : 
+
+\actualAxiom{$rule\_unit-form : \ctx\ ctx\ \text{——}\ \ctx \vdash \unit:\U{i}$} \probe
+\end{axiom}
+
+\begin{axiom}{1.6.2}
+\axiomName{Unit introduction} \probe : 
+
+\actualAxiom{$rule\_unit-intro : \ctx\ ctx\ \text{——}\ \ctx \vdash \star:\unit$} \probe
+\end{axiom}
+
+\begin{axiom}{1.6.3}
+\axiomName{Unit elimination} \probe : 
+
+\actualAxiom{$rule\_unit-elim : \ctx, \var{x}:\unit \vdash \var{C}:\U{i},\quad \ctx \vdash \var{c}:\var{C}(\star),\quad \ctx \vdash \var{a}:\unit\ \text{——}\ \ctx \vdash ind(\var{C}, \var{c}, \var{a}):\var{C}(\var{a})$} \probe
+\end{axiom}
+
+\begin{axiom}{1.6.4}
+\axiomName{Unit computation} \probe : 
+
+\actualAxiom{$rule\_unit-comp : \ctx, \var{x}:\unit \vdash \var{C}:\U{i},\quad \ctx \vdash \var{c}:\var{C}(\star)\ \text{——}\ \ctx \vdash \text{let}\ \var{x} = \star \text{in}\ ind(\var{C}, \var{c}, \star)\equiv \var{c}:\var{C}(\var{x})$} \probe
+\end{axiom}
+
+
 \end{document}

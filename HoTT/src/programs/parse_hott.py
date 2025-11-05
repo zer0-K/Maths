@@ -16,7 +16,7 @@ from src.Parsing.Grammar.hott_parser import HottParser
 
 def run():
     # parse an HoTT expression
-    txt = "rule_test : context_{\\Gamma} ⊢ var_{a}:var_{A}, context_{\\Gamma} ⊢ var_{A}\\equiv var_{B}:Type_{i} ————— context_{\\Gamma} ⊢ var_{a}:var_{B}"
+    txt = "rule_unit-intro : context_{\\Gamma} ctx ————— context_{\\Gamma} ⊢ \\star:unit_type"
     parsed = HottParser.get_HoTT_tree(txt, "inference_system")
 
     res_str = parsed.pretty()

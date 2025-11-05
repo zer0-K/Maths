@@ -68,6 +68,7 @@ class LatexTransformer(Transformer):
 
         text = text.replace("\\ctx", "\\context{\\Gamma}")
         text = text.replace("\\zero", "empty_type")
+        text = text.replace("\\unit", "unit_type")
         text = LatexTransformer.replace_nested(text, "context")
         text = LatexTransformer.replace_nested(text, "var")
         text = LatexTransformer.replace_nested(text, "U", "Type")

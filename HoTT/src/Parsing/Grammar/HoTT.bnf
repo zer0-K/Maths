@@ -69,14 +69,13 @@
     | <formation_id> | <formation_induction>
 
 // Introduction rules
-@ <intro_unit> ::= <STAR> ":" "unit_type"                -- 1-intro
 @ <intro_lambda> ::= "\lambda" <var_decl> "." <term>     -- lambda-intro
 @ <intro_pair> ::= "pair(" <term> "," <term> ")"         -- pair-intro
 @ <intro_coproduct> ::= "inl" "(" <term> ")" | "inr" "(" <term> ")"     -- coproduct-intro
 @ <intro_refl> ::= "refl" "(" <term> ")"                 -- refl-intro
 @ <intro_constr> ::= <constructor>                       -- constructor-intro
 
-@ <introduction_rule> ::= <intro_unit> | <intro_lambda> | <intro_pair> | <intro_coproduct> | <intro_refl> | <intro_constr>
+@ <introduction_rule> ::=  <intro_lambda> | <intro_pair> | <intro_coproduct> | <intro_refl> | <intro_constr>
 
 
 // Elimination rules
@@ -131,7 +130,7 @@
 @ <var> ::= <VNAME>                         -- variable names
 @ <varlist> ::= <var> ("," <var>)*
 
-@ <STAR> ::= "star"
+@ <STAR> ::= "\\star"
 @ <NUMBER> ::= /[0-9]+/                                 -- we allow 0109 for example
 @ <VNAME> ::= /var_[a-zA-Z0-9_\\]+/ | /var_{[a-zA-Z0-9_\\\(\)]+}/
 @ <CNAME> ::= /name_[a-zA-Z_\\][a-zA-Z0-9_\\]*/ | /name_{[a-zA-Z_\\][a-zA-Z0-9_\\]*}/

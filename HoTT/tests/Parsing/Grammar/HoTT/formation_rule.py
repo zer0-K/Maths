@@ -88,7 +88,7 @@ class RUN_FORM:
                 "      formation_rule\n" + \
                 "        formation_unit\n")
             test_container.add(
-                "\\Pi_{var_x:unit_type} star", 
+                "\\Pi_{var_x:unit_type} \\star", 
                 "formation_rule\n" + \
                 "  formation_pi\n" + \
                 "    var_decl\n" + \
@@ -96,7 +96,7 @@ class RUN_FORM:
                 "      term\n" + \
                 "        formation_rule\n" + \
                 "          formation_unit\n" + \
-                "    term\tstar\n")
+                "    term\t\\star\n")
             
             # starting point in the grammar is the node 'universe'
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
@@ -180,13 +180,13 @@ class RUN_FORM:
 
             test_container = TestContainer()
             test_container.add(
-                "Id(unit_type, star, star)", 
+                "Id(unit_type, \\star, \\star)", 
                 "formation_rule\n  formation_id\n" + \
                 "    term\n" + \
                 "      formation_rule\n" + \
                 "        formation_unit\n" + \
-                "    term\tstar\n" + \
-                "    term\tstar\n")
+                "    term\t\\star\n" + \
+                "    term\t\\star\n")
             
             # starting point in the grammar is the node 'universe'
             func: Callable = lambda s: HottParser.get_HoTT_tree(s, "formation_rule").pretty()
