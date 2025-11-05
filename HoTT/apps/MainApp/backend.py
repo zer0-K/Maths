@@ -330,7 +330,8 @@ class BackEnd:
         def clean_common(text):
             
             text = text.replace("context\\_", "").replace("var\\_", "")\
-                .replace("Type\\_", "\\mathcal{U}_").replace("pair(", "(")
+                .replace("Type\\_", "\\mathcal{U}_").replace("pair(", "(")\
+                .replace("empty_type", "0")
             
             return text
 

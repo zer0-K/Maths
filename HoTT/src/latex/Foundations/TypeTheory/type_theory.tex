@@ -249,4 +249,20 @@ Similar as non dependent functions.
 \end{axiom}
 
 
+% Empty type
+\subsection{Empty type}
+
+\begin{axiom}{1.5.1}
+\axiomName{Empty formation} \probe : 
+
+\actualAxiom{$rule\_empty-form : \ctx\ ctx\ \text{——}\ \ctx \vdash \zero:\U{i}$} \probe
+\end{axiom}
+
+\begin{axiom}{1.5.2}
+\axiomName{Empty elimination} \probe : 
+
+\actualAxiom{$rule\_empty-elim : \ctx, \var{x}:\zero \vdash \var{C}:\U{i},\quad \ctx \vdash \var{a}:\zero\ \text{——}\ \ctx \vdash absurd\ \var{a}:\var{C}(\var{a})$} \probe
+\end{axiom}
+
+
 \end{document}
