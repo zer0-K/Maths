@@ -66,6 +66,7 @@ class LatexTransformer(Transformer):
     @staticmethod
     def replace_all_commands(text: str):
 
+        text = text.replace("\\ctx", "\\context{\\Gamma}")
         text = LatexTransformer.replace_nested(text, "context")
         text = LatexTransformer.replace_nested(text, "var")
         text = LatexTransformer.replace_nested(text, "U", "Type")

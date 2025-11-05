@@ -36,13 +36,13 @@ We will note \notation{$.$} \probe for the \actualDef{empty context} \probe
 \begin{axiom}{0.1.2}
 \axiomName{context extension} \probe : 
 
-\actualAxiom{$rule\_context\_extension : \context{\Gamma} \vdash \var{A}:\U{i},\quad \var{x}\ not\ in\ dom(\context{\Gamma})\ \text{——}\ \context{\Gamma},\ \var{x}:\var{A}\ ctx$} \probe
+\actualAxiom{$rule\_context\_extension : \ctx \vdash \var{A}:\U{i},\quad \var{x}\ not\ in\ dom(\ctx)\ \text{——}\ \ctx,\ \var{x}:\var{A}\ ctx$} \probe
 \end{axiom}
 
 \begin{axiom}{0.1.3}
 
 \axiomName{variable rule} \probe : 
-\actualAxiom{$rule\_variable : \context{\Gamma}\ ctx,\quad \var{x}:\var{A}\ in\ \context{\Gamma}\ \text{——}\ \context{\Gamma} \vdash \var{x}:\var{A}$} \probe
+\actualAxiom{$rule\_variable : \ctx\ ctx,\quad \var{x}:\var{A}\ in\ \ctx\ \text{——}\ \ctx \vdash \var{x}:\var{A}$} \probe
 \end{axiom}
 
 
@@ -55,31 +55,31 @@ We suppose that judgmental equality is an equivalence relation. Namely:
 \begin{axiom}{0.2.1}
 \axiomName{Judgmental reflexivity} \probe : 
 
-\actualAxiom{$rule\_judg\_refl : \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \var{a} \equiv \var{a}:\var{A}$} \probe
+\actualAxiom{$rule\_judg\_refl : \ctx \vdash \var{a}:\var{A}\ \text{——}\ \ctx \vdash \var{a} \equiv \var{a}:\var{A}$} \probe
 \end{axiom}
 
 \begin{axiom}{0.2.2}
 \axiomName{Judgmental symmetry} \probe : 
 
-\actualAxiom{$rule\_judg\_sym : \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \var{b} \equiv \var{a}:\var{A}$} \probe
+\actualAxiom{$rule\_judg\_sym : \ctx \vdash \var{a}\equiv \var{b}:\var{A}\ \text{——}\ \ctx \vdash \var{b} \equiv \var{a}:\var{A}$} \probe
 \end{axiom}
 
 \begin{axiom}{0.2.3}
 \axiomName{Judgmental transitivity} \probe : 
 
-\actualAxiom{$rule\_judg\_trans : \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{A},\quad \context{\Gamma} \vdash \var{b}\equiv \var{c}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \var{a} \equiv \var{c}:\var{A}$} \probe
+\actualAxiom{$rule\_judg\_trans : \ctx \vdash \var{a}\equiv \var{b}:\var{A},\quad \ctx \vdash \var{b}\equiv \var{c}:\var{A}\ \text{——}\ \ctx \vdash \var{a} \equiv \var{c}:\var{A}$} \probe
 \end{axiom}
 
 \begin{axiom}{0.2.4}
 \axiomName{Judgmental typing} \probe : 
 
-\actualAxiom{$rule\_judg\_typing : \context{\Gamma} \vdash \var{a}:\var{A},\quad \context{\Gamma} \vdash \var{A}\equiv \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \var{a}:\var{B}$} \probe
+\actualAxiom{$rule\_judg\_typing : \ctx \vdash \var{a}:\var{A},\quad \ctx \vdash \var{A}\equiv \var{B}:\U{i}\ \text{——}\ \ctx \vdash \var{a}:\var{B}$} \probe
 \end{axiom}
 
 \begin{axiom}{0.2.5}
 \axiomName{Judgmental typing equiv} \probe : 
 
-\actualAxiom{$rule\_judg\_typing\_eq : \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{A},\quad \context{\Gamma} \vdash \var{A}\equiv \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \var{a}\equiv \var{b}:\var{B}$} \probe
+\actualAxiom{$rule\_judg\_typing\_eq : \ctx \vdash \var{a}\equiv \var{b}:\var{A},\quad \ctx \vdash \var{A}\equiv \var{B}:\U{i}\ \text{——}\ \ctx \vdash \var{a}\equiv \var{b}:\var{B}$} \probe
 \end{axiom}
 
 
@@ -90,13 +90,13 @@ We suppose that judgmental equality is an equivalence relation. Namely:
 \begin{axiom}{0.3.1}
 \axiomName{Universe intro} \probe : 
 
-\actualAxiom{$rule\_univ\_intro : \context{\Gamma}\ ctx\ \text{——}\ \context{\Gamma} \vdash \U{i}:\U{i+1}$} \probe
+\actualAxiom{$rule\_univ\_intro : \ctx\ ctx\ \text{——}\ \ctx \vdash \U{i}:\U{i+1}$} \probe
 \end{axiom}
 
 \begin{axiom}{0.3.2}
 \axiomName{Universe cumul} \probe : 
 
-\actualAxiom{$rule\_univ\_cumul : \context{\Gamma} \vdash \var{A}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \var{A}:\U{i+1}$} \probe
+\actualAxiom{$rule\_univ\_cumul : \ctx \vdash \var{A}:\U{i}\ \text{——}\ \ctx \vdash \var{A}:\U{i+1}$} \probe
 \end{axiom}
 
 
@@ -116,31 +116,31 @@ We suppose that judgmental equality is an equivalence relation. Namely:
 \begin{axiom}{1.1.1}
 \axiomName{Function formation} \probe :
 
-\actualAxiom{$rule\_\lambda-form : \context{\Gamma} \vdash \var{A}:\U{i},\quad \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \var{A} \to \var{B}:\U{i}$} \probe
+\actualAxiom{$rule\_\lambda-form : \ctx \vdash \var{A}:\U{i},\quad \ctx, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \ctx \vdash \var{A} \to \var{B}:\U{i}$} \probe
 \end{axiom}
 
 \begin{axiom}{1.1.2}
 \axiomName{Function introduction} \probe : 
 
-\actualAxiom{$rule\_\lambda-intro : \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \lambda (\var{x}:\var{A}).\var{b}:\var{A} \to \var{B}$} \probe
+\actualAxiom{$rule\_\lambda-intro : \ctx, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \ctx \vdash \lambda (\var{x}:\var{A}).\var{b}:\var{A} \to \var{B}$} \probe
 \end{axiom}
 
 \begin{axiom}{1.1.3}
 \axiomName{Function elimination} \probe : 
 
-\actualAxiom{$rule\_\lambda-elim : \context{\Gamma} \vdash \var{f}:\var{A}\to\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \var{f(a)}:\var{B}$} \probe
+\actualAxiom{$rule\_\lambda-elim : \ctx \vdash \var{f}:\var{A}\to\var{B},\quad \ctx \vdash \var{a}:\var{A}\ \text{——}\ \ctx \vdash \var{f(a)}:\var{B}$} \probe
 \end{axiom}
 
 \begin{axiom}{1.1.4}
 \axiomName{Function computation} \probe : 
 
-\actualAxiom{$rule\_\lambda-comp : \context{\Gamma}, \var{x}:\var{A} \vdash \var{b}:\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \text{let}\ \var{x} = \var{a}\ \text{in}\ \lambda (\var{x}:\var{A}).\var{b}:\var{B}$} \probe
+\actualAxiom{$rule\_\lambda-comp : \ctx, \var{x}:\var{A} \vdash \var{b}:\var{B},\quad \ctx \vdash \var{a}:\var{A}\ \text{——}\ \ctx \vdash \text{let}\ \var{x} = \var{a}\ \text{in}\ \lambda (\var{x}:\var{A}).\var{b}:\var{B}$} \probe
 \end{axiom}
 
 \begin{axiom}{1.1.5}
 \axiomName{Function uniqueness principle} \probe : 
 
-\actualAxiom{$rule\_\lambda-uniq : \context{\Gamma} \vdash \var{f}:\var{A}\to\var{B}\ \text{——}\ \context{\Gamma} \vdash \var{f} \equiv \lambda (\var{x}:\var{A}).\var{f}(\var{x}):\var{A} \to \var{B}$} \probe
+\actualAxiom{$rule\_\lambda-uniq : \ctx \vdash \var{f}:\var{A}\to\var{B}\ \text{——}\ \ctx \vdash \var{f} \equiv \lambda (\var{x}:\var{A}).\var{f}(\var{x}):\var{A} \to \var{B}$} \probe
 \end{axiom}
 
 
@@ -154,31 +154,31 @@ Similar as non dependent functions.
 \begin{axiom}{1.2.1}
 \axiomName{Dependent function formation} \probe : 
 
-\actualAxiom{$rule\_\Pi-form : \context{\Gamma} \vdash \var{A}:\U{i},\quad \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \Pi_{\var{x}:\var{A}}\var{B}(\var{x}):\U{i}$} \probe
+\actualAxiom{$rule\_\Pi-form : \ctx \vdash \var{A}:\U{i},\quad \ctx, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \ctx \vdash \Pi_{\var{x}:\var{A}}\var{B}(\var{x}):\U{i}$} \probe
 \end{axiom}
 
 \begin{axiom}{1.2.2}
 \axiomName{Dependent function introduction} \probe : 
 
-\actualAxiom{$rule\_\Pi-intro : \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \lambda (\var{x}:\var{A}).\var{b}:\Pi_{\var{x}:\var{A}}\var{B}(\var{x})$} \probe
+\actualAxiom{$rule\_\Pi-intro : \ctx, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \ctx \vdash \lambda (\var{x}:\var{A}).\var{b}:\Pi_{\var{x}:\var{A}}\var{B}(\var{x})$} \probe
 \end{axiom}
 
 \begin{axiom}{1.2.3}
 \axiomName{Dependent function elimination} \probe : 
 
-\actualAxiom{$rule\_\Pi-elim : \context{\Gamma} \vdash \var{f}:\Pi_{\var{x}:\var{A}}\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \var{f(a)}:\var{B}(\var{a})$} \probe
+\actualAxiom{$rule\_\Pi-elim : \ctx \vdash \var{f}:\Pi_{\var{x}:\var{A}}\var{B},\quad \ctx \vdash \var{a}:\var{A}\ \text{——}\ \ctx \vdash \var{f(a)}:\var{B}(\var{a})$} \probe
 \end{axiom}
 
 \begin{axiom}{1.2.4}
 \axiomName{Dependent function computation} \probe : 
 
-\actualAxiom{$rule\_\Pi-comp : \context{\Gamma}, \var{x}:\var{A} \vdash \var{b}:\var{B},\quad \context{\Gamma} \vdash \var{a}:\var{A}\ \text{——}\ \context{\Gamma} \vdash \text{let}\ \var{x} = \var{a}\ \text{in}\ \lambda (\var{x}:\var{A}).\var{b}:\var{B}(\var{x})$} \probe
+\actualAxiom{$rule\_\Pi-comp : \ctx, \var{x}:\var{A} \vdash \var{b}:\var{B},\quad \ctx \vdash \var{a}:\var{A}\ \text{——}\ \ctx \vdash \text{let}\ \var{x} = \var{a}\ \text{in}\ \lambda (\var{x}:\var{A}).\var{b}:\var{B}(\var{x})$} \probe
 \end{axiom}
 
 \begin{axiom}{1.2.5}
 \axiomName{Dependent function uniqueness principle} \probe : 
 
-\actualAxiom{$rule\_\Pi-uniq : \context{\Gamma} \vdash \var{f}:\Pi_{\var{x}:\var{A}}\var{B}\ \text{——}\ \context{\Gamma} \vdash \var{f} \equiv \lambda (\var{x}:\var{A}).\var{f}(\var{x}):\Pi_{\var{x}:\var{A}}\var{B}$} \probe
+\actualAxiom{$rule\_\Pi-uniq : \ctx \vdash \var{f}:\Pi_{\var{x}:\var{A}}\var{B}\ \text{——}\ \ctx \vdash \var{f} \equiv \lambda (\var{x}:\var{A}).\var{f}(\var{x}):\Pi_{\var{x}:\var{A}}\var{B}$} \probe
 \end{axiom}
 
 
@@ -189,24 +189,24 @@ Similar as non dependent functions.
 \begin{axiom}{1.3.1}
 \axiomName{Dependent pair formation} \probe : 
 
-\actualAxiom{$rule\_\Sigma-form : \context{\Gamma} \vdash \var{A}:\U{i},\quad \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \context{\Gamma} \vdash \Sigma_{\var{x}:\var{A}}\var{B}(\var{x}):\U{i}$} \probe
+\actualAxiom{$rule\_\Sigma-form : \ctx \vdash \var{A}:\U{i},\quad \ctx, \var{a}:\var{A} \vdash \var{B}:\U{i}\ \text{——}\ \ctx \vdash \Sigma_{\var{x}:\var{A}}\var{B}(\var{x}):\U{i}$} \probe
 \end{axiom}
 
 \begin{axiom}{1.3.2}
 \axiomName{Dependent pair introduction} \probe : 
 
-\actualAxiom{$rule\_\Sigma-intro : \context{\Gamma}, \var{a}:\var{A} \vdash \var{B}:\U{i},\quad \context{\Gamma} \vdash \var{a}:\var{A},\quad \context{\Gamma} \vdash \var{b}:\var{B}(\var{x})\ \text{——}\ \context{\Gamma} \vdash pair(\var{a}, \var{b}):\Sigma_{\var{y}:\var{A}}\var{B}(\var{y})$} \probe
+\actualAxiom{$rule\_\Sigma-intro : \ctx, \var{a}:\var{A} \vdash \var{B}:\U{i},\quad \ctx \vdash \var{a}:\var{A},\quad \ctx \vdash \var{b}:\var{B}(\var{x})\ \text{——}\ \ctx \vdash pair(\var{a}, \var{b}):\Sigma_{\var{y}:\var{A}}\var{B}(\var{y})$} \probe
 \end{axiom}
 
 \begin{axiom}{1.3.3}
 \axiomName{Dependent pair elimination} \probe : 
 
-\actualAxiom{$rule\_\Sigma-elim : \context{\Gamma}, \var{z}:\Sigma_{\var{x}:\var{A}}\var{B}(\var{x}) \vdash \var{C}:\U{i},\quad \context{\Gamma}, \var{a}:\var{A},\var{b}:\var{B} \vdash \var{g}:\var{C}(pair(\var{a},\var{b})),\quad \context{\Gamma} \vdash \var{p}:\Sigma_{\var{y}:\var{A}}\var{B}(\var{y})\ \text{——} \context{\Gamma} \vdash ind(\var{C}(\var{z}), \var{g}, \var{p}):\var{C}(\var{z})$} \probe
+\actualAxiom{$rule\_\Sigma-elim : \ctx, \var{z}:\Sigma_{\var{x}:\var{A}}\var{B}(\var{x}) \vdash \var{C}:\U{i},\quad \ctx, \var{a}:\var{A},\var{b}:\var{B} \vdash \var{g}:\var{C}(pair(\var{a},\var{b})),\quad \ctx \vdash \var{p}:\Sigma_{\var{y}:\var{A}}\var{B}(\var{y})\ \text{——} \ctx \vdash ind(\var{C}(\var{z}), \var{g}, \var{p}):\var{C}(\var{z})$} \probe
 \end{axiom}
 
 \begin{axiom}{1.3.4} \axiomName{Dependent pair computation} \probe : 
 
-\actualAxiom{$rule\_\Sigma-comp : \context{\Gamma}, \var{z}:\Sigma_{\var{x}:\var{A}}\var{B}(\var{x}) \vdash \var{C}:\U{i},\quad \context{\Gamma},\var{a}:\var{A},\var{b}:\var{B} \vdash \var{g}:\var{C}(\var{z}),\quad \context{\Gamma} \vdash \var{a}:\var{A},\quad \context{\Gamma} \vdash \var{b}:\var{B}(\var{x})\ \text{——}\ \context{\Gamma} \vdash \text{let}\ \var{x} = \var{a}, \var{y} = \var{b}, \var{z} = pair(\var{a},\var{b})\ \text{in}\ ind(\var{C}(\var{z}), \var{g}, pair(\var{a},\var{b}))\equiv \var{g}(\var{x}, \var{y}):\var{C}(\var{z})$} \probe
+\actualAxiom{$rule\_\Sigma-comp : \ctx, \var{z}:\Sigma_{\var{x}:\var{A}}\var{B}(\var{x}) \vdash \var{C}:\U{i},\quad \ctx,\var{a}:\var{A},\var{b}:\var{B} \vdash \var{g}:\var{C}(\var{z}),\quad \ctx \vdash \var{a}:\var{A},\quad \ctx \vdash \var{b}:\var{B}(\var{x})\ \text{——}\ \ctx \vdash \text{let}\ \var{x} = \var{a}, \var{y} = \var{b}, \var{z} = pair(\var{a},\var{b})\ \text{in}\ ind(\var{C}(\var{z}), \var{g}, pair(\var{a},\var{b}))\equiv \var{g}(\var{x}, \var{y}):\var{C}(\var{z})$} \probe
 \end{axiom}
 
 
