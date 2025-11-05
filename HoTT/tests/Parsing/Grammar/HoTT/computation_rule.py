@@ -37,7 +37,7 @@ class RUN_COMPUT:
             test_container = TestContainer()
             # empty context
             test_container.add(
-                "\\text{let} name_p = name_e \\text{in} (name_e, name_d)", 
+                "\\text{let} name_p = name_e \\text{in} pair(name_e, name_d)", 
                 "computation_rule\n" + \
                 "  term\tname_p\n" + \
                 "  term\tname_e\n" + \

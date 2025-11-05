@@ -85,7 +85,7 @@ class RUN_INTRO:
 
             test_container = TestContainer()
             test_container.add(
-                "(star,star)", 
+                "pair(star,star)", 
                 "introduction_rule\n" + \
                 "  intro_pair\n" + \
                 "    term\tstar\n" + \

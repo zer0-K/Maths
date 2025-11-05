@@ -155,7 +155,7 @@ class RUN_ELIM:
 
             test_container = TestContainer()
             test_container.add(
-                "pr1((star, star))", 
+                "pr1(pair(star, star))", 
                 "elimination_rule\n" + \
                 "  elim_sigma\n" + \
                 "    elim_sigma1\n" + \
@@ -165,7 +165,7 @@ class RUN_ELIM:
                 "            term\tstar\n" + \
                 "            term\tstar\n")
             test_container.add(
-                "pr2((star, star))", 
+                "pr2(pair(star, star))", 
                 "elimination_rule\n" + \
                 "  elim_sigma\n" + \
                 "    elim_sigma2\n" + \

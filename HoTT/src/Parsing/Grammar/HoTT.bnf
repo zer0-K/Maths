@@ -59,7 +59,7 @@
 @ <formation_unit> ::= "unit_type"                          -- 1-formation
 @ <formation_arrow> ::= <term> "\\to" <term>                -- arrow-formation
 @ <formation_pi> ::= "\Pi_{" <var_decl> "}" <term>          -- Π-formation
-@ <formation_sigma> ::= "sigma" <var_decl> "." <term>       -- Σ-formation
+@ <formation_sigma> ::= "\\Sigma_{" <var_decl> "}" <term>   -- Σ-formation
 @ <formation_coproduct> ::= <term> "+" <term>               -- coproduct-formation
 @ <formation_id> ::= "Id" <subscript>? "(" <term> "," <term> "," <term>")"                 -- id-formation
 @ <formation_induction> ::= "Ind" <CNAME> <params> ":" <term> "where" <constructors>       -- inductive_formation
@@ -71,7 +71,7 @@
 // Introduction rules
 @ <intro_unit> ::= <STAR> ":" "unit_type"                -- 1-intro
 @ <intro_lambda> ::= "\lambda" <var_decl> "." <term>     -- lambda-intro
-@ <intro_pair> ::= "(" <term> "," <term> ")"             -- pair-intro
+@ <intro_pair> ::= "pair(" <term> "," <term> ")"         -- pair-intro
 @ <intro_coproduct> ::= "inl" "(" <term> ")" | "inr" "(" <term> ")"     -- coproduct-intro
 @ <intro_refl> ::= "refl" "(" <term> ")"                 -- refl-intro
 @ <intro_constr> ::= <constructor>                       -- constructor-intro
@@ -93,8 +93,8 @@
 // J(A, a, C, d, b, p) where:
 //   A: type, a:A, C: Π (b:A). Π (p:Id_A(a,b)). Type, d: C(a, refl_a), b:A, p:Id_A(a,b)
 
-@ <recursion> ::= "rec" "(" <term> "," <term> "," <term> "," <term> ")"     -- recursion
-@ <induction> ::= "ind" "(" <term> "," <term> "," <term> "," <term> ")"     -- induction
+@ <recursion> ::= "rec" "(" <term> ("," <term> )* ")"     -- recursion
+@ <induction> ::= "ind" "(" <term> ("," <term>)* ")"     -- induction
 // rec(A, R, F, a) where:
 //   A: Type
 //   R: A → A → Type (well-founded relation)
@@ -107,13 +107,13 @@
 
 
 // Computation
-@ <computation_rule> ::= "\\text{let}" <term> "=" <term> "\\text{in}" <term>
+@ <computation_rule> ::= "\\text{let}" <term> "=" <term> ("," <term> "=" <term>)* "\\text{in}" <term>
 // all computation rules are 'factorized' into a single 'binding' rule for easier usage
 
 // Terms
 @ <term> ::= <universe>
     | <var>
-    | <var> "(" <term> ")"                              -- for example : var_f(var_A)
+    | <var> "(" <term> ("," <term>)* ")"                              -- for example : var_f(var_A)
     | <STAR>
     | <formation_rule>
     | <introduction_rule>

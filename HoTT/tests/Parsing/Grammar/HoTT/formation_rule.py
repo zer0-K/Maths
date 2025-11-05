@@ -118,7 +118,7 @@ class RUN_FORM:
 
             test_container = TestContainer()
             test_container.add(
-                "sigma var_x : unit_type.unit_type", 
+                "\\Sigma_{var_x : unit_type}unit_type", 
                 "formation_rule\n" + \
                 "  formation_sigma\n" + \
                 "    var_decl\n" + \
