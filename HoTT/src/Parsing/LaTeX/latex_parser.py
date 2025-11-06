@@ -33,8 +33,7 @@ class LatexTransformer(Transformer):
         while i < n:
             # Look for the \command{ pattern
             
-            if text[i:i+cmd_size] == cmd_latex:
-                # Add "context_" to result
+            if i + cmd_size < n and text[i:i+cmd_size] == cmd_latex:
                 result.append(corresponding_hott_command + '\\_{')
                 i += cmd_size
                 
@@ -57,12 +56,72 @@ class LatexTransformer(Transformer):
                 result.append('}')
                 
             else:
-                # Add regular character to result
                 result.append(text[i])
                 i += 1
         
         return ''.join(result)
 
+    @staticmethod
+    def replace_nested_several(text: str, command: str, nb_args: int = 1, corresponding_hott_command: str = None):
+        """Replaces all text in a 'command{text}' by 'command_text'"""
+        result = []
+        i = 0
+        n = len(text)
+
+        if corresponding_hott_command is None:
+            corresponding_hott_command = command
+        cmd_latex = "\\" + command + "{"
+        cmd_size = len(cmd_latex)
+        
+        while i < n:
+            if i + cmd_size < n and text[i:i+cmd_size] == cmd_latex:
+                args = []
+                pos = i + cmd_size
+                
+                for arg_num in range(nb_args):
+                    if pos >= n:
+                        break
+                        
+                    brace_count = 1
+                    content_start = i
+                    start_pos = pos
+                    
+                    while pos < n and brace_count > 0:
+                        if text[pos] == '{':
+                            brace_count += 1
+                        elif text[pos] == '}':
+                            brace_count -= 1
+                        pos += 1
+                    
+                    # Extract argument content
+                    if brace_count == 0:
+                        arg_content = text[start_pos:pos-1]  # Exclude closing brace
+                    else:
+                        arg_content = text[start_pos:pos]
+                    
+                    args.append(arg_content)
+                    if arg_num < nb_args-1:
+                        pos += 1 # skip new opening bracket
+                    
+                content = text[content_start:content_start + cmd_size - 1] + "("
+ 
+                if len(args) == nb_args:
+                    result.append(content)
+                    result.append(args[0])
+                    for arg_num in range(1, nb_args):
+                        result.append(', ')
+                        result.append(args[arg_num])
+                    result.append(')')
+                    i = pos
+                else:
+                    result.append(text[i])
+                    i += 1
+            else:
+                result.append(text[i])
+                i += 1
+        
+        return ''.join(result)
+    
     @staticmethod
     def replace_all_commands(text: str):
 
@@ -73,6 +132,8 @@ class LatexTransformer(Transformer):
         text = LatexTransformer.replace_nested(text, "var")
         text = LatexTransformer.replace_nested(text, "name")
         text = LatexTransformer.replace_nested(text, "U", "Type")
+        text = LatexTransformer.replace_nested(text, "refl")
+        text = LatexTransformer.replace_nested_several(text, "Id", 3)
         
         return text
 

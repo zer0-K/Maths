@@ -61,8 +61,8 @@
 @ <formation_pi> ::= "\Pi_{" <var_decl> "}" <term>          -- Π-formation
 @ <formation_sigma> ::= "\\Sigma_{" <var_decl> "}" <term>   -- Σ-formation
 @ <formation_coproduct> ::= <term> "+" <term>               -- coproduct-formation
-@ <formation_id> ::= "Id" <subscript>? "(" <term> "," <term> "," <term>")"                 -- id-formation
-@ <formation_induction> ::= "Ind" <CNAME> <params> ":" <term> "where" <constructors>       -- inductive_formation
+@ <formation_id> ::= "\\Id(" <term> "," <term> "," <term>")"                                -- id-formation
+@ <formation_induction> ::= "Ind" <CNAME> <params> ":" <term> "where" <constructors>        -- inductive_formation
 
 @ <formation_rule> ::= <formation_empty> | <formation_unit> 
     | <formation_arrow> | <formation_pi> 
@@ -74,10 +74,11 @@
 @ <intro_lambda> ::= "\lambda" <var_decl> "." <term>     -- lambda-intro
 @ <intro_pair> ::= "pair(" <term> "," <term> ")"         -- pair-intro
 @ <intro_coproduct> ::= "inl" "(" <term> ")" | "inr" "(" <term> ")"     -- coproduct-intro
-@ <intro_refl> ::= "refl" "(" <term> ")"                 -- refl-intro
+@ <intro_refl> ::= "refl_{" <term> "}"                 -- refl-intro
 @ <intro_constr> ::= <constructor>                       -- constructor-intro
 
-@ <introduction_rule> ::= <intro_nat> | <intro_lambda> | <intro_pair> | <intro_coproduct> | <intro_refl> --| <intro_constr>
+@ <introduction_rule> ::= <intro_nat> | <intro_lambda> | <intro_pair> | <intro_coproduct> | <intro_refl> 
+    --| <intro_constr> --intro_constr ambiguates for some cases like the natural number introduction rules (name_0)
 
 
 // Elimination rules

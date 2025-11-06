@@ -180,7 +180,7 @@ class RUN_FORM:
 
             test_container = TestContainer()
             test_container.add(
-                "Id(unit_type, \\star, \\star)", 
+                "\Id(unit_type, \\star, \\star)", 
                 "formation_rule\n  formation_id\n" + \
                 "    term\n" + \
                 "      formation_rule\n" + \

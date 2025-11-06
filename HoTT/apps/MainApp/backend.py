@@ -332,7 +332,7 @@ class BackEnd:
             text = text.replace("context\\_", "").replace("var\\_", "")\
                 .replace("Type\\_", "\\mathcal{U}_").replace("pair(", "(")\
                 .replace("empty_type", "0").replace("unit_type", "1")\
-                .replace("name\\_", "")
+                .replace("name\\_", "").replace("\\Id", "Id").replace("refl\\_", "refl_")
             
             return text
 

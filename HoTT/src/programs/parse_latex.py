@@ -44,5 +44,5 @@ class RUN:
         Logger.info("end")
 
 if __name__ == "__main__":
-    RUN.parse_text()
+    #RUN.parse_text()
     RUN.parse_file()
