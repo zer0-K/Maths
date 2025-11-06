@@ -71,6 +71,7 @@ class LatexTransformer(Transformer):
         text = text.replace("\\unit", "unit_type")
         text = LatexTransformer.replace_nested(text, "context")
         text = LatexTransformer.replace_nested(text, "var")
+        text = LatexTransformer.replace_nested(text, "name")
         text = LatexTransformer.replace_nested(text, "U", "Type")
         
         return text

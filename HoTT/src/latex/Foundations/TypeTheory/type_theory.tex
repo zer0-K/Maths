@@ -293,4 +293,44 @@ Similar as non dependent functions.
 \end{axiom}
 
 
+% Natural numbers
+\subsection{Natural numbers}
+
+\begin{axiom}{1.7.1}
+\axiomName{Natural numbers formation} \probe : 
+
+\actualAxiom{$rule\_N-form : \ctx\ ctx\ \text{——}\ \ctx \vdash \N:\U{i}$} \probe
+\end{axiom}
+
+\begin{axiom}{1.7.2}
+\axiomName{Natural numbers introduction : 0} \probe : 
+
+\actualAxiom{$rule\_N-intro-0 : \ctx\ ctx\ \text{——}\ \ctx \vdash \name{0}:\N$} \probe
+\end{axiom}
+
+\begin{axiom}{1.7.3}
+\axiomName{Natural numbers introduction : succ} \probe : 
+
+\actualAxiom{$rule\_N-intro-succ : \ctx\ \vdash \var{n}:\N\ \text{——}\ \ctx \vdash succ(\var{n}):\N$} \probe
+\end{axiom}
+
+\begin{axiom}{1.7.4}
+\axiomName{Natural numbers elimination} \probe : 
+
+\actualAxiom{$rule\_N-elim : \ctx, \var{x}:\N \vdash \var{C}:\U{i},\quad \ctx \vdash \var{c_0}:\var{C}(\name{0}),\quad \ctx, \var{x}:\N, \var{y}:\var{C} \vdash \var{c_s}:\var{C}(succ(\var{x})),\quad \ctx \vdash \var{n}:\N\ \text{——}\ \ctx \vdash ind(\var{C}, \var{c_0}, \var{c_s}, \var{n}):\var{C}(\var{n})$} \probe
+\end{axiom}
+
+\begin{axiom}{1.7.5}
+\axiomName{Natural numbers computation : 0} \probe : 
+
+\actualAxiom{$rule\_N-comp-0 : \ctx, \var{x}:\N \vdash \var{C}:\U{i},\quad \ctx \vdash \var{c_0}:\var{C}(\name{0}),\quad \ctx, \var{x}:\N, \var{y}:\var{C} \vdash \var{c_s}:\var{C}(succ(\var{x}))\ \text{——}\ \ctx \vdash \text{let}\ \var{x} =\ \name{0}\ \text{in}\ ind(\var{C}, \var{c_0}, \var{c_s}, \name{0})\equiv \var{c_0}:\var{C}(\var{x})$} \probe
+\end{axiom}
+
+\begin{axiom}{1.7.6}
+\axiomName{Natural numbers computation : 0} \probe : 
+
+\actualAxiom{$rule\_N-comp-succ : \ctx, \var{x}:\N \vdash \var{C}:\U{i},\quad \ctx \vdash \var{c_0}:\var{C}(\name{0}),\quad \ctx, \var{x}:\N, \var{y}:\var{C} \vdash \var{c_s}:\var{C}(succ(\var{x})),\quad \ctx \vdash \var{n}:\N\ \text{——}\ \ctx \vdash \text{let}\ \var{x} =\ \var{n}, \var{x'} =\ succ(\var{n}), \var{y} =\ ind(\var{C}, \var{c_0}, \var{c_s}, \var{n})\ \text{in}\ ind(\var{C}, \var{c_0}, \var{c_s}, succ(\var{n}))\equiv \var{c_s}(\var{x}, \var{y}):\var{C}(\var{x'})$} \probe
+\end{axiom}
+
+
 \end{document}

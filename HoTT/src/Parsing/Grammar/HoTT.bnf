@@ -64,18 +64,20 @@
 @ <formation_id> ::= "Id" <subscript>? "(" <term> "," <term> "," <term>")"                 -- id-formation
 @ <formation_induction> ::= "Ind" <CNAME> <params> ":" <term> "where" <constructors>       -- inductive_formation
 
-@ <formation_rule> ::= <formation_empty> | <formation_unit> | <formation_arrow> | <formation_pi> 
+@ <formation_rule> ::= <formation_empty> | <formation_unit> 
+    | <formation_arrow> | <formation_pi> 
     | <formation_sigma> | <formation_coproduct> 
     | <formation_id> | <formation_induction>
 
 // Introduction rules
+@ <intro_nat> ::= "succ(" <term> ")"                     -- N-intro
 @ <intro_lambda> ::= "\lambda" <var_decl> "." <term>     -- lambda-intro
 @ <intro_pair> ::= "pair(" <term> "," <term> ")"         -- pair-intro
 @ <intro_coproduct> ::= "inl" "(" <term> ")" | "inr" "(" <term> ")"     -- coproduct-intro
 @ <intro_refl> ::= "refl" "(" <term> ")"                 -- refl-intro
 @ <intro_constr> ::= <constructor>                       -- constructor-intro
 
-@ <introduction_rule> ::=  <intro_lambda> | <intro_pair> | <intro_coproduct> | <intro_refl> | <intro_constr>
+@ <introduction_rule> ::= <intro_nat> | <intro_lambda> | <intro_pair> | <intro_coproduct> | <intro_refl> --| <intro_constr>
 
 
 // Elimination rules
@@ -112,8 +114,9 @@
 // Terms
 @ <term> ::= <universe>
     | <var>
-    | <var> "(" <term> ("," <term>)* ")"                              -- for example : var_f(var_A)
+    | <var> "(" <term> ("," <term>)* ")"                -- for example : var_f(var_A)
     | <STAR>
+    | <NAT>
     | <formation_rule>
     | <introduction_rule>
     | <elimination_rule>
@@ -131,11 +134,12 @@
 @ <varlist> ::= <var> ("," <var>)*
 
 @ <STAR> ::= "\\star"
+@ <NAT> ::= "\\N"
 @ <NUMBER> ::= /[0-9]+/                                 -- we allow 0109 for example
-@ <VNAME> ::= /var_[a-zA-Z0-9_\\]+/ | /var_{[a-zA-Z0-9_\\\(\)]+}/
-@ <CNAME> ::= /name_[a-zA-Z_\\][a-zA-Z0-9_\\]*/ | /name_{[a-zA-Z_\\][a-zA-Z0-9_\\]*}/
+@ <VNAME> ::= /var_[a-zA-Z0-9_'\\]+/ | /var_{[a-zA-Z0-9_'\\\(\)]+}/
+@ <CNAME> ::= /name_[a-zA-Z0-9_'\\]+/ | /name_{[a-zA-Z0-9_'\\]+}/
 
 @ <EMPTY_CTX> ::= /empty_context/
 @ <EMPTY_PREMISE> ::= /\\epsilon/
-@ <CTX_NAME> ::= /context_[a-zA-Z_\\][a-zA-Z0-9_\\]*/ | /context_{[a-zA-Z_\\][a-zA-Z0-9_\\]*}/
-@ <RULE_NAME> ::= /rule_[a-zA-Z_\\][a-zA-Z0-9_\\\-]*/ | /rule_{[a-zA-Z_\\][a-zA-Z0-9_\\\-]*}/
+@ <CTX_NAME> ::= /context_[a-zA-Z_'\\][a-zA-Z0-9_'\\]*/ | /context_{[a-zA-Z_'\\][a-zA-Z0-9_'\\]*}/
+@ <RULE_NAME> ::= /rule_[a-zA-Z_'\\][a-zA-Z0-9_'\\\-]*/ | /rule_{[a-zA-Z_'\\][a-zA-Z0-9_'\\\-]*}/
