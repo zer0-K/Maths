@@ -8,6 +8,8 @@ import sys
 import streamlit as st
 import pandas
 import numpy
+import time
+import matplotlib.pyplot as plt
 
 proj_dir = "Maths/HoTT".lower()
 hott_dir = __file__[:__file__.lower().rfind(proj_dir) + len(proj_dir)]
@@ -102,6 +104,58 @@ def run():
     
     with tab_example:
         
+        st.title("Real-time Mathematical Animations")
+
+        animation_type = st.selectbox("Animation type", ["Rotating Sine", "Growing Circle", "Particle Motion"])
+        duration = st.slider("Animation duration (seconds)", 5, 30, 10)
+
+
+        if st.button("Start Animation"):
+            progress_bar = st.progress(0)
+            plot_placeholder = st.empty()
+            
+            start_time = time.time()
+            current_time = 0
+            
+            while current_time < duration:
+                current_time = time.time() - start_time
+                progress = min([1, current_time / duration])
+                progress_bar.progress(progress)
+                
+                fig, ax = plt.subplots(figsize=(10, 6))
+                
+                if animation_type == "Rotating Sine":
+                    x = numpy.linspace(0, 4*numpy.pi, 1000)
+                    phase = current_time * 2 * numpy.pi
+                    y = numpy.sin(x + phase)
+                    ax.plot(x, y, 'b-', linewidth=2)
+                    ax.set_ylim(-1.5, 1.5)
+                    
+                elif animation_type == "Growing Circle":
+                    theta = numpy.linspace(0, 2*numpy.pi, 100)
+                    radius = 1 + 0.5 * numpy.sin(current_time * 2 * numpy.pi)
+                    x = radius * numpy.cos(theta)
+                    y = radius * numpy.sin(theta)
+                    ax.plot(x, y, 'r-', linewidth=2)
+                    ax.set_xlim(-2, 2)
+                    ax.set_ylim(-2, 2)
+                    
+                else:
+                    t = numpy.linspace(0, current_time/10, 1000)
+                    x = numpy.cos(2 * numpy.pi * t)
+                    y = numpy.sin(3 * numpy.pi * t)
+                    ax.plot(x, y, 'g-', alpha=0.7)
+                    ax.plot(x[-1], y[-1], 'ro', markersize=10)
+                    ax.set_xlim(-1.5, 1.5)
+                    ax.set_ylim(-1.5, 1.5)
+                
+                ax.grid(True, alpha=0.3)
+                ax.set_aspect('equal', adjustable='box')
+                plot_placeholder.pyplot(fig)
+                plt.close(fig)
+                
+                time.sleep(0.02)
+
         st.text("Nothing yet")
         
 
