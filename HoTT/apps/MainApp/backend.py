@@ -55,9 +55,11 @@ class BackEnd:
                 "subchapters": [],
                 "selected_chapter_tex_file": "",
                 "math_container": MathContainer(),
+                "loaded_math_containers": {},
                 # choices and display
                 "definition_choices": {},
                 "axiom_choices": {},
+                "context_choices": {},
                 "text_for_ast": "",
                 "ast_as_text": "",
                 "display_text": ""
@@ -141,6 +143,23 @@ class BackEnd:
                 if True:
                     return choices
 
+            @staticmethod
+            def context_choices(session) -> list[str]:
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][context_choices]"
+                    container: MathContainer = st.session_state["data"]["math_container"]
+                    contexts: Dict[str, str] = container.contexts
+                    choices = []
+                
+                # process
+                if len(contexts) > 0:
+                    choices = list(contexts.keys())
+
+                # postprocess
+                if True:
+                    return choices
+
     class Listener:
         
         class Chapters:
@@ -203,6 +222,52 @@ class BackEnd:
                 if True:
                     container = LatexToUI.read_latex(file)
                     session["data"]["math_container"] = container
+                    session["data"]["loaded_math_containers"][file] = container
+                    
+                    session = BackEnd.Listener.Choices.update_choices(session, container)
+
+                # postprocess
+                if True:
+                    return session
+
+            @staticmethod
+            def on_change_container(session):
+                
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_change_container]"
+                    file: str = st.session_state["selectbox_math_container"]
+                
+                # process
+                if True:
+                    if file not in session["data"]["loaded_math_containers"].keys():
+                        Logger.error(
+                            f"Wrong container selected ({file}). Available containers : " +\
+                            f"{session['data']['loaded_math_containers'].keys()}", 
+                            log_prefix, 
+                            5)
+                        return session
+                    container = session["data"]["loaded_math_containers"][file]
+                    session["data"]["math_container"] = container
+                    session["data"]["loaded_math_containers"][file] = container
+                    
+                    session = BackEnd.Listener.Choices.update_choices(session, container)
+
+                # postprocess
+                if True:
+                    return session
+       
+        class Choices:
+        
+            def update_choices(session, container: MathContainer):
+                
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][update_choices]"
+                    file: str = st.session_state["selectbox_math_container"]
+                
+                # process
+                if True:
                     
                     # updates choices after latex file was parsed
                     # definitions
@@ -217,14 +282,19 @@ class BackEnd:
                         axiom_choices_clean = [a.replace(":::", ":").replace("$", "") for a in axiom_choices_raw]
                         axiom_choices_display = {a1: a2 for a1, a2 in zip(axiom_choices_clean, axiom_choices_raw)}
                         session["data"]["axiom_choices"] = axiom_choices_display
+                    # contexts
+                    if True:
+                        context_choices_raw = BackEnd.Get.Choices.context_choices(st.session_state)
+                        context_choices_clean = [a.replace(":::", ":").replace("$", "") for a in context_choices_raw]
+                        context_choices_display = {a1: a2 for a1, a2 in zip(context_choices_clean, context_choices_raw)}
+                        session["data"]["context_choices"] = context_choices_display
 
                 # postprocess
                 if True:
                     Logger.debug(f"Definition choices: {def_choices_clean}", log_prefix, 5)
                     Logger.debug(f"Axiom choices: {axiom_choices_clean}", log_prefix, 5)
+                    Logger.debug(f"Context choices: {context_choices_clean}", log_prefix, 5)
                     return session
-        
-        class Choices:
 
             @staticmethod
             def on_select_definition(session):
@@ -245,9 +315,7 @@ class BackEnd:
                     actual_def = container.definitions[choice]
 
                     display_text = BackEnd.Display.clean_definition(def_id, notation, actual_def)
-                    session["data"]["display_text"] = display_text
-                    session["data"]["text_for_ast"] = ""
-                    session["data"]["ast_as_text"] = ""
+                    session = BackEnd.Listener.Choices.update_display_zone(session, display_text, "")
                 
                 # postprocess
                 if True:
@@ -272,8 +340,48 @@ class BackEnd:
                     actual_axiom = container.axioms[choice]
 
                     display_text = BackEnd.Display.clean_axiom(axiom_id, axiom_name, actual_axiom)
-                    session["data"]["display_text"] = display_text
-                    session["data"]["text_for_ast"] = actual_axiom
+                    session = BackEnd.Listener.Choices.update_display_zone(session, display_text, actual_axiom)
+
+                # postprocess
+                if True:
+                    return session
+
+            @staticmethod
+            def on_select_context(session):
+
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_select_context]"
+
+                    container = session["data"]["math_container"]
+                    choice_displayed = session["selectbox_contexts"]
+                    choice = session["data"]["context_choices"][choice_displayed]
+
+                # process
+                if True:
+                    context_id, context_name = choice.split(":::")
+                    context_id = context_id.replace(" ", "")
+                    Logger.debug(f"Chosen context: id={context_id}, context name={context_name}", log_prefix, 5)
+                    actual_context = container.contexts[choice]
+
+                    display_text = BackEnd.Display.clean_context(context_id, context_name, actual_context)
+                    session = BackEnd.Listener.Choices.update_display_zone(session, display_text, actual_context)
+
+                # postprocess
+                if True:
+                    return session
+
+            @staticmethod
+            def update_display_zone(session, display_text, text_for_ast):
+
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][update_display_zone]"
+
+                # process
+                if True:
+                    session["data"]["display_text"] = str(display_text)
+                    session["data"]["text_for_ast"] = str(text_for_ast)
                     session["data"]["ast_as_text"] = ""
 
                 # postprocess
@@ -310,7 +418,6 @@ class BackEnd:
                 # postprocess
                 if True:
                     return session
-
 
         class Settings:
             
@@ -355,6 +462,25 @@ class BackEnd:
                 Logger.debug(f"Cleaned definition for display: {display_text}", log_prefix, 15)
                 return display_text
     
+        @staticmethod
+        def clean_context(context_id: str, context_name: str, actual_context: str) -> str:
+            # preprocess
+            if True:
+                log_prefix: str = f"{BackEnd.log_prefix}[Display][clean_context]"
+
+            # process
+            if True:
+                display_text_raw: str = f"({context_id})\ {actual_context}"
+                display_text = display_text_raw.replace("$", "")
+                display_text = LatexTransformer.replace_all_commands(display_text)
+                display_text = BackEnd.Display.clean_common(display_text)
+
+            # postprocess
+            if True:
+                Logger.debug(f"Context (raw): {display_text_raw}", log_prefix, 15)
+                Logger.debug(f"Cleaned context for display: {display_text}", log_prefix, 15)
+                return display_text
+
         @staticmethod
         def clean_axiom(axiom_id: str, axiom_name: str, actual_axiom: str) -> str:
             # preprocess

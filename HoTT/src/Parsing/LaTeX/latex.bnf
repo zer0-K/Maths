@@ -17,7 +17,20 @@
 @ <axiom> ::= "\\begin{axiom}{" <axiom_id> "}" <other_content>* <axiom_name> <other_content>? <actual_axiom> <other_content>? "\\end{axiom}"
     | "\\begin{axiom}{" <axiom_id> "}" <other_content>* <actual_axiom> <other_content>? <axiom_name> <other_content>? "\\end{axiom}"
 
-@ <rule> ::= <definition> | <axiom>
+// context environment
+@ <ctxenv_name> ::= "\\ctxenvName{" <text> "}" "\\probe"
+@ <actual_ctxenv> ::= "\\actualCtxenv{" <any_text> "}" "\\probe"
+@ <ctxenv_id> ::= <text>
+@ <context_env> ::= "\\begin{context_env}{" <ctxenv_id> "}" <other_content>* <ctxenv_name> <other_content>? <actual_ctxenv> <other_content>? "\\end{context_env}"
+
+// construction
+@ <construction_name> ::= "\\constructionName{" <text> "}" "\\probe"
+@ <actual_construction> ::= "\\actualConstruction{" <any_text> "}" "\\probe"
+@ <construction_id> ::= <text>
+@ <construction> ::= "\\begin{construction}{" <construction_id> "}" <other_content>* <construction_name> <other_content>? <actual_construction> <other_content>? "\\end{construction}"
+
+
+@ <rule> ::= <definition> | <axiom> | <context_env> | <construction>
 
 // ----------------------------------------------------------------------------- latex stuff (mainly to tell the parser to ignore those)
 

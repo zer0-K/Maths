@@ -38,7 +38,7 @@ class RUN:
     @staticmethod
     def parse_file():
         
-        file = "/home/adrien/Programmation/Projets/Maths/HoTT/src/latex/Foundations/TypeTheory/type_theory.tex"
+        file = "/home/adrien/Programmation/Projets/Maths/HoTT/src/latex/Foundations/TypeTheory/basic_constructions.tex"
         container = LatexToUI.read_latex(file) 
 
         Logger.info("end")

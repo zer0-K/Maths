@@ -50,7 +50,19 @@
 \newcommand{\actualAxiom}[1]{#1}
 \newenvironment{axiom}[2][Axiom]{\begin{trivlist}
 \item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
-%
+\newcommand{\axiomApplyEmpty}[1]{We apply axiom {#1}}
+\newcommand{\axiomApply}[2]{We apply axiom {#1} with {#2}}
+% context environment
+\newcommand{\ctxenvName}[1]{#1}
+\newcommand{\actualCtxenv}[1]{#1}
+\newenvironment{context_env}[2][Context environment]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+% construction
+\newcommand{\constructionName}[1]{#1}
+\newcommand{\actualConstruction}[1]{#1}
+\newenvironment{construction}[2][Construction]{\begin{trivlist}
+\item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
+% usual maths commands
 \newenvironment{theorem}[2][Theorem]{\begin{trivlist}
 \item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
 \newenvironment{lemma}[2][Lemma]{\begin{trivlist}

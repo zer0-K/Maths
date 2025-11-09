@@ -169,6 +169,9 @@ class LatexTransformer(Transformer):
     def axiom(self, items):
         return LatexTransformer.filter(items, "axiom") 
 
+    def context_env(self, items):
+        return LatexTransformer.filter(items, "context_env") 
+
 
 class LatexParser:
 

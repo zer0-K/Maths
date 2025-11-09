@@ -28,6 +28,7 @@ class MathContainer:
         self.name = name
         self.definitions: Dict[str, str] = {}
         self.axioms: Dict[str, str] = {}
+        self.contexts: Dict[str, str] = {}
         self.theorems: Dict[str, str] = {}
         
         if tree is not None:
@@ -68,6 +69,8 @@ class MathContainer:
                     self.add_definition(rule)
                 elif rule_name == "axiom":
                     self.add_axiom(rule)
+                elif rule_name == "context_env":
+                    self.add_context(rule)
         
         # postprocess
         if True:
@@ -142,3 +145,38 @@ class MathContainer:
          # postprocess
         if True:
             Logger.info(f"'{axiom_name}' ({axiom_id}) added", prefix, 10)
+    
+    def add_context(self, context: Tree):
+        prefix = f"{log_prefix}[add_context]({self.name})"
+ 
+        # check integrity
+        if True:
+            # check if the context contains an id, a name and the actual context definition
+            children_names = [c.data.value for c in context.children]
+            if len(context.children) != 3 \
+                    or "ctxenv_id" not in children_names \
+                    or "ctxenv_name" not in children_names \
+                    or "actual_ctxenv" not in children_names:
+                err_msg = f"Cannot retrieve context env from tree: a context should have " + \
+                    f"a ctxenv_id, a ctxenv_name and an actual_ctxenv. Got : {children_names}"
+                Logger.error(err_msg, prefix)
+                return                
+
+        # preprocess
+        if True:
+            ctxenv_id = [c.children[0] for c in context.children if c.data.value == "ctxenv_id"][0]
+            ctxenv_name = [c.children[0] for c in context.children if c.data.value == "ctxenv_name"][0]
+            actual_ctxenv = [c.children[0] for c in context.children if c.data.value == "actual_ctxenv"][0]
+
+            # 'unwrap'
+            ctxenv_id = ctxenv_id.children[0].value
+            ctxenv_name = ctxenv_name.children[0].value
+            actual_ctxenv = actual_ctxenv.children[0].value
+   
+         # process
+        if True:
+            self.contexts[f"{ctxenv_id} ::: {ctxenv_name}"] = actual_ctxenv
+    
+         # postprocess
+        if True:
+            Logger.info(f"'{ctxenv_name}' ({ctxenv_id}) added", prefix, 10)

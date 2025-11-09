@@ -60,9 +60,18 @@ def run():
 
         st.text("Latex file : " + st.session_state["data"]["selected_chapter_tex_file"])
 
-        def on_click_parse_latex():
-            st.session_state = be.Listener.Chapters.on_parse_latex(st.session_state)
-        st.button(label="parse latex file", on_click=on_click_parse_latex)
+        col1_container_select, col2_container_select = st.columns(2)
+        with col1_container_select:
+            def on_click_parse_latex():
+                st.session_state = be.Listener.Chapters.on_parse_latex(st.session_state)
+            st.button(label="parse latex file", on_click=on_click_parse_latex)
+        with col2_container_select:
+            def on_click_change_container():
+                st.session_state = be.Listener.Chapters.on_change_container(st.session_state)
+            st.selectbox(label="select math container", 
+                         key="selectbox_math_container", 
+                         options=st.session_state["data"]["loaded_math_containers"].keys(),
+                         on_change=on_click_change_container)
 
     # --------------------------------------------- display maths container
 
@@ -82,6 +91,8 @@ def run():
                 st.session_state = be.Listener.Choices.on_select_definition(st.session_state)
             def on_select_axiom():
                 st.session_state = be.Listener.Choices.on_select_axiom(st.session_state)
+            def on_select_context():
+                st.session_state = be.Listener.Choices.on_select_context(st.session_state)
             
             # choices
             st.selectbox(label="definitions",
@@ -92,6 +103,10 @@ def run():
                          key="selectbox_axioms",
                          options=st.session_state["data"]["axiom_choices"].keys(),
                          on_change=on_select_axiom)
+            st.selectbox(label="contexts",
+                         key="selectbox_contexts",
+                         options=st.session_state["data"]["context_choices"].keys(),
+                         on_change=on_select_context)
         
         with display_col:
             st.subheader("Display")
