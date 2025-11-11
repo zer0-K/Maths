@@ -419,6 +419,63 @@ class BackEnd:
                 if True:
                     return session
 
+            @staticmethod
+            def on_click_get_derivation(session):
+                
+                # preprocess
+                if True:
+                    log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_click_get_derivation]"
+
+                    text_for_derivation = session["data"]["text_for_ast"]
+                    inferences = text_for_derivation.replace("\\_", "_").split("\n")
+                    Logger.debug(f"Text for derivation : {inferences}", log_prefix)                    
+
+                # process
+                if text_for_derivation != "":
+
+                    inferences_retrieved = []
+                    for inference in inferences:
+                        try:
+                            inference_type, inference_retrieved = LatexToUI.retrieve_derivation(
+                                inference, 
+                                session["data"]["loaded_math_containers"]
+                            )
+
+                            if inference_type is None:
+                                session["data"]["ast_as_text"] = f"Couldn't get inference {inference}"
+                                Logger.error(session["data"]["ast_as_text"], log_prefix) 
+                                return session
+
+                            inference_id = inference.split(" -> ")[1]
+                            inferences_retrieved.append((inference_id, inference_type, inference_retrieved))
+                        except Exception as e:
+                            session["data"]["ast_as_text"] = f"Couldn't get inference {inference}. Error: {traceback.format_exc()}"
+                            Logger.error(session["data"]["ast_as_text"], log_prefix)
+                            return session
+               
+                # postprocess
+                if True:
+                    text_for_ast = '\n'.join([el[1] for el in inferences_retrieved])
+
+                    display_texts = []
+                    for inference_id, inference_type, inference_retrieved in inferences_retrieved:
+
+                        display_text = f"({inference_id}) : \\text{{None}}"
+                        if inference_type == "axiom_apply":
+                            display_text = BackEnd.Display.clean_axiom(inference_id, "", inference_retrieved)
+                        
+                        display_texts.append(display_text)
+                    
+                    display_text = '\\\\'.join(display_texts)
+
+                    session = BackEnd.Listener.Choices.on_select_context(session)
+                    current_text = session["data"]["display_text"]
+                    display_text = f"{current_text} \\\\~\\\\ {display_text}"
+                    
+                    Logger.debug(f"Retrieved derivations : {display_text}", log_prefix, 6)                    
+                    session = BackEnd.Listener.Choices.update_display_zone(session, display_text, text_for_ast)
+                    return session
+
         class Settings:
             
             @staticmethod

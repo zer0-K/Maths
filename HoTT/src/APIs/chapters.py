@@ -19,7 +19,7 @@ chapters: Dict = {
 #
 # Gives the file corresponding to the chapter number
 #
-chapter_number: Dict[int, str] = {
+chapter_number_mapping: Dict[int, str] = {
     0: chapters["Foundations"]["Type Theory"],
     1: chapters["Foundations"]["Type Theory"],
     2: chapters["Foundations"]["Basic constructions"]

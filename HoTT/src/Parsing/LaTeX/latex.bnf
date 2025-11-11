@@ -17,9 +17,13 @@
 @ <axiom> ::= "\\begin{axiom}{" <axiom_id> "}" <other_content>* <axiom_name> <other_content>? <actual_axiom> <other_content>? "\\end{axiom}"
     | "\\begin{axiom}{" <axiom_id> "}" <other_content>* <actual_axiom> <other_content>? <axiom_name> <other_content>? "\\end{axiom}"
 
+// inference
+@ <axiom_apply> ::= "\\axiomApply{" <any_text> "}" "\\probe" | "\\axiomApplyEmpty{" <any_text> "}" "\\probe"
+@ <inference> ::= (<axiom_apply> "\n"?)+
+
 // context environment
 @ <ctxenv_name> ::= "\\ctxenvName{" <text> "}" "\\probe"
-@ <actual_ctxenv> ::= "\\actualCtxenv{" <any_text> "}" "\\probe"
+@ <actual_ctxenv> ::= "\\actualCtxenv{" <inference> "}" "\\probe"
 @ <ctxenv_id> ::= <text>
 @ <context_env> ::= "\\begin{context_env}{" <ctxenv_id> "}" <other_content>* <ctxenv_name> <other_content>? <actual_ctxenv> <other_content>? "\\end{context_env}"
 

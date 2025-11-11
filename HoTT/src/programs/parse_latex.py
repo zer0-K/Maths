@@ -34,7 +34,6 @@ class RUN:
 
         Logger.info("end")
 
-
     @staticmethod
     def parse_file():
         
@@ -43,6 +42,16 @@ class RUN:
 
         Logger.info("end")
 
+    @staticmethod
+    def retrieve_derivation():
+        
+        text = "axiom_apply -> 0.1.1"
+        derivation = LatexToUI.retrieve_derivation(text) 
+
+        Logger.info("end")
+
+
 if __name__ == "__main__":
     #RUN.parse_text()
-    RUN.parse_file()
+    #RUN.parse_file()
+    RUN.retrieve_derivation()

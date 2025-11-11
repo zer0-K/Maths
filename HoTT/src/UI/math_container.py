@@ -171,12 +171,52 @@ class MathContainer:
             # 'unwrap'
             ctxenv_id = ctxenv_id.children[0].value
             ctxenv_name = ctxenv_name.children[0].value
-            actual_ctxenv = actual_ctxenv.children[0].value
+            actual_ctxenv = [
+                f"{c.data.replace('_', "\\_")} -> {c.children[0].children[0].value}" 
+                for c in actual_ctxenv.children
+            ]
    
          # process
         if True:
-            self.contexts[f"{ctxenv_id} ::: {ctxenv_name}"] = actual_ctxenv
+            self.contexts[f"{ctxenv_id} ::: {ctxenv_name}"] = '\n'.join(actual_ctxenv)
     
          # postprocess
         if True:
             Logger.info(f"'{ctxenv_name}' ({ctxenv_id}) added", prefix, 10)
+
+    def get_from_number(self, inference_type: str, inference_id: str) -> str:
+        prefix = f"{log_prefix}[get_from_number]({self.name})"
+ 
+        # check integrity
+        if True:
+
+            existing_inference_types = ["axiom_apply"] 
+            if inference_type not in existing_inference_types:
+                Logger.error(f"Given inference type doesn't exist ({inference_type}). " +
+                             f"Existing types : {existing_inference_types}", prefix)
+                return ""
+
+        # preprocess
+        if True:
+            elements = []
+            if inference_type == "axiom_apply":
+                elements = self.axioms
+            
+            referenced_numbers = [el.split(" ::: ")[0] for el in elements.keys()]
+            if inference_id not in referenced_numbers:
+                Logger.error(f"Given number ({inference_id}) not in referenced numbers ({referenced_numbers})", 
+                             prefix)
+                return ""
+   
+        # process
+        if True:
+            for element, val in elements.items():
+                if inference_id == element.split(" ::: ")[0]:
+                    return val
+    
+         # postprocess
+        if True:
+            Logger.error(f"Nothing found ; unexpected situtation", prefix, 10)
+            return ""
+
+        

@@ -172,6 +172,9 @@ class LatexTransformer(Transformer):
     def context_env(self, items):
         return LatexTransformer.filter(items, "context_env") 
 
+    def inference(self, items):
+        return LatexTransformer.filter(items, "inference") 
+
 
 class LatexParser:
 

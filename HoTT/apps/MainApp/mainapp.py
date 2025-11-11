@@ -85,8 +85,6 @@ def run():
             st.subheader("Choices")
             
             # callbacks
-            def on_click_get_ast():
-                st.session_state = be.Listener.Other.on_click_get_ast(st.session_state)
             def on_select_definition():
                 st.session_state = be.Listener.Choices.on_select_definition(st.session_state)
             def on_select_axiom():
@@ -113,7 +111,18 @@ def run():
         
             st.latex(st.session_state["data"]["display_text"])
 
-            st.button("Get ast", on_click=on_click_get_ast)
+            # callbacks
+            def on_click_get_ast():
+                st.session_state = be.Listener.Other.on_click_get_ast(st.session_state)
+            def on_click_get_derivation():
+                st.session_state = be.Listener.Other.on_click_get_derivation(st.session_state)
+
+            # buttons
+            col_ast, col_derivation = st.columns(2)
+            with col_ast:
+                st.button("Get ast", on_click=on_click_get_ast)
+            with col_derivation:
+                st.button("Get derivation", on_click=on_click_get_derivation)
 
             st.text(st.session_state["data"]["ast_as_text"])
     

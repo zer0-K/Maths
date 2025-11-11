@@ -7,6 +7,7 @@
 import sys
 import os
 import traceback
+from typing import Dict
 
 proj_dir = "Maths/HoTT".lower()
 hott_dir = __file__[:__file__.lower().rfind(proj_dir) + len(proj_dir)]
@@ -16,6 +17,7 @@ if hott_dir not in sys.path:
 from src.Utils.logging import Logger
 from src.Parsing.LaTeX.latex_parser import LatexParser
 from src.UI.math_container import MathContainer
+from src.APIs.chapters import chapter_number_mapping, chapters
 
 prefix: str = "[UI][Latex to UI]"
 
@@ -69,6 +71,47 @@ class LatexToUI:
         # postprocess
         if True:
             return container
+
+    @staticmethod
+    def retrieve_derivation(text: str, loaded_containers: Dict[str, MathContainer] = None) -> (str, str):
+        log_prefix: str = f"{prefix}[retrieve_derivation]"
+        
+        # check integrity
+        if True:
+            splitted_text = text.split(" -> ")
+            if len(splitted_text) != 2:
+                Logger.error(f"Text does not have format 'inference_type -> inference_number' : {text}", log_prefix, 3)
+                return (None, None)
+            
+            inference_type, inference_id = splitted_text[0], splitted_text[1]
+            chapter_number = int(inference_id.split(".")[0])
+                
+            if chapter_number not in chapter_number_mapping.keys():
+                Logger.error(f"Chapter number {chapter_number} does not exist", log_prefix, 3)
+                return (None, None)
+        
+        # preprocess
+        if True:
+            chapter_file = chapter_number_mapping[chapter_number]
+            chapter_file_full = os.path.join(hott_dir, "src", "latex", chapter_file)
+                
+        # process
+        if True:
+            if loaded_containers is not None and chapter_file_full in loaded_containers.keys():
+                container = loaded_containers[chapter_file_full]
+            else:
+                container = LatexToUI.read_latex(chapter_file_full)
+
+                if loaded_containers is None:
+                    loaded_containers = {}
+                loaded_containers[container.name] = container
+            
+            retrieved_text = container.get_from_number(inference_type, inference_id)
+                                    
+        # postprocess
+        if True:
+            Logger.info(f"Retrieved text : {inference_type} : {retrieved_text}", log_prefix, 7)
+            return inference_type, retrieved_text
 
 
 if __name__ == "__main__":
