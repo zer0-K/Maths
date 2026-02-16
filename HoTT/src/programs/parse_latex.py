@@ -25,10 +25,10 @@ class RUN:
         
         text = """
         \\begin{document}
-        \\begin{axiom}{0.3.2}
-        \\axiomName{Test axiom} \\probe : 
-        \\actualAxiom{$rule\\_test : \\context{G} \\vdash \\U{i+1}:\\U{i}\\ \\text{——}\\ \\context{G} ctx$} \\probe
-        \\end{axiom}
+        \\begin{construction}{2.1.1}
+        \\constructionName{Star construction} \\probe :
+        \\apply{axiom}{1.6.2} \\useConstructedObjects{context}{2.1.1} \\outToIn{0|2}{$\\ctx$|2} \\probe
+        \\end{construction}
         \\end{document}"""
         container = LatexToUI.get_container_from_str(text, "test container") 
 
@@ -52,6 +52,6 @@ class RUN:
 
 
 if __name__ == "__main__":
-    #RUN.parse_text()
+    RUN.parse_text()
     #RUN.parse_file()
-    RUN.retrieve_derivation()
+    #RUN.retrieve_derivation()

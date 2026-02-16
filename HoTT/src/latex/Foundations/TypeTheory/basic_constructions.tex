@@ -26,11 +26,13 @@ All constructions will need a context.
 \actualCtxenv{\axiomApplyEmpty{0.1.1} \probe} \probe
 \end{context_env}
 
-%\begin{construction}{2.1.1}
-%\constructionName{Unit type identity} \probe :
+We have built an empty context : $.$ ctx
 
-%\actualConstruction{$rule\_empty\_derivation : \epsilon\ \text{——}\ empty\_context\ ctx$} \probe
-%\end{construction}
+\begin{construction}{2.1.1}
+\constructionName{Star construction} \probe :
+
+\apply{axiom}{1.6.2} \useConstructedObjects{context}{2.1.1} \outToIn{0}{$\ctx$} \probe
+\end{construction}
 
 
 \end{document}

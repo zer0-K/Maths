@@ -59,7 +59,9 @@
 \item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
 % construction
 \newcommand{\constructionName}[1]{#1}
-\newcommand{\actualConstruction}[1]{#1}
+\newcommand{\outToIn}[2]{with built objects {#1} mapped to {#2}}
+\newcommand{\useConstructedObjects}[2]{{#1} number {#2}, }
+\newcommand{\apply}[2]{We apply {#1} number {#2} using}
 \newenvironment{construction}[2][Construction]{\begin{trivlist}
 \item[\hskip \labelsep \textbf{#1}\hskip \labelsep \textbf{#2.}]}{\end{trivlist}}
 % usual maths commands

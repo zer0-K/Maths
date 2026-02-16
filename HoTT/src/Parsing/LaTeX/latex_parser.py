@@ -175,6 +175,9 @@ class LatexTransformer(Transformer):
     def inference(self, items):
         return LatexTransformer.filter(items, "inference") 
 
+    def construction(self, items):
+        return LatexTransformer.filter(items, "construction") 
+
 
 class LatexParser:
 

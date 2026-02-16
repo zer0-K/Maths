@@ -20,6 +20,8 @@ from src.Utils.utils_path import UtilsPath
 from src.APIs.chapters import chapters
 from src.UI.latex_to_ui import LatexToUI
 from src.UI.math_container import MathContainer
+from src.UI.tex_container import TexContainer
+from src.UI.construction import Construction
 from src.Parsing.Grammar.hott_parser import HottParser
 from src.Parsing.LaTeX.latex_parser import LatexTransformer
 
@@ -55,7 +57,8 @@ class BackEnd:
                 "subchapters": [],
                 "selected_chapter_tex_file": "",
                 "math_container": MathContainer(),
-                "loaded_math_containers": {},
+                "current_tex_container_name": "",
+                "current_tex_container": TexContainer(),
                 # choices and display
                 "definition_choices": {},
                 "axiom_choices": {},
@@ -114,8 +117,8 @@ class BackEnd:
                 # preprocess
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][definition_choices]"
-                    container: MathContainer = st.session_state["data"]["math_container"]
-                    definitions: Dict[str, str] = container.definitions
+                    tex_container = session["data"]["current_tex_container"]
+                    definitions: Dict[str, str] = tex_container.definitions
                     choices = []
                 
                 # process
@@ -131,8 +134,8 @@ class BackEnd:
                 # preprocess
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][axiom_choices]"
-                    container: MathContainer = st.session_state["data"]["math_container"]
-                    axioms: Dict[str, str] = container.axioms
+                    tex_container = session["data"]["current_tex_container"]
+                    axioms: Dict[str, str] = tex_container.axioms
                     choices = []
                 
                 # process
@@ -148,8 +151,8 @@ class BackEnd:
                 # preprocess
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][context_choices]"
-                    container: MathContainer = st.session_state["data"]["math_container"]
-                    contexts: Dict[str, str] = container.contexts
+                    tex_container = session["data"]["current_tex_container"]
+                    contexts: Dict[str, str] = tex_container.contexts
                     choices = []
                 
                 # process
@@ -217,14 +220,17 @@ class BackEnd:
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_parse_latex]"
                     file: str = st.session_state["data"]["selected_chapter_tex_file"]
+
+                    math_container: TexContainer = st.session_state["data"]["math_container"]
                 
                 # process
                 if True:
-                    container = LatexToUI.read_latex(file)
-                    session["data"]["math_container"] = container
-                    session["data"]["loaded_math_containers"][file] = container
+                    tex_container = LatexToUI.read_latex(file)
+                    math_container.add_tex(tex_container)
+                    session["data"]["current_tex_container_name"] = tex_container.name
+                    session["data"]["current_tex_container"] = tex_container
                     
-                    session = BackEnd.Listener.Choices.update_choices(session, container)
+                    session = BackEnd.Listener.Choices.update_choices(session)
 
                 # postprocess
                 if True:
@@ -237,21 +243,19 @@ class BackEnd:
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_change_container]"
                     file: str = st.session_state["selectbox_math_container"]
+
+                    math_container: TexContainer = st.session_state["data"]["math_container"]
                 
                 # process
                 if True:
-                    if file not in session["data"]["loaded_math_containers"].keys():
-                        Logger.error(
-                            f"Wrong container selected ({file}). Available containers : " +\
-                            f"{session['data']['loaded_math_containers'].keys()}", 
-                            log_prefix, 
-                            5)
+                    tex_container = math_container.get_tex(file)
+                    if tex_container is None:
                         return session
-                    container = session["data"]["loaded_math_containers"][file]
-                    session["data"]["math_container"] = container
-                    session["data"]["loaded_math_containers"][file] = container
                     
-                    session = BackEnd.Listener.Choices.update_choices(session, container)
+                    session["data"]["current_tex_container_name"] = tex_container.name
+                    session["data"]["current_tex_container"] = tex_container
+                    
+                    session = BackEnd.Listener.Choices.update_choices(session)
 
                 # postprocess
                 if True:
@@ -259,12 +263,12 @@ class BackEnd:
        
         class Choices:
         
-            def update_choices(session, container: MathContainer):
+            def update_choices(session):
                 
                 # preprocess
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][update_choices]"
-                    file: str = st.session_state["selectbox_math_container"]
+                    file: str = session["selectbox_math_container"]
                 
                 # process
                 if True:
@@ -272,19 +276,19 @@ class BackEnd:
                     # updates choices after latex file was parsed
                     # definitions
                     if True:
-                        def_choices_raw = BackEnd.Get.Choices.definition_choices(st.session_state)
+                        def_choices_raw = BackEnd.Get.Choices.definition_choices(session)
                         def_choices_clean = [d.replace(":::", ":").replace("$", "") for d in def_choices_raw]
                         def_choices_display = {d1: d2 for d1, d2 in zip(def_choices_clean, def_choices_raw)}
                         session["data"]["definition_choices"] = def_choices_display
                     # axioms
                     if True:
-                        axiom_choices_raw = BackEnd.Get.Choices.axiom_choices(st.session_state)
+                        axiom_choices_raw = BackEnd.Get.Choices.axiom_choices(session)
                         axiom_choices_clean = [a.replace(":::", ":").replace("$", "") for a in axiom_choices_raw]
                         axiom_choices_display = {a1: a2 for a1, a2 in zip(axiom_choices_clean, axiom_choices_raw)}
                         session["data"]["axiom_choices"] = axiom_choices_display
                     # contexts
                     if True:
-                        context_choices_raw = BackEnd.Get.Choices.context_choices(st.session_state)
+                        context_choices_raw = BackEnd.Get.Choices.context_choices(session)
                         context_choices_clean = [a.replace(":::", ":").replace("$", "") for a in context_choices_raw]
                         context_choices_display = {a1: a2 for a1, a2 in zip(context_choices_clean, context_choices_raw)}
                         session["data"]["context_choices"] = context_choices_display
@@ -303,7 +307,7 @@ class BackEnd:
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_select_definition]"
 
-                    container = session["data"]["math_container"]
+                    container = session["data"]["current_tex_container"]
                     choice_displayed = session["selectbox_definition"]
                     choice = session["data"]["definition_choices"][choice_displayed]
 
@@ -328,7 +332,7 @@ class BackEnd:
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_select_axiom]"
 
-                    container = session["data"]["math_container"]
+                    container = session["data"]["current_tex_container"]
                     choice_displayed = session["selectbox_axioms"]
                     choice = session["data"]["axiom_choices"][choice_displayed]
 
@@ -353,7 +357,7 @@ class BackEnd:
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_select_context]"
 
-                    container = session["data"]["math_container"]
+                    container = session["data"]["current_tex_container"]
                     choice_displayed = session["selectbox_contexts"]
                     choice = session["data"]["context_choices"][choice_displayed]
 
@@ -361,11 +365,15 @@ class BackEnd:
                 if True:
                     context_id, context_name = choice.split(":::")
                     context_id = context_id.replace(" ", "")
+                    context_name = context_name if context_name[0] != ' ' else context_name[1:]
                     Logger.debug(f"Chosen context: id={context_id}, context name={context_name}", log_prefix, 5)
                     actual_context = container.contexts[choice]
+                    actual_context_str = actual_context
+                    if isinstance(actual_context, Construction):
+                        actual_context_str = f"(Construction) {actual_context.name}"
 
-                    display_text = BackEnd.Display.clean_context(context_id, context_name, actual_context)
-                    session = BackEnd.Listener.Choices.update_display_zone(session, display_text, actual_context)
+                    display_text = BackEnd.Display.clean_context(context_id, context_name, actual_context_str)
+                    session = BackEnd.Listener.Choices.update_display_zone(session, display_text, actual_context_str)
 
                 # postprocess
                 if True:
@@ -398,7 +406,6 @@ class BackEnd:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_click_get_ast]"
 
                     text_for_ast = session["data"]["text_for_ast"]
-                    #container = session["data"]["math_container"]
 
                 # process
                 if text_for_ast != "":
@@ -426,32 +433,45 @@ class BackEnd:
                 if True:
                     log_prefix: str = f"{BackEnd.log_prefix}[Listener][on_click_get_derivation]"
 
+                    math_container = session["data"]["math_container"]
                     text_for_derivation = session["data"]["text_for_ast"]
-                    inferences = text_for_derivation.replace("\\_", "_").split("\n")
-                    Logger.debug(f"Text for derivation : {inferences}", log_prefix)                    
+
+                    if "(Construction)" in text_for_derivation:
+                        tex_container = session["data"]["current_tex_container"]
+                        choice = session["data"]["context_choices"][session["selectbox_contexts"]]
+                        constructor = tex_container.contexts[choice]
+                        Logger.debug(f"Constructor for derivation : {constructor.name}", log_prefix)                    
+                    else:
+                        inferences = text_for_derivation.replace("\\_", "_").split("\n")
+                        constructor = None
+                        Logger.debug(f"Text for derivation : {inferences}", log_prefix)                    
 
                 # process
                 if text_for_derivation != "":
+                    if constructor is None:
 
-                    inferences_retrieved = []
-                    for inference in inferences:
-                        try:
-                            inference_type, inference_retrieved = LatexToUI.retrieve_derivation(
-                                inference, 
-                                session["data"]["loaded_math_containers"]
-                            )
+                        inferences_retrieved = []
+                        for inference in inferences:
+                            try:
+                                inference_type, inference_retrieved = math_container.retrieve_derivation(
+                                    inference
+                                )
 
-                            if inference_type is None:
-                                session["data"]["ast_as_text"] = f"Couldn't get inference {inference}"
-                                Logger.error(session["data"]["ast_as_text"], log_prefix) 
+                                if inference_type is None:
+                                    session["data"]["ast_as_text"] = f"Couldn't get inference {inference}"
+                                    Logger.error(session["data"]["ast_as_text"], log_prefix) 
+                                    return session
+
+                                inference_id = inference.split(" -> ")[1]
+                                inferences_retrieved.append((inference_id, inference_type, inference_retrieved))
+                            except Exception as e:
+                                session["data"]["ast_as_text"] = f"Couldn't get inference {inference}. Error: {traceback.format_exc()}"
+                                Logger.error(session["data"]["ast_as_text"], log_prefix)
                                 return session
-
-                            inference_id = inference.split(" -> ")[1]
-                            inferences_retrieved.append((inference_id, inference_type, inference_retrieved))
-                        except Exception as e:
-                            session["data"]["ast_as_text"] = f"Couldn't get inference {inference}. Error: {traceback.format_exc()}"
-                            Logger.error(session["data"]["ast_as_text"], log_prefix)
-                            return session
+                    else:
+                        display_text = constructor.construct_derivation()
+                        session = BackEnd.Listener.Choices.update_display_zone(session, display_text, text_for_derivation)
+                        return session
                
                 # postprocess
                 if True:

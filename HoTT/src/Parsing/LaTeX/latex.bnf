@@ -29,7 +29,11 @@
 
 // construction
 @ <construction_name> ::= "\\constructionName{" <text> "}" "\\probe"
-@ <actual_construction> ::= "\\actualConstruction{" <any_text> "}" "\\probe"
+@ <out_to_in> ::= "\\outToIn{" <number> ("|" <number>)* "}" "{" <any_text> "}" "\\probe"
+@ <input_result> ::= "\\useConstructedObjects{" <text> "}" "{" <text> "}"
+@ <input_objects> ::= <input_result> ("," <input_result>)*
+@ <apply_builder> ::= "\\apply{" (<text>) "}" "{" (<text>) "}"
+@ <actual_construction> ::= <apply_builder> <input_objects> <out_to_in>
 @ <construction_id> ::= <text>
 @ <construction> ::= "\\begin{construction}{" <construction_id> "}" <other_content>* <construction_name> <other_content>? <actual_construction> <other_content>? "\\end{construction}"
 
@@ -49,3 +53,4 @@
 @ <text>          ::= /[^{}\[\]\\%]+/
 @ <any_text>      ::= /(?:[^{}]|\{(?!\s*\\probe\})|\}(?!\s*\\probe))+/      -- any text that does not end with "}\probe" (taking whitespaces into account)
 @ <comment>       ::= "%" /[^\n]+/ "\n"
+@ <number>        ::= /[0-9]+/

@@ -70,7 +70,7 @@ def run():
                 st.session_state = be.Listener.Chapters.on_change_container(st.session_state)
             st.selectbox(label="select math container", 
                          key="selectbox_math_container", 
-                         options=st.session_state["data"]["loaded_math_containers"].keys(),
+                         options=st.session_state["data"]["math_container"].tex_containers.keys(),
                          on_change=on_click_change_container)
 
     # --------------------------------------------- display maths container

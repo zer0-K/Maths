@@ -5,8 +5,9 @@
 #############################################
 
 import sys
+import os
 import traceback
-from lark import Tree
+from lark import Tree, Token
 from typing import Dict
 from collections.abc import Callable
 
@@ -17,206 +18,88 @@ if hott_dir not in sys.path:
 
 from src.Utils.logging import Logger
 from src.Parsing.LaTeX.latex_parser import LatexParser
+from src.UI.tex_container import TexContainer
+from src.UI.latex_to_ui import LatexToUI
+from src.APIs.chapters import chapter_number_mapping
 
 log_prefix: str = "[UI][Math container]"
 
 
 class MathContainer:
+    """Linker for the files of the library"""
     
-    def __init__(self, name: str = "empty container", tree: Tree = None):
+    def __init__(self, name: str = "empty container"):
 
         self.name = name
-        self.definitions: Dict[str, str] = {}
-        self.axioms: Dict[str, str] = {}
-        self.contexts: Dict[str, str] = {}
-        self.theorems: Dict[str, str] = {}
-        
-        if tree is not None:
-            self.transform_ast(tree)
-    
-    def transform_ast(self, tree: Tree):
-        prefix = f"{log_prefix}[transform_ast]({self.name})"
+        self.tex_containers: Dict[str, TexContainer] = {}
 
-        # check basic integrity
+    def retrieve_derivation(self, text: str) -> (str, str):
+        prefix: str = f"{log_prefix}[retrieve_derivation]({self.name})"
+        
+        # check integrity
         if True:
-            if tree.data != "start" or len(tree.children) == 0:
-                Logger.error(f"Cannot transform tree into container, missing node : 'start'", prefix)
-                return
-
-            contents = tree.children
-            # check content
-            if len([False for c in contents if c.data != "content"]) != 0:
-                Logger.error(f"Cannot transform tree into container, missing node : 'content'", prefix)
-                return
-            if len([False for c in contents if len(c.children) != 1]) != 0:
-                Logger.error(f"Cannot transform tree into container, a content should have 1 rule", prefix)
-                return
-            
-            # check rules
-            rules = [content.children[0] for content in contents]
-            if len([False for r in rules if len(r.children) != 1]) != 0:
-                Logger.error(f"Cannot transform tree into container, a rule should have 1 child", prefix)
-                return
-            # 'unwrapping' the rule node
-            rules = [r.children[0] for r in rules]
+            splitted_text = text.split(" -> ")
+            if len(splitted_text) != 2:
+                Logger.error(f"Text does not have format 'inference_type -> inference_number' : {text}", prefix, 3)
+                return None, None
         
-        # process : flatten tree
+        # preprocess
         if True:
-            for rule in rules:
-                rule_name = rule.data
-
-                if rule_name == "definition":
-                    self.add_definition(rule)
-                elif rule_name == "axiom":
-                    self.add_axiom(rule)
-                elif rule_name == "context_env":
-                    self.add_context(rule)
-        
+            inference_type, inference_id = splitted_text[0], splitted_text[1]
+                
+        # process
+        if True:
+            retrieved_text = self.get_from_number(inference_type, inference_id)
+                                    
         # postprocess
         if True:
-            Logger.info(f"Latex ast parsed into container", prefix, 6)
-    
-    def add_definition(self, definition: Tree):
-        prefix = f"{log_prefix}[add_definition]({self.name})"
- 
-        # check integrity
-        if True:
-            # check if definition contains an id, a notation and the actual definition
-            children_names = [c.data.value for c in definition.children]
-            if len(definition.children) != 3 \
-                    or "def_id" not in children_names \
-                    or "notation" not in children_names \
-                    or "actual_definition" not in children_names:
-                err_msg = f"Cannot retrieve definition from tree: a definitions should have " + \
-                    f"a def_id, a notation and an actual_definition. Got : {children_names}"
-                Logger.error(err_msg, prefix)
-                return                
-
-        # preprocess
-        if True:
-            def_id = [c.children[0] for c in definition.children if c.data.value == "def_id"][0]
-            notation = [c.children[0] for c in definition.children if c.data.value == "notation"][0]
-            actual_def = [c.children[0] for c in definition.children if c.data.value == "actual_definition"][0]
-
-            # 'unwrap'
-            def_id = def_id.children[0].value
-            notation = notation.children[0].value
-            actual_def = actual_def.children[0].value
-   
-         # process
-        if True:
-            self.definitions[f"{def_id} ::: {notation}"] = actual_def
-    
-         # postprocess
-        if True:
-            Logger.info(f"Definition of '{notation}' ({def_id}) added", prefix, 10)
-    
-    def add_axiom(self, axiom: Tree):
-        prefix = f"{log_prefix}[add_axiom]({self.name})"
- 
-        # check integrity
-        if True:
-            # check if the axiom contains an id, a name and the actual axiom
-            children_names = [c.data.value for c in axiom.children]
-            if len(axiom.children) != 3 \
-                    or "axiom_id" not in children_names \
-                    or "axiom_name" not in children_names \
-                    or "actual_axiom" not in children_names:
-                err_msg = f"Cannot retrieve axiom from tree: an axiom should have " + \
-                    f"an axiom_id, an axiom_name and an actual_axiom. Got : {children_names}"
-                Logger.error(err_msg, prefix)
-                return                
-
-        # preprocess
-        if True:
-            axiom_id = [c.children[0] for c in axiom.children if c.data.value == "axiom_id"][0]
-            axiom_name = [c.children[0] for c in axiom.children if c.data.value == "axiom_name"][0]
-            actual_axiom = [c.children[0] for c in axiom.children if c.data.value == "actual_axiom"][0]
-
-            # 'unwrap'
-            axiom_id = axiom_id.children[0].value
-            axiom_name = axiom_name.children[0].value
-            actual_axiom = actual_axiom.children[0].value
-   
-         # process
-        if True:
-            self.axioms[f"{axiom_id} ::: {axiom_name}"] = actual_axiom
-    
-         # postprocess
-        if True:
-            Logger.info(f"'{axiom_name}' ({axiom_id}) added", prefix, 10)
-    
-    def add_context(self, context: Tree):
-        prefix = f"{log_prefix}[add_context]({self.name})"
- 
-        # check integrity
-        if True:
-            # check if the context contains an id, a name and the actual context definition
-            children_names = [c.data.value for c in context.children]
-            if len(context.children) != 3 \
-                    or "ctxenv_id" not in children_names \
-                    or "ctxenv_name" not in children_names \
-                    or "actual_ctxenv" not in children_names:
-                err_msg = f"Cannot retrieve context env from tree: a context should have " + \
-                    f"a ctxenv_id, a ctxenv_name and an actual_ctxenv. Got : {children_names}"
-                Logger.error(err_msg, prefix)
-                return                
-
-        # preprocess
-        if True:
-            ctxenv_id = [c.children[0] for c in context.children if c.data.value == "ctxenv_id"][0]
-            ctxenv_name = [c.children[0] for c in context.children if c.data.value == "ctxenv_name"][0]
-            actual_ctxenv = [c.children[0] for c in context.children if c.data.value == "actual_ctxenv"][0]
-
-            # 'unwrap'
-            ctxenv_id = ctxenv_id.children[0].value
-            ctxenv_name = ctxenv_name.children[0].value
-            actual_ctxenv = [
-                f"{c.data.replace('_', "\\_")} -> {c.children[0].children[0].value}" 
-                for c in actual_ctxenv.children
-            ]
-   
-         # process
-        if True:
-            self.contexts[f"{ctxenv_id} ::: {ctxenv_name}"] = '\n'.join(actual_ctxenv)
-    
-         # postprocess
-        if True:
-            Logger.info(f"'{ctxenv_name}' ({ctxenv_id}) added", prefix, 10)
+            Logger.info(f"Retrieved text : {inference_type} : {retrieved_text}", prefix, 7)
+            return inference_type, retrieved_text
 
     def get_from_number(self, inference_type: str, inference_id: str) -> str:
         prefix = f"{log_prefix}[get_from_number]({self.name})"
  
         # check integrity
         if True:
-
-            existing_inference_types = ["axiom_apply"] 
-            if inference_type not in existing_inference_types:
-                Logger.error(f"Given inference type doesn't exist ({inference_type}). " +
-                             f"Existing types : {existing_inference_types}", prefix)
-                return ""
+            chapter_number = int(inference_id.split(".")[0])
+                
+            if chapter_number not in chapter_number_mapping.keys():
+                Logger.error(f"Chapter number {chapter_number} does not exist", prefix, 3)
+                return (None, None)
 
         # preprocess
         if True:
-            elements = []
-            if inference_type == "axiom_apply":
-                elements = self.axioms
-            
-            referenced_numbers = [el.split(" ::: ")[0] for el in elements.keys()]
-            if inference_id not in referenced_numbers:
-                Logger.error(f"Given number ({inference_id}) not in referenced numbers ({referenced_numbers})", 
-                             prefix)
-                return ""
-   
+            chapter_file: str = chapter_number_mapping[chapter_number]
+            chapter_file_full: str = os.path.join(hott_dir, "src", "latex", chapter_file)
+ 
         # process
         if True:
-            for element, val in elements.items():
-                if inference_id == element.split(" ::: ")[0]:
-                    return val
+            if chapter_file_full in self.tex_containers.keys():
+                tex_container = self.tex_containers[chapter_file_full]
+            else:
+                tex_container = LatexToUI.read_latex(chapter_file_full)
+                self.add_tex(tex_container)
+            
+            retrieved_text = tex_container.get_from_number(inference_type, inference_id)
     
-         # postprocess
+        # postprocess
         if True:
-            Logger.error(f"Nothing found ; unexpected situtation", prefix, 10)
-            return ""
+            return retrieved_text
 
-        
+    def get_tex(self, tex_container_name: str) -> TexContainer:
+        prefix = f"{log_prefix}[get_from_number]({self.name})"
+
+        # check integrity
+        if tex_container_name not in self.tex_containers.keys():
+            Logger.error(
+                f"Wrong container selected ({tex_container_name}). Available containers : " +\
+                f"{self.tex_containers.keys()}", 
+                log_prefix, 
+                5)
+            return None
+
+        return self.tex_containers[tex_container_name]
+
+    def add_tex(self, tex_container: TexContainer):
+
+        self.tex_containers[tex_container.name] = tex_container
